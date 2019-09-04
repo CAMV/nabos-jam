@@ -22,9 +22,13 @@ public class InputController : MonoBehaviour
         foreach(var input in _inputActions)
         {
             if (input.CheckInput())
-                _playerSquad.AddCommand(
-                                    input.GetInputCommand(_playerSquad.ActiveUnit)
-                                );
+            {
+                Command c = input.GetInputCommand();
+
+                if (c != null)
+                    _playerSquad.AddCommand(c);
+            }
+
         }
     }
 }

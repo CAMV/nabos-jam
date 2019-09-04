@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9806aa4643c2d744f839ec3117171e01, type: 3}
-  m_Name: MoveInputSettings
+  m_Script: {fileID: 11500000, guid: e959d2226821ba047aaf66f76889f63b, type: 3}
+  m_Name: Move IA
   m_EditorClassIdentifier: 
-  _name: Fire2
+  _buttomName: Fire2
+  _myICheckType: 1
+  _terrainLayer: 8

@@ -17,7 +17,11 @@ public class MoveCmd : Command
     override public void Do()
     {
         _lastPosition = _myUnit.transform.position;
-        _myUnit.Agent.destination = _myTarget;
+
+        if (_myUnit.Movement)
+            _myUnit.Movement.Agent.destination = _myTarget;
+        else
+            Debug.Log(_myUnit.name + " can't Move!");
     }
 
 

@@ -19,6 +19,39 @@ public class SquadController : MonoBehaviour
             
             return _activeUnit;
         }
+
+        set {
+            if (_activeUnit != value && _myUnits.Contains(value.RootLeader))
+            {
+                _activeUnit = value.RootLeader;
+                UpdateSelectGizmo();
+            }
+        }
+    }
+
+    public List<Unit> Members {
+        get {
+            return _myUnits;
+        }
+    }
+
+    private void UpdateSelectGizmo()
+    {
+        foreach(Unit u in _myUnits)
+        {
+            if (u == ActiveUnit)
+            {
+                u.Gizmo.SetIntensity(USelectGizmo.SelectGizmoIntensity.High);
+            }
+            else if (u.IsFollower)
+            {
+                u.Gizmo.SetIntensity(USelectGizmo.SelectGizmoIntensity.Low);
+            }
+            else
+            {
+                u.Gizmo.SetIntensity(USelectGizmo.SelectGizmoIntensity.Medium);
+            }
+        }
     }
 
     public void AddCommand(Command c)
@@ -30,6 +63,7 @@ public class SquadController : MonoBehaviour
     void Start()
     {
         _cmdQ = new Queue<Command>();
+        UpdateSelectGizmo();
         _isIdle = true;
     }
 
