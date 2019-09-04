@@ -6,7 +6,6 @@ public class Unit : MonoBehaviour
 {
     private NavMeshAgent _myNavAgent;
 
-
     public NavMeshAgent Agent{
         get {
             return _myNavAgent;

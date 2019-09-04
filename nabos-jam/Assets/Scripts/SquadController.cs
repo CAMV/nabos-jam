@@ -4,16 +4,26 @@ using UnityEngine;
 
 public class SquadController : MonoBehaviour
 {
+
+    [SerializeField]
+    private List<Unit> _myUnits;
+
     private Unit _activeUnit;
-    private Unit _myUnit;
     private Queue<Command> _cmdQ;
     private bool _isIdle = true;
 
-
     public Unit ActiveUnit {
         get {
+            if (!_activeUnit)
+                _activeUnit = _myUnits[0];
+            
             return _activeUnit;
         }
+    }
+
+    public void AddCommand(Command c)
+    {
+        _cmdQ.Enqueue(c);
     }
     
     // Start is called before the first frame update
