@@ -22,7 +22,6 @@ public class InputController : MonoBehaviour
             {
                 if (input.CheckInput())
                 {
-                    Debug.Log("Done");
                     yield return StartCoroutine(input.ExecuteAction());  
                 }
 

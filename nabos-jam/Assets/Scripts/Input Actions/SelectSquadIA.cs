@@ -31,6 +31,7 @@ public class SelectSquadIA : InputAction
                 yield return new WaitForEndOfFrame();
             }
 
+            // change rect position to represent the screenSpace correctly
             r.x = startMousePos.x <= currentMousePos.x ? startMousePos.x : currentMousePos.x;
             r.y = startMousePos.y <= currentMousePos.y ? startMousePos.y : currentMousePos.y;
 

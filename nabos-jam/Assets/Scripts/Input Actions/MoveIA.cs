@@ -17,9 +17,50 @@ public class MoveIA : InputAction
 
         if (Physics.Raycast(r, out hit, RAYCAST_LENGTH, layerMask))
         {
-            foreach(Unit u in GameManager.Instance.PlayerSquad.ActiveUnits)
+            Unit leader = GameManager.Instance.PlayerSquad.ActiveUnits[0];
+            
+            Quaternion moveRot = leader.transform.rotation;
+            moveRot.SetLookRotation(
+                (hit.point - leader.transform.position).normalized,
+                Vector3.up
+            );
+
+            GameManager.Instance.PlayerSquad.AddCommand(new MoveCmd(leader, hit.point, moveRot));
+
+            Formation moveFormation = GameManager.Instance.PlayerSquad.Formation;
+                                                    
+            for(int i = 1; i < GameManager.Instance.PlayerSquad.ActiveUnits.Count; i++)
             {
-                GameManager.Instance.PlayerSquad.AddCommand(new MoveCmd(u, hit.point));
+                Matrix4x4 tPosMatrix = new Matrix4x4();
+                tPosMatrix.SetTRS(hit.point, moveRot, Vector3.one);
+
+                Vector3 currentHitPoint = hit.point;
+                Command fMoveCmd;
+
+                // apply formation position offset
+                if (moveFormation)
+                {
+                    currentHitPoint = tPosMatrix.MultiplyPoint(
+                                            moveFormation.GetPosOffset(i-1)
+                                        );
+
+                    Quaternion cRot =  tPosMatrix.rotation * Quaternion.Euler(0, moveFormation.GetEAOffset(i), 0);
+
+                    fMoveCmd = new MoveCmd(
+                            GameManager.Instance.PlayerSquad.ActiveUnits[i], 
+                            currentHitPoint,
+                            cRot
+                        );
+                }
+                else
+                {
+                    fMoveCmd = new MoveCmd(
+                                GameManager.Instance.PlayerSquad.ActiveUnits[i], 
+                                currentHitPoint
+                            );
+                }
+
+                GameManager.Instance.PlayerSquad.AddCommand(fMoveCmd);
             }
         }
         
