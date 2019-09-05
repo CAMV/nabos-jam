@@ -76,4 +76,14 @@ public class Stat: ScriptableObject
         }
         finalStat = (int) (additiveCount * multiplicativeCount);
     }
+
+    public bool IsStatGreater(int val) 
+    {
+        return finalStat > val;
+    }
+
+    public bool IsStatLower(int val) 
+    {
+        return finalStat < val;
+    }
 }

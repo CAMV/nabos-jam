@@ -9,37 +9,33 @@ public class Character : ScriptableObject
     public Health health;
     public Health shieldHealth;
 
-    public List<Stat> stats;
+    public Stats stats;
     public CharacterClass charClass;
 
     public FormationsEnum formationType;
-    public int damage;
-    public float attackSpeed;
-    public float hitChance;
-    public float dodgeChance;
 
-    public void TakeDamage(int damage) {
-        health.modifyHealth(-damage);
-    }
-
-    public bool HitCheck() 
+    public void TakeDamage(int damage) 
     {
-        float randVal = Random.Range(0, 1);
-        return  randVal < hitChance;
+        int remainingDamage = damage;
+        if (shieldHealth.currentHealth != 0) 
+        {
+            remainingDamage = damage - shieldHealth.currentHealth;
+            shieldHealth.modifyHealth(-damage);
+        }
+        if (remainingDamage > 0) 
+        {
+            health.modifyHealth(-remainingDamage);
+        }
     }
 
-    public bool DodgeCheck()
+
+    public void PerformAttack(Character enemyChar) 
     {
-        float randVal = Random.Range(0, 1);
-        return randVal > dodgeChance;
-    }
-
-    public void PerformAttack(Character enemyChar) {
         //Check character hit chance
-        if (HitCheck()) 
+        if (stats.HitCheck()) 
         {
             //Check enemy dodgeChance
-            if (enemyChar.DodgeCheck()) 
+            if (enemyChar.stats.DodgeCheck()) 
             {
                 Attack(enemyChar);
             }
@@ -48,14 +44,6 @@ public class Character : ScriptableObject
 
     public void Attack(Character enemyChar) 
     {
-        enemyChar.TakeDamage(damage);
-    }
-
-    public void TickModifiers(float tick) 
-    {
-        foreach (var stat in stats)
-        {
-            stat.TickModifiers(tick);
-        }
+        enemyChar.TakeDamage(stats.damage.finalStat);
     }
 }

@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Character/Health")]
 public class Health : ScriptableObject
 {
-    public int maxHealth;
-    private int currentHealth;
+    public int maxHealth {get; private set;}
+    public int currentHealth {get; private set;}
 
     public Health(int maxHealth) 
     {
