@@ -5,8 +5,8 @@ using UnityEngine;
 public class Stat: ScriptableObject
 {
     public string statName;
-    public int statValue;
-    public int finalStat;
+    public int statValue {get; private set;}
+    public int finalStat {get; private set;}
     public List<Modifier> modifiers = new List<Modifier>();
 
     public Stat(string _statName, int _statValue) 

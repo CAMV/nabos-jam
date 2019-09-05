@@ -9,7 +9,7 @@ public class Character : ScriptableObject
     public Health health;
     public Health shieldHealth;
 
-    public Stats stats;
+    public List<Stat> stats;
     public CharacterClass charClass;
 
     public FormationsEnum formationType;
@@ -49,5 +49,13 @@ public class Character : ScriptableObject
     public void Attack(Character enemyChar) 
     {
         enemyChar.TakeDamage(damage);
+    }
+
+    public void TickModifiers(float tick) 
+    {
+        foreach (var stat in stats)
+        {
+            stat.TickModifiers(tick);
+        }
     }
 }
