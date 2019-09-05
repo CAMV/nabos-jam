@@ -15,7 +15,7 @@ public class USelectGizmo : MonoBehaviour
 
     private MeshRenderer _myMR;
 
-    void Start()
+    void Awake()
     {
         _hMaterial = materialSettings.hightIntensityMat;
         _mMaterial = materialSettings.mediumIntensityMat;

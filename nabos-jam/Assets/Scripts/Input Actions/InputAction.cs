@@ -1,12 +1,15 @@
 using UnityEngine;
+using System.Collections;
 
 public abstract class InputAction : ScriptableObject
 {
+    protected const float RAYCAST_LENGTH = 100;
+
     [SerializeField]
-    private string _buttomName;
+    protected string _buttomName;
     [SerializeField]
     private InputCheckType _myICheckType;
-    protected const float RAYCAST_LENGTH = 100;
+
 
     enum InputCheckType
     {
@@ -15,6 +18,7 @@ public abstract class InputAction : ScriptableObject
 
     private bool _currentState;
     private bool _prevState;
+    private bool _isModifierActive;
 
     public bool CheckInput()
     {
@@ -27,6 +31,6 @@ public abstract class InputAction : ScriptableObject
         return (!_prevState && _currentState);           
     }
 
-    public abstract Command GetInputCommand();
+    public abstract IEnumerator ExecuteAction();
     
 }

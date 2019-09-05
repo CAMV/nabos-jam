@@ -1,19 +1,20 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class SelectCmd : Command
 {
-    private Unit _newActiveUnit, _oldActiveUnit;
+    private List<Unit> _newActiveUnits, _oldActiveUnits;
 
-    public SelectCmd(Unit u)
+    public SelectCmd(List<Unit> units)
     {
-        _newActiveUnit = u;   
+        _newActiveUnits = units;   
     }
 
 
     override public void Do()
     {
-        _oldActiveUnit = GameManager.Instance.PlayerSquad.ActiveUnit;
-        GameManager.Instance.PlayerSquad.ActiveUnit = _newActiveUnit;
+        _oldActiveUnits = GameManager.Instance.PlayerSquad.ActiveUnits;
+        GameManager.Instance.PlayerSquad.ActiveUnits = _newActiveUnits;
     }
 
 

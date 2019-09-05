@@ -1,34 +1,36 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class InputController : MonoBehaviour
 {
 
-
-    [SerializeField]
-    private SquadController _playerSquad;
     [SerializeField]
     private List<InputAction> _inputActions;
 
-    private Unit _activeUnit;
-
-    public void Start()
+    void Start()
     {
-        _activeUnit = _playerSquad.ActiveUnit;
+        StartCoroutine(UpdateCo());
     }
 
-    public void Update()
+
+    private IEnumerator UpdateCo()
     {
-        foreach(var input in _inputActions)
+        while (true)
         {
-            if (input.CheckInput())
+            foreach(var input in _inputActions)
             {
-                Command c = input.GetInputCommand();
+                if (input.CheckInput())
+                {
+                    Debug.Log("Done");
+                    yield return StartCoroutine(input.ExecuteAction());  
+                }
 
-                if (c != null)
-                    _playerSquad.AddCommand(c);
             }
-
+            
+            yield return new WaitForEndOfFrame();
         }
+
+        
     }
 }
