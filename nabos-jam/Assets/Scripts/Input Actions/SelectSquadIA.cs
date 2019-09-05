@@ -1,24 +1,66 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Collections; 
 
 [CreateAssetMenu(menuName = "Input Settings/Select Squad Input Setting")]
 public class SelectSquadIA : InputAction
 {
 
-    public override Command GetInputCommand()
+    public override IEnumerator ExecuteAction()
     {
-        Ray r = Camera.main.ScreenPointToRay(Input.mousePosition); 
-        RaycastHit hit;
+        List<Unit> sUnits = new List<Unit>();
+        sUnits.Clear();
 
-        Debug.DrawRay(r.origin, r.direction*RAYCAST_LENGTH, Color.red, 5f);
-
-        foreach(var unit in GameManager.Instance.PlayerSquad.Members)
+        if (Input.GetButton("Ctrl"))                    // Multiple unit selection with Ctrl pressed
         {
-            if (unit.SelectCollider && unit.SelectCollider.Raycast(r, out hit, RAYCAST_LENGTH))
+            Vector2 startMousePos = Input.mousePosition;
+            Vector2 currentMousePos = Input.mousePosition;
+
+            Rect r = new Rect();
+
+            while (Input.GetButton(_buttomName))
             {
-                return new SelectCmd(unit);        
+                currentMousePos = Input.mousePosition;
+
+                r.x = startMousePos.x >= currentMousePos.x ? startMousePos.x : currentMousePos.x;
+                r.y = startMousePos.y >= currentMousePos.y ? startMousePos.y : currentMousePos.y;
+                r.width = Mathf.Abs(startMousePos.x - currentMousePos.x);
+                r.height = Mathf.Abs(startMousePos.y - currentMousePos.y);
+
+                GUIManager.Instance.SetSelectSqr(r);
+                yield return new WaitForEndOfFrame();
+            }
+
+            r.x = startMousePos.x <= currentMousePos.x ? startMousePos.x : currentMousePos.x;
+            r.y = startMousePos.y <= currentMousePos.y ? startMousePos.y : currentMousePos.y;
+
+            foreach (Unit u in GameManager.Instance.PlayerSquad.Units)
+            {   
+                Vector2 unitPos = Camera.main.WorldToScreenPoint(u.transform.position);
+                
+                if (r.Contains(unitPos))
+                    sUnits.Add(u);
+            }
+
+            GUIManager.Instance.SetSelectSqr(Rect.zero);
+        }
+        else                                            // single unit selection                                   
+        {
+            Ray r = Camera.main.ScreenPointToRay(Input.mousePosition); 
+            RaycastHit hit;
+
+            foreach(Unit u in GameManager.Instance.PlayerSquad.Units)
+            {
+                if (u.SelectCollider && u.SelectCollider.Raycast(r, out hit, RAYCAST_LENGTH))
+                {
+                    sUnits.Add(u);
+                    break;   
+                }
             }
         }
 
-        return null;
+        GameManager.Instance.PlayerSquad.AddCommand(new SelectCmd(sUnits));
+
+        yield return null;
     }
 }

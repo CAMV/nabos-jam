@@ -8,28 +8,48 @@ public class SquadController : MonoBehaviour
     [SerializeField]
     private List<Unit> _myUnits;
 
-    private Unit _activeUnit;
+    private List<Unit> _activeUnits;
     private Queue<Command> _cmdQ;
     private bool _isIdle = true;
 
-    public Unit ActiveUnit {
+    public List<Unit> ActiveUnits {
         get {
-            if (!_activeUnit)
-                _activeUnit = _myUnits[0];
+            if (_activeUnits.Count == 0)
+                _activeUnits.Add(_myUnits[0]);
             
-            return _activeUnit;
+            return _activeUnits;
         }
 
         set {
-            if (_activeUnit != value && _myUnits.Contains(value.RootLeader))
+            if (value.Count > 0)
             {
-                _activeUnit = value.RootLeader;
-                UpdateSelectGizmo();
+                bool hasValidUnit = false;
+
+                foreach(Unit u in value)
+                {
+                    if (_myUnits.Contains(u.RootLeader))
+                    {
+                        hasValidUnit = true;
+                        break;
+                    }
+                }
+
+                if (hasValidUnit)
+                {
+                    _activeUnits.Clear();
+
+                    foreach(Unit u in value) {
+                        if (_myUnits.Contains(u.RootLeader) && !_activeUnits.Contains(u.RootLeader))
+                            _activeUnits.Add(u.RootLeader);
+                    }
+                    
+                    UpdateSelectGizmo();
+                }
             }
         }
     }
 
-    public List<Unit> Members {
+    public List<Unit> Units {
         get {
             return _myUnits;
         }
@@ -39,7 +59,7 @@ public class SquadController : MonoBehaviour
     {
         foreach(Unit u in _myUnits)
         {
-            if (u == ActiveUnit)
+            if (ActiveUnits.Contains(u))
             {
                 u.Gizmo.SetIntensity(USelectGizmo.SelectGizmoIntensity.High);
             }
@@ -63,6 +83,7 @@ public class SquadController : MonoBehaviour
     void Start()
     {
         _cmdQ = new Queue<Command>();
+        _activeUnits = new List<Unit>();
         UpdateSelectGizmo();
         _isIdle = true;
     }
