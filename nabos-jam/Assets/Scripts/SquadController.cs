@@ -7,6 +7,8 @@ public class SquadController : MonoBehaviour
 
     [SerializeField]
     private List<Unit> _myUnits;
+    [SerializeField]
+    private Formation _myFormation;
 
     private List<Unit> _activeUnits;
     private Queue<Command> _cmdQ;
@@ -38,6 +40,7 @@ public class SquadController : MonoBehaviour
                 {
                     _activeUnits.Clear();
 
+                    // only root leaders can be an active unit
                     foreach(Unit u in value) {
                         if (_myUnits.Contains(u.RootLeader) && !_activeUnits.Contains(u.RootLeader))
                             _activeUnits.Add(u.RootLeader);
@@ -53,6 +56,27 @@ public class SquadController : MonoBehaviour
         get {
             return _myUnits;
         }
+    }
+
+    public Formation Formation
+    {
+        get {
+            return _myFormation;
+        }
+    }
+
+    public bool SwapUnitsOrer(int firstU, int secondU)
+    {
+        if (firstU > 0 && firstU < _myUnits.Count && firstU > 0 && firstU < _myUnits.Count && firstU != secondU)
+        {
+            Unit tmp = _myUnits[firstU];
+            _myUnits[firstU] = _myUnits[secondU];
+            _myUnits[secondU] = tmp;
+
+            return true;
+        }
+
+        return false;
     }
 
     private void UpdateSelectGizmo()
@@ -93,7 +117,9 @@ public class SquadController : MonoBehaviour
     {
         if (_cmdQ.Count > 0 && _isIdle)
         {
-            _cmdQ.Dequeue().Do();
+            Command currentCmd = _cmdQ.Dequeue();
+
+            currentCmd.Do();
         }
     }
 }
