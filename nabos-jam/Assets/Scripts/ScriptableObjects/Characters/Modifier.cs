@@ -25,6 +25,15 @@ public class Modifier: ScriptableObject
         timeLeft = timeToLive;
     }
 
+    Modifier(string modName, float val, int ttl, bool _isStackable, ModType _modType) 
+    {
+        timeToLive = ttl;
+        modValue = val;
+        modType = _modType;
+        modifierName = modName;
+        isStackable = _isStackable;
+    }
+
     //TODO This whole timer interaction can be a timer script outside 
     public float Tick(float tickValue) 
     {

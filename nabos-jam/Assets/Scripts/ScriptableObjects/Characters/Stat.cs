@@ -15,6 +15,11 @@ public class Stat: ScriptableObject
         statValue = _statValue;
     }
 
+    public void setStat(int baseStat)
+    {
+        statValue = baseStat;
+    }
+
     public void AddModifier(Modifier _mod)
     {
         foreach (var mod in modifiers)
@@ -58,7 +63,7 @@ public class Stat: ScriptableObject
         }
     }
 
-    private void CalculateFinalStat() 
+    public void CalculateFinalStat() 
     {
         float additiveCount = (float) statValue;
         float multiplicativeCount = 1f;

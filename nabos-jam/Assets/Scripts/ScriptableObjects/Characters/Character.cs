@@ -16,7 +16,8 @@ public class Character : ScriptableObject
 
     public void TakeDamage(int damage) 
     {
-        int remainingDamage = damage;
+        float armorAbsorption = Random.Range(0.3f, 1) * stats.armor.finalStat;
+        int remainingDamage = (int) Mathf.Max(0, damage - armorAbsorption);
         if (shieldHealth.currentHealth != 0) 
         {
             remainingDamage = damage - shieldHealth.currentHealth;
@@ -35,7 +36,7 @@ public class Character : ScriptableObject
         if (stats.HitCheck()) 
         {
             //Check enemy dodgeChance
-            if (enemyChar.stats.DodgeCheck()) 
+            if (!enemyChar.stats.hasDodged()) 
             {
                 Attack(enemyChar);
             }
