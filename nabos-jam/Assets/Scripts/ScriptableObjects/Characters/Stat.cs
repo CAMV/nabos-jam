@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Character/Stat/Stat")]
 public class Stat: ScriptableObject
 {
     public string statName;
     public int statValue;
-    public int finalStat;
+    public int finalStat {get; private set;}
     public List<Modifier> modifiers = new List<Modifier>();
 
     public Stat(string _statName, int _statValue) 
     {
         statName = _statName;
         statValue = _statValue;
+    }
+
+    public void setStat(int baseStat)
+    {
+        statValue = baseStat;
     }
 
     public void AddModifier(Modifier _mod)
@@ -58,7 +64,7 @@ public class Stat: ScriptableObject
         }
     }
 
-    private void CalculateFinalStat() 
+    public void CalculateFinalStat() 
     {
         float additiveCount = (float) statValue;
         float multiplicativeCount = 1f;
@@ -75,5 +81,15 @@ public class Stat: ScriptableObject
             }
         }
         finalStat = (int) (additiveCount * multiplicativeCount);
+    }
+
+    public bool IsStatGreater(int val) 
+    {
+        return finalStat > val;
+    }
+
+    public bool IsStatLower(int val) 
+    {
+        return finalStat < val;
     }
 }

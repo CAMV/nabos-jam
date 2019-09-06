@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class Unit : MonoBehaviour
 {
+    private NavMeshAgent _myNavAgent;
+    public Character character;
     [SerializeField]
     private UMovement _movement;
 
