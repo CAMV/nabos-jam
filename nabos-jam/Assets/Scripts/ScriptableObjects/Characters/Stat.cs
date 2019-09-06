@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Character/Stat/Stat")]
 public class Stat: ScriptableObject
 {
     public string statName;
-    public int statValue {get; private set;}
+    public int statValue;
     public int finalStat {get; private set;}
     public List<Modifier> modifiers = new List<Modifier>();
 

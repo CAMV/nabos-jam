@@ -5,8 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Character/Health")]
 public class Health : ScriptableObject
 {
-    public int maxHealth {get; private set;}
-    public int currentHealth {get; private set;}
+    [SerializeField]
+    public int maxHealth; 
+    [SerializeField]
+    public int currentHealth;
 
     public Health(int maxHealth) 
     {

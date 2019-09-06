@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stats : MonoBehaviour
+
+[CreateAssetMenu(menuName = "Character/Stat/Stats")]
+public class Stats : ScriptableObject
 {
     [SerializeField]
     List<Stat> baseStats = new List<Stat>();    //Str, Int, Agi, Dex, etc
+    [SerializeField]
     List<Stat> evasionStats = new List<Stat>(); //Block, Dodge, Negate, etc
     public Stat damage;
     public Stat armor;
     public Stat attackSpeed;
     public Stat hitChance;
 
-    private void Update() {
+    private void ReduceModifierDurations(float tick) {
         //Reduces buff durations
-        float tick = Time.fixedDeltaTime;
         foreach (var stat in baseStats)
         {
             stat.TickModifiers(tick);
@@ -30,6 +32,7 @@ public class Stats : MonoBehaviour
         
     }
 
+    //Get a stat by its name, or null if it couldn't be found
     public Stat getStatValue(string statName)
     {
         foreach (var stat in baseStats)
@@ -42,6 +45,7 @@ public class Stats : MonoBehaviour
         return null;
     }
 
+    //Updates the damage stat, based on str
     public void updateDamage() 
     {
         Stat str = getStatValue("Strength");
@@ -69,6 +73,4 @@ public class Stats : MonoBehaviour
         }
         return false;
     }
-
-
 }

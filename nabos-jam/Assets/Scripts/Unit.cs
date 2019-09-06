@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class Unit : MonoBehaviour
 {
     private NavMeshAgent _myNavAgent;
+    public Character character;
 
     public NavMeshAgent Agent{
         get {
