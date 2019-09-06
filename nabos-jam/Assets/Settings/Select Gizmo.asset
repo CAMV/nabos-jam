@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 361004d3e5f277342a03b44a2f8156da, type: 3}
+  m_Name: Select Gizmo
+  m_EditorClassIdentifier: 
+  hightIntensityMat: {fileID: 2100000, guid: 55b942ad62aebd5408a3442911ec313d, type: 2}
+  mediumIntensityMat: {fileID: 2100000, guid: 41debbbf3bef974498821f3db9d5d90f, type: 2}
+  lowIntensityMat: {fileID: 2100000, guid: 024f01bbe93948d45ad991bd98f5d643, type: 2}

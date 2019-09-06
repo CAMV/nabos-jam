@@ -7,17 +7,94 @@ public class SquadController : MonoBehaviour
 
     [SerializeField]
     private List<Unit> _myUnits;
+    [SerializeField]
+    private Formation _myFormation;
 
-    private Unit _activeUnit;
+    private List<Unit> _activeUnits;
     private Queue<Command> _cmdQ;
     private bool _isIdle = true;
 
-    public Unit ActiveUnit {
+    public List<Unit> ActiveUnits {
         get {
-            if (!_activeUnit)
-                _activeUnit = _myUnits[0];
+            if (_activeUnits.Count == 0)
+                _activeUnits.Add(_myUnits[0]);
             
-            return _activeUnit;
+            return _activeUnits;
+        }
+
+        set {
+            if (value.Count > 0)
+            {
+                bool hasValidUnit = false;
+
+                foreach(Unit u in value)
+                {
+                    if (_myUnits.Contains(u.RootLeader))
+                    {
+                        hasValidUnit = true;
+                        break;
+                    }
+                }
+
+                if (hasValidUnit)
+                {
+                    _activeUnits.Clear();
+
+                    // only root leaders can be an active unit
+                    foreach(Unit u in value) {
+                        if (_myUnits.Contains(u.RootLeader) && !_activeUnits.Contains(u.RootLeader))
+                            _activeUnits.Add(u.RootLeader);
+                    }
+                    
+                    UpdateSelectGizmo();
+                }
+            }
+        }
+    }
+
+    public List<Unit> Units {
+        get {
+            return _myUnits;
+        }
+    }
+
+    public Formation Formation
+    {
+        get {
+            return _myFormation;
+        }
+    }
+
+    public bool SwapUnitsOrer(int firstU, int secondU)
+    {
+        if (firstU > 0 && firstU < _myUnits.Count && firstU > 0 && firstU < _myUnits.Count && firstU != secondU)
+        {
+            Unit tmp = _myUnits[firstU];
+            _myUnits[firstU] = _myUnits[secondU];
+            _myUnits[secondU] = tmp;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private void UpdateSelectGizmo()
+    {
+        foreach(Unit u in _myUnits)
+        {
+            if (ActiveUnits.Contains(u))
+            {
+                u.Gizmo.SetIntensity(USelectGizmo.SelectGizmoIntensity.High);
+            }
+            else if (u.IsFollower)
+            {
+                u.Gizmo.SetIntensity(USelectGizmo.SelectGizmoIntensity.Low);
+            }
+            else
+            {
+                u.Gizmo.SetIntensity(USelectGizmo.SelectGizmoIntensity.Medium);
+            }
         }
     }
 
@@ -30,6 +107,8 @@ public class SquadController : MonoBehaviour
     void Start()
     {
         _cmdQ = new Queue<Command>();
+        _activeUnits = new List<Unit>();
+        UpdateSelectGizmo();
         _isIdle = true;
     }
 
@@ -38,7 +117,9 @@ public class SquadController : MonoBehaviour
     {
         if (_cmdQ.Count > 0 && _isIdle)
         {
-            _cmdQ.Dequeue().Do();
+            Command currentCmd = _cmdQ.Dequeue();
+
+            currentCmd.Do();
         }
     }
 }
