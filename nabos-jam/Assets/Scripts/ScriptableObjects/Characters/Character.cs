@@ -13,33 +13,34 @@ public class Character : ScriptableObject
     public CharacterClass charClass;
 
     public FormationsEnum formationType;
-    public int damage;
-    public float attackSpeed;
-    public float hitChance;
-    public float dodgeChance;
 
-    public void TakeDamage(int damage) {
-        health.modifyHealth(-damage);
-    }
-
-    public bool HitCheck() 
+    public void TakeDamage(int damage) 
     {
-        float randVal = Random.Range(0, 1);
-        return  randVal < hitChance;
+        //Reduce damage by armor
+        float armorAbsorption = Random.Range(0.3f, 1) * stats.armor.finalStat;
+        int remainingDamage = (int) Mathf.Max(0, damage - armorAbsorption);
+        //Reduce health from shield
+        if (remainingDamage > 0 && 
+            shieldHealth.currentHealth != 0) 
+        {
+            remainingDamage = damage - shieldHealth.currentHealth;
+            shieldHealth.modifyHealth(-damage);
+        }
+        //Reduce actual health
+        if (remainingDamage > 0) 
+        {
+            health.modifyHealth(-remainingDamage);
+        }
     }
 
-    public bool DodgeCheck()
+
+    public void PerformAttack(Character enemyChar) 
     {
-        float randVal = Random.Range(0, 1);
-        return randVal > dodgeChance;
-    }
-
-    public void PerformAttack(Character enemyChar) {
         //Check character hit chance
-        if (HitCheck()) 
+        if (stats.HitCheck()) 
         {
             //Check enemy dodgeChance
-            if (enemyChar.DodgeCheck()) 
+            if (!enemyChar.stats.hasDodged()) 
             {
                 Attack(enemyChar);
             }
@@ -48,6 +49,6 @@ public class Character : ScriptableObject
 
     public void Attack(Character enemyChar) 
     {
-        enemyChar.TakeDamage(damage);
+        enemyChar.TakeDamage(stats.damage.finalStat);
     }
 }
