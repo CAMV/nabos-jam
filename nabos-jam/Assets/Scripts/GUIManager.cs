@@ -7,6 +7,16 @@ public class GUIManager : Singleton<GUIManager>
     [SerializeField]
     private Image _selectSqr;
 
+    [SerializeField]
+    private MovementPreview _mvmntPreview;
+
+    public MovementPreview MovementPreview
+    {
+        get {
+            return _mvmntPreview;
+        }
+    } 
+
     void Update()
     {
         
@@ -17,6 +27,5 @@ public class GUIManager : Singleton<GUIManager>
         _selectSqr.rectTransform.anchoredPosition = rect.position;
         _selectSqr.rectTransform.sizeDelta = rect.size;
     }
-
 
 }

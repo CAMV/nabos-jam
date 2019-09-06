@@ -35,7 +35,6 @@ public class UMovement : MonoBehaviour
         }
 
         transform.rotation = rotation;
-        Debug.Log(name);
     }
 
     void Start()

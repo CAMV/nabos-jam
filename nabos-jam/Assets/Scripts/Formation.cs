@@ -32,4 +32,19 @@ public class Formation : ScriptableObject
 
         return -1;
     }
+
+    public static Quaternion GetFollowerRotation(Formation f, int index, Matrix4x4 leaderMatrix)
+    {
+        return  leaderMatrix.rotation * Quaternion.Euler(0, f._fTransform[index].w, 0);
+    }
+
+    public static Vector3 GetFollowerPosition(Formation f, int index, Matrix4x4 leaderMatrix)
+    {
+        return  leaderMatrix.MultiplyPoint(new Vector3 (
+                                                f._fTransform[index].x, 
+                                                f._fTransform[index].y, 
+                                                f._fTransform[index].z)
+                                            );
+    }
+
 }

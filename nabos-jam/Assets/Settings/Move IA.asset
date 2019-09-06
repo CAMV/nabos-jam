@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Move IA
   m_EditorClassIdentifier: 
   _buttomName: Fire2
-  _myICheckType: 1
+  _myICheckType: 0
   _terrainLayer: 8
