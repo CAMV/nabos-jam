@@ -13,6 +13,9 @@ public class GUIManager : Singleton<GUIManager>
     [SerializeField]
     private MoveTargetGUI _moveTgGUI = null;
 
+    [SerializeField]
+    private SquadUnitsGUI _sqUnitsGUI = null;
+
     public MoveInFormationGUI MoveInFormationGUI
     {
         get {
@@ -24,6 +27,13 @@ public class GUIManager : Singleton<GUIManager>
     {
         get {
             return _moveTgGUI;
+        }
+    }
+
+    public SquadUnitsGUI SquadUnitsGUI
+    {
+        get {
+            return _sqUnitsGUI;
         }
     }
 

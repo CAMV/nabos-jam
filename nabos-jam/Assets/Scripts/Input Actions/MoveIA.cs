@@ -116,7 +116,6 @@ public class MoveIA : InputAction
                 // apply formation position offset
                 if (moveFormation)
                 {
-
                     fMoveCmd = new MoveCmd(
                             GameManager.Instance.PlayerSquad.ActiveUnits[i], 
                             positions[i],

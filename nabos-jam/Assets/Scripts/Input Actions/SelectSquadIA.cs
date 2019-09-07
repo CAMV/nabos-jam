@@ -12,6 +12,7 @@ public class SelectSquadIA : InputAction
         bool isReset = !Input.GetButton("Ctrl");
 
         List<Unit> selectedUnits = new List<Unit>();
+        // Units that could be selected if not already
         List<Unit> nonSelectedUnits = new List<Unit>(GameManager.Instance.PlayerSquad.Units);
 
         selectedUnits.Clear();
@@ -72,7 +73,7 @@ public class SelectSquadIA : InputAction
             }
         }
 
-        GUIManager.Instance.SetSelectSqr(Rect.zero);       
+        GUIManager.Instance.SetSelectSqr(Rect.zero);    
         GameManager.Instance.PlayerSquad.AddCommand(new SelectCmd(selectedUnits));
 
     }
