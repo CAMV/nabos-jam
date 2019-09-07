@@ -5,11 +5,11 @@ using UnityEngine;
 public class Formation : ScriptableObject
 {
     [SerializeField]
-    private int _size;
+    private int _size = 1;
     // xyz components are the position offset from the leader
     // w is the angle y offset from the leader;
     [SerializeField]
-    private Vector4[] _fTransform;
+    private Vector4[] _fTransform = new Vector4[1];
 
     public int Size{
         get {

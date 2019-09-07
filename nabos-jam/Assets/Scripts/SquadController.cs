@@ -6,9 +6,9 @@ public class SquadController : MonoBehaviour
 {
 
     [SerializeField]
-    private List<Unit> _myUnits;
+    private List<Unit> _myUnits = new List<Unit>();
     [SerializeField]
-    private Formation _myFormation;
+    private Formation _myFormation = null;
 
     private List<Unit> _activeUnits;
     private Queue<Command> _cmdQ;

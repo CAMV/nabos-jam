@@ -7,13 +7,13 @@ public class Unit : MonoBehaviour
     private NavMeshAgent _myNavAgent;
     public Character character;
     [SerializeField]
-    private UMovement _movement;
+    private UMovement _movement = null;
 
     [SerializeField]
-    private USelectGizmo _gizmo;
+    private USelectGizmo _gizmo = null;
 
     [SerializeField]
-    private Collider _selectCollider;
+    private Collider _selectCollider = null;
 
     private List<Unit> _followers;
     private Unit _leader;

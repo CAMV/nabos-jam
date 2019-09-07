@@ -4,7 +4,7 @@ using UnityEngine;
 public class USelectGizmo : MonoBehaviour
 {
     [SerializeField]
-    SelectGizmoSetting materialSettings;
+    SelectGizmoSetting materialSettings = null;
 
     private Material _hMaterial, _mMaterial, _lMaterial;
 

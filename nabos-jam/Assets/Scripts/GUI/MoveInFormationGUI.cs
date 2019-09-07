@@ -1,11 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class MovementPreview : MonoBehaviour
+public class MoveInFormationGUI : MonoBehaviour
 {
 
     [SerializeField]
-    private GameObject[] _unitGizmos;
+    private GameObject[] _unitGizmos = new GameObject[0];
 
     public void TurnOn()
     {

@@ -8,7 +8,7 @@ public class MoveIA : InputAction
     private const float TIME_TO_SHOW_PREVIEW = .2f;
 
     [SerializeField]
-    private int _terrainLayer;
+    private int _terrainLayer = 8;
     
     public override IEnumerator ExecuteAction()
     {
@@ -65,7 +65,7 @@ public class MoveIA : InputAction
                     {
 
                         isPreviewOn = true;
-                        GUIManager.Instance.MovementPreview.TurnOn();
+                        GUIManager.Instance.MoveInFormationGUI.TurnOn();
                     }
                     
                 }
@@ -99,7 +99,7 @@ public class MoveIA : InputAction
                         ));
                     }
 
-                    GUIManager.Instance.MovementPreview.SetValues(positions, rotations);
+                    GUIManager.Instance.MoveInFormationGUI.SetValues(positions, rotations);
                 }
                 
                 yield return new WaitForEndOfFrame();
@@ -134,9 +134,8 @@ public class MoveIA : InputAction
                 GameManager.Instance.PlayerSquad.AddCommand(fMoveCmd);
             }
 
-            GUIManager.Instance.MovementPreview.TurnOff();
-
-            
+            GUIManager.Instance.MoveInFormationGUI.TurnOff();    
+            GUIManager.Instance.MoveTargetGUI.Show(positions, rotations);        
         }
         
         yield return null;

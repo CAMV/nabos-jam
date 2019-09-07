@@ -5,21 +5,26 @@ public class GUIManager : Singleton<GUIManager>
 {
 
     [SerializeField]
-    private Image _selectSqr;
+    private Image _selectSqr = null;
 
     [SerializeField]
-    private MovementPreview _mvmntPreview;
+    private MoveInFormationGUI _moveInFormGUI = null;
 
-    public MovementPreview MovementPreview
+    [SerializeField]
+    private MoveTargetGUI _moveTgGUI = null;
+
+    public MoveInFormationGUI MoveInFormationGUI
     {
         get {
-            return _mvmntPreview;
+            return _moveInFormGUI;
         }
     } 
 
-    void Update()
+    public MoveTargetGUI MoveTargetGUI
     {
-        
+        get {
+            return _moveTgGUI;
+        }
     }
 
     public void SetSelectSqr (Rect rect)

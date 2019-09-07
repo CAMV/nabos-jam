@@ -8,7 +8,7 @@ public abstract class InputAction : ScriptableObject
     [SerializeField]
     protected string _buttomName;
     [SerializeField]
-    private InputCheckType _myICheckType;
+    private InputCheckType _myICheckType = InputCheckType.OnPress;
 
 
     enum InputCheckType
