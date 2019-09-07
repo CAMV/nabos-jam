@@ -4,8 +4,12 @@ using System.Collections.Generic;
 
 public class Unit : MonoBehaviour
 {
-    private NavMeshAgent _myNavAgent;
-    public Character character;
+    [SerializeField]
+    private Character _myChar = null;
+    
+    [SerializeField]
+    private CharacterBio _myCharBio = null;
+
     [SerializeField]
     private UMovement _movement = null;
 
@@ -17,6 +21,18 @@ public class Unit : MonoBehaviour
 
     private List<Unit> _followers;
     private Unit _leader;
+
+    public Character Character {
+        get {
+            return _myChar;
+        }
+    }
+
+    public CharacterBio Bio {
+        get {
+            return _myCharBio;
+        }
+    }
 
     public UMovement Movement{
         get {

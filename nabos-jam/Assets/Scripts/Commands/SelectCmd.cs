@@ -10,7 +10,6 @@ public class SelectCmd : Command
         _newActiveUnits = units;   
     }
 
-
     override public void Do()
     {
         _oldActiveUnits = GameManager.Instance.PlayerSquad.ActiveUnits;

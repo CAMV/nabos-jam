@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -11,9 +12,9 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    void Update()
+    void Start()
     { 
-
+        _playerSquad.AddCommand(new SelectCmd(new List<Unit>() {_playerSquad.Units[0]} ));
     }
 
 

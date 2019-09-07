@@ -14,6 +14,25 @@ public class SquadController : MonoBehaviour
     private Queue<Command> _cmdQ;
     private bool _isIdle = true;
 
+    
+    public List<Unit> Units {
+        get {
+            return _myUnits;
+        }
+    }
+
+    public Formation Formation {
+        get {
+            return _myFormation;
+        }
+    }
+
+    public int Size {
+        get {
+            return _myUnits.Count;
+        }
+    }
+
     public List<Unit> ActiveUnits {
         get {
             if (_activeUnits.Count == 0)
@@ -48,20 +67,11 @@ public class SquadController : MonoBehaviour
                     
                     UpdateSelectGizmo();
                 }
+
+                // Update GUI
+                GUIManager.Instance.SquadUnitsGUI.SetActiveAvatars(value);
+                
             }
-        }
-    }
-
-    public List<Unit> Units {
-        get {
-            return _myUnits;
-        }
-    }
-
-    public Formation Formation
-    {
-        get {
-            return _myFormation;
         }
     }
 
