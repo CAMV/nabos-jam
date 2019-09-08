@@ -14,7 +14,13 @@ public class Stat: ScriptableObject
     {
         statName = _statName;
         statValue = _statValue;
+        finalStat = _statValue;
     }
+
+    private void OnEnable()
+    {
+        CalculateFinalStat();
+    }        
 
     public void setStat(int baseStat)
     {
@@ -27,11 +33,13 @@ public class Stat: ScriptableObject
         {
             if (mod.modifierName == _mod.modifierName)
             {
+                //add modifier and recalculate its final value
                 if (mod.isStackable)
                 {
                     modifiers.Add(_mod);
                     CalculateFinalStat();
                 }
+                //refresh the modifier. This could be optimized by just updating the timer
                 else 
                 {
                     modifiers.Remove(mod);

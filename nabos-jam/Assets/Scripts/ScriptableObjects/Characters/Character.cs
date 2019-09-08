@@ -8,12 +8,14 @@ public class Character : ScriptableObject
     public string characterName;
     public Health health;
     public Health shieldHealth;
+    public float attackCooldown;
 
     public Stats stats;
     public CharacterClass charClass;
 
     public FormationsEnum formationType;
 
+    /** Performs damage reduction calculations and take the remainind damage */
     public void TakeDamage(int damage) 
     {
         //Reduce damage by armor
@@ -31,24 +33,51 @@ public class Character : ScriptableObject
         {
             health.modifyHealth(-remainingDamage);
         }
+        Debug.Log(characterName + " took damage. remaining health " + health.currentHealth);
     }
 
+    //Reduce attack delay and Modifier cooldowns
+    public void TickDurations(float tick)
+    {
+        if (attackCooldown > 0)
+        {
+            attackCooldown -= tick;
+        }
+        stats.ReduceModifierDurations(tick);
+    }
 
+    /** Attempt an attack on an enemy unit */
     public void PerformAttack(Character enemyChar) 
     {
         //Check character hit chance
         if (stats.HitCheck()) 
         {
             //Check enemy dodgeChance
-            if (!enemyChar.stats.hasDodged()) 
+            if (enemyChar.stats.hasDodged()) 
             {
+                //Attack the enemy
                 Attack(enemyChar);
             }
+            else
+            {
+                Debug.Log(enemyChar.characterName + " dodged attack");
+            }
+        }
+        else
+        {
+            Debug.Log(characterName + " missed attack");
         }
     }
 
+    /** Actual attack once hit and dodge checks passed */
     public void Attack(Character enemyChar) 
     {
         enemyChar.TakeDamage(stats.damage.finalStat);
+    }
+
+    //Set attack delay equal to character attack speed
+    public void ResetAttackCd() 
+    {
+        attackCooldown = stats.attackSpeed.finalStat;
     }
 }

@@ -15,7 +15,7 @@ public class Stats : ScriptableObject
     public Stat attackSpeed;
     public Stat hitChance;
 
-    private void ReduceModifierDurations(float tick) {
+    public void ReduceModifierDurations(float tick) {
         //Reduces buff durations
         foreach (var stat in baseStats)
         {

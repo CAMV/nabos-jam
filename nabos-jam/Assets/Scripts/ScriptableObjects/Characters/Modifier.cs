@@ -34,7 +34,7 @@ public class Modifier: ScriptableObject
         isStackable = _isStackable;
     }
 
-    //TODO This whole timer interaction can be a timer script outside 
+    //Reduce the modifier cooldown 
     public float Tick(float tickValue) 
     {
         //Infinite buffs
