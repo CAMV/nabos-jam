@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1618969bfe10a6541a64f9f21b88814c, type: 3}
-  m_Name: SMHealth
+  m_Name: E1Health
   m_EditorClassIdentifier: 
-  maxResource: 100
-  currentResource: 100
+  maxHealth: 15
+  currentHealth: 15

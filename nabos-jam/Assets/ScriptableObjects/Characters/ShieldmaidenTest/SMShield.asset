@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1618969bfe10a6541a64f9f21b88814c, type: 3}
   m_Name: SMShield
   m_EditorClassIdentifier: 
-  maxHealth: 0
-  currentHealth: 0
+  maxResource: 100
+  currentResource: 100
