@@ -36,6 +36,7 @@ public class Character : ScriptableObject
         Debug.Log(characterName + " took damage. remaining health " + health.currentHealth);
     }
 
+    //Reduce attack delay and Modifier cooldowns
     public void TickDurations(float tick)
     {
         if (attackCooldown > 0)
@@ -54,6 +55,7 @@ public class Character : ScriptableObject
             //Check enemy dodgeChance
             if (enemyChar.stats.hasDodged()) 
             {
+                //Attack the enemy
                 Attack(enemyChar);
             }
             else
@@ -73,6 +75,7 @@ public class Character : ScriptableObject
         enemyChar.TakeDamage(stats.damage.finalStat);
     }
 
+    //Set attack delay equal to character attack speed
     public void ResetAttackCd() 
     {
         attackCooldown = stats.attackSpeed.finalStat;

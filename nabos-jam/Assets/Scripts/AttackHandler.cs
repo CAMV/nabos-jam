@@ -8,6 +8,7 @@ public class AttackHandler : MonoBehaviour
     
     private void FixedUpdate() 
     {
+        //Reduce character cooldowns
         float tick = Time.fixedDeltaTime;
         character.TickDurations(tick);
     }

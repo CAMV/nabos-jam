@@ -18,9 +18,11 @@ public class AttackIA : InputAction
 
         if (Physics.Raycast(r, out hit, RAYCAST_LENGTH, layerMask))
         {
+            //Get targetted unit
             Unit enemy = hit.transform.GetComponent<Unit>();
             for(int i = 0; i < GameManager.Instance.PlayerSquad.ActiveUnits.Count; i++) 
             {
+                //Queue attack command from unit to target
                 Unit unit = GameManager.Instance.PlayerSquad.ActiveUnits[i];
                 GameManager.Instance.PlayerSquad.AddCommand(new AttackCmd(unit, enemy));
             }
