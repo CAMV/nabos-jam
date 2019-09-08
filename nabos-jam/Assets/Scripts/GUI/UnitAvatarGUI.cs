@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(RectTransform))]
 public class UnitAvatarGUI : MonoBehaviour
@@ -36,6 +37,11 @@ public class UnitAvatarGUI : MonoBehaviour
                 _picture.sprite = value.Bio.Portrait;
                 _showingName.text = value.Bio.Name;
             }
+
+            List<Unit> aUnits = GameManager.Instance.PlayerSquad.ActiveUnits;
+
+            if (aUnits != null) 
+                SetSelectGizmo(aUnits.Contains(value));
         
             _myUnit = value;
         }

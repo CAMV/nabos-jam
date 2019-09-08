@@ -33,7 +33,7 @@ public class MoveIA : InputAction
 
             Vector2 oldMPos;
             Vector2 newMPos = Input.mousePosition;
-            float time = 0;
+            float elapsedTime = 0;
 
             List<Quaternion> rotations = new List<Quaternion>();
             List<Vector3> positions = new List<Vector3>();
@@ -46,7 +46,7 @@ public class MoveIA : InputAction
 
             do
             {   
-                if (time >= TIME_TO_SHOW_PREVIEW)
+                if (elapsedTime >= TIME_TO_SHOW_PREVIEW)
                 {
 
                     oldMPos = newMPos;
@@ -71,7 +71,7 @@ public class MoveIA : InputAction
                 }
                 else
                 {
-                   time += Time.deltaTime; 
+                   elapsedTime += Time.deltaTime; 
                 }          
 
                 if (isPreviewOn || rotations.Count == 0 || positions.Count == 0)
@@ -104,9 +104,8 @@ public class MoveIA : InputAction
                 
                 yield return new WaitForEndOfFrame();
 
-            } while (Input.GetButton(_buttomName));
-            
-            
+            } while (Input.GetButton(_buttomName));            
+
                                                     
             for(int i = 0; i < GameManager.Instance.PlayerSquad.ActiveUnits.Count; i++)
             {

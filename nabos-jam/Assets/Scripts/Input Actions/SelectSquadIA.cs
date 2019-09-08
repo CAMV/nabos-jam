@@ -27,6 +27,7 @@ public class SelectSquadIA : InputAction
             Ray r = Camera.main.ScreenPointToRay(Input.mousePosition); 
             RaycastHit hit;
 
+            // BUG RIGHT HERE: Unit is selected even if the final square selection does not include it
             for(int i = 0; i< nonSelectedUnits.Count; i++)
             {
                 Unit u = nonSelectedUnits[i];
