@@ -2,16 +2,18 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Class <c> MoveTargetGUI </c> handles the feedback when a movement begins executing.
+/// </summary>
 public class MoveTargetGUI : MonoBehaviour
 {
     [SerializeField]
-    GameObject[] _tgGizmos = new GameObject[0];
+    private GameObject[] _tgGizmos = new GameObject[0];
 
-    Animator[] _gizmoAnimators;
+    private Animator[] _gizmoAnimators;
 
     void Start()
     {
-
         _gizmoAnimators = new Animator[_tgGizmos.Length];
 
         for (int i = 0; i < _tgGizmos.Length; i++)
@@ -21,8 +23,14 @@ public class MoveTargetGUI : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Shows the feedback of the movement given the target positions and rotations of the units being moved.
+    /// </summary>
+    /// <param name="pTargets">Target positions of units being moved.</param>
+    /// <param name="rTargets">Target rotations of units being moved.</param>
     public void Show(List<Vector3> pTargets, List<Quaternion> rTargets)
     {
+        // Reset the animation of the gizmos first
         for (int i = 0; i < pTargets.Count; i++)
         {
             if (i < _gizmoAnimators.Length)
@@ -33,10 +41,16 @@ public class MoveTargetGUI : MonoBehaviour
             }
         }
 
+        // Execute the animation in the next frame
         StartCoroutine(ShowCO(pTargets.Count)); 
     }
 
-    IEnumerator ShowCO(int nTargets)
+    /// <summary>
+    /// Corutine to handle the execution of the animations of the gizmos a frame after being called. 
+    /// </summary>
+    /// <param name="nTargets"></param>
+    /// <returns></returns>
+    private IEnumerator ShowCO(int nTargets)
     {
         yield return new WaitForEndOfFrame();
 

@@ -72,7 +72,7 @@ public class SquadController : MonoBehaviour
                 }
 
                 // Update GUI
-                GUIManager.Instance.SquadUnitsGUI.SetActiveAvatars(value);
+                GUIManager.Instance.SquadUnitsGUI.SetSelectedAvatars(value);
                 
             }
         }
@@ -118,17 +118,20 @@ public class SquadController : MonoBehaviour
     {
         foreach(Unit u in _myUnits)
         {
-            if (ActiveUnits.Contains(u))
-            {
-                u.Gizmo.SetIntensity(USelectGizmo.SelectGizmoIntensity.High);
-            }
-            else if (u.IsFollower)
-            {
-                u.Gizmo.SetIntensity(USelectGizmo.SelectGizmoIntensity.Low);
-            }
-            else
-            {
-                u.Gizmo.SetIntensity(USelectGizmo.SelectGizmoIntensity.Medium);
+                if (u.SelectGizmo)
+                {
+                if (ActiveUnits.Contains(u))
+                {
+                    u.SelectGizmo.SetIntensity(USelectGizmo.SelectGizmoIntensity.High);
+                }
+                else if (u.IsFollower)
+                {
+                    u.SelectGizmo.SetIntensity(USelectGizmo.SelectGizmoIntensity.Low);
+                }
+                else
+                {
+                    u.SelectGizmo.SetIntensity(USelectGizmo.SelectGizmoIntensity.Medium);
+                }
             }
         }
     }

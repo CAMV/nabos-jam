@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
+/// <summary>
+/// Class <c> UnitAvatar </c> models a single unit avatar GUI. 
+/// </summary>
 [RequireComponent(typeof(RectTransform))]
 public class UnitAvatarGUI : MonoBehaviour
 {
@@ -22,6 +25,10 @@ public class UnitAvatarGUI : MonoBehaviour
     private RectTransform _myRectTransform;
     private Canvas _myCanvas;
 
+    /// <summary>
+    /// Unit that the avatar is representing.
+    /// </summary>
+    /// <value>Unit.</value>
     public Unit Unit
     {
         get { 
@@ -59,12 +66,20 @@ public class UnitAvatarGUI : MonoBehaviour
         _myCanvas = GetComponentInParent<Canvas>().rootCanvas;
     }
 
+    /// <summary>
+    /// Turns on/off the highlight of the avatar.
+    /// </summary>
+    /// <param name="isActive"> is avatar highlighted.</param>
     public void SetSelectGizmo(bool isActive)
     {
         if (_selectGizmo)
             _selectGizmo.SetActive(isActive);
     } 
 
+    /// <summary>
+    /// Get the rectangle of the space the avatar occupies on screen in screen space coord.
+    /// </summary>
+    /// <returns>Rect of the avatar in screen space.</returns>
     public Rect GetScreenSpaceRect()
     {
         Rect rect = _myRectTransform.rect;

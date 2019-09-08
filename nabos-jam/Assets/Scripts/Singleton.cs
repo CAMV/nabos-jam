@@ -1,4 +1,9 @@
 using UnityEngine;
+
+/// <summary>
+/// Singleton base class to be used ad pattern
+/// </summary>
+/// <typeparam name="T">Class to be used as a singleton</typeparam>
 public class Singleton<T> : MonoBehaviour where T : Component {
 
     protected static T _instance;

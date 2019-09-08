@@ -1,21 +1,25 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Singleton <c> GUI Manager </c> models all GUI components, giving access to all of them.
+/// </summary>
 public class GUIManager : Singleton<GUIManager>
 {
 
     [SerializeField]
-    private Image _selectSqr = null;
-
+    private SelectSquareGUI _selectSqrGUI = null;
     [SerializeField]
     private MoveInFormationGUI _moveInFormGUI = null;
-
     [SerializeField]
     private MoveTargetGUI _moveTgGUI = null;
-
     [SerializeField]
     private SquadUnitsGUI _sqUnitsGUI = null;
 
+    /// <summary>
+    /// Component that handles formation preview when holding Move Input Button.
+    /// </summary>
+    /// <value> MoveInFormationGUI component.</value>
     public MoveInFormationGUI MoveInFormationGUI
     {
         get {
@@ -23,6 +27,10 @@ public class GUIManager : Singleton<GUIManager>
         }
     } 
 
+    /// <summary>
+    /// Component that handles movement feedback when moving.
+    /// </summary>
+    /// <value>MoveTargetGUI component.</value>
     public MoveTargetGUI MoveTargetGUI
     {
         get {
@@ -30,6 +38,10 @@ public class GUIManager : Singleton<GUIManager>
         }
     }
 
+    /// <summary>
+    /// Component that handles squad units avatars GUI.
+    /// </summary>
+    /// <value>SquadUnitsGUI component.</value>
     public SquadUnitsGUI SquadUnitsGUI
     {
         get {
@@ -37,10 +49,16 @@ public class GUIManager : Singleton<GUIManager>
         }
     }
 
-    public void SetSelectSqr (Rect rect)
-    {
-        _selectSqr.rectTransform.anchoredPosition = rect.position;
-        _selectSqr.rectTransform.sizeDelta = rect.size;
+    /// <summary>
+    /// Component that handles selection area GUI.
+    /// </summary>
+    /// <value>SelectSquareGUI component.</value>
+    public SelectSquareGUI SelectSquareGUI {
+        get {
+            return _selectSqrGUI;
+        }
     }
+
+    
 
 }

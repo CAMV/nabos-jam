@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Unit component that handles the selection gizmo of the unit.
+/// </summary>
 [RequireComponent(typeof(MeshRenderer))]
 public class USelectGizmo : MonoBehaviour
 {
@@ -8,6 +11,9 @@ public class USelectGizmo : MonoBehaviour
 
     private Material _hMaterial, _mMaterial, _lMaterial;
 
+    /// <summary>
+    /// Type of a unit's selection gizmo
+    /// </summary>
     public enum SelectGizmoIntensity
     {
         High, Medium, Low
@@ -24,6 +30,10 @@ public class USelectGizmo : MonoBehaviour
         _myMR = GetComponent<MeshRenderer>();
     }
 
+    /// <summary>
+    /// Turns on and sets the type of the highlight of the gizmo. 
+    /// </summary>
+    /// <param name="intensity">Type of the highlifht.</param>
     public void SetIntensity(SelectGizmoIntensity intensity)
     {
         _myMR.enabled = true;
@@ -41,6 +51,9 @@ public class USelectGizmo : MonoBehaviour
         }
     }
 
+    /// <summary>
+    ///  Turn off the gizmo.
+    /// </summary>
     public void Disable()
     {
         _myMR.enabled = false;

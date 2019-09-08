@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Controller that handles all the input actions available.
+/// </summary>
 public class InputController : MonoBehaviour
 {
 
@@ -13,7 +16,9 @@ public class InputController : MonoBehaviour
         StartCoroutine(UpdateCo());
     }
 
-
+    /// <summary>
+    /// Updates coroutine to make wait until a input action finish before exceuting another one. 
+    /// </summary>
     private IEnumerator UpdateCo()
     {
         while (true)

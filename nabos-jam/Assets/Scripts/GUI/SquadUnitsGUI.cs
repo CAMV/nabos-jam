@@ -3,21 +3,34 @@ using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// Class <c> SquadUnitGUI </c> handles all avatars in the GUI of the units in the squad. Setting them and reordering them with a drag & drop behaviour
+/// </summary>
 public class SquadUnitsGUI : MonoBehaviour, IDragComponent<UnitAvatarGUI>
 {
     [SerializeField]
     private GameObject _dragDummy = null;  
-
     [SerializeField]
     private UnitAvatarGUI[] _uAvatars = new UnitAvatarGUI[0];
 
     private int _indexDragElement = 0;
     private int _nActiveAvatars = 0;
 
+    /// <summary>
+    /// List of all the active avatars.
+    /// </summary>
+    /// <value>Array of UnitAvartGUI.</value>
     public UnitAvatarGUI[] Avatars
     {
         get {
-            return _uAvatars;
+            UnitAvatarGUI[] activeAvatars = new UnitAvatarGUI[_nActiveAvatars];
+
+            for (int i = 0; i < _nActiveAvatars; i++)
+            {
+                activeAvatars[i] = _uAvatars[i];    
+            }
+
+            return activeAvatars;
         }
     }
 
@@ -35,8 +48,11 @@ public class SquadUnitsGUI : MonoBehaviour, IDragComponent<UnitAvatarGUI>
         _nActiveAvatars = units.Count;           
     }
 
-    // Higlight the avatar of the given units
-    public void SetActiveAvatars(List<Unit> units)
+    /// <summary>
+    /// Highlights the avatars of the given units to show which units are the active ones in the party.
+    /// </summary>
+    /// <param name="units">Units to be highlighted</param>
+    public void SetSelectedAvatars(List<Unit> units)
     {
         foreach(var avatar in _uAvatars)
         {
@@ -47,7 +63,12 @@ public class SquadUnitsGUI : MonoBehaviour, IDragComponent<UnitAvatarGUI>
         }
     }
 
-    // IDragComponent functions
+    // IDragComponent functions to handle re ordering of the party input
+
+    /// <summary>
+    /// Starts the dragging of a given avatar.
+    /// </summary>
+    /// <param name="elementToDrag">Avatar to drag.</param>
     public void StartDrag(UnitAvatarGUI elementToDrag)
     {
         elementToDrag.gameObject.SetActive(false);
@@ -57,8 +78,13 @@ public class SquadUnitsGUI : MonoBehaviour, IDragComponent<UnitAvatarGUI>
         _dragDummy.SetActive(true);
     }
 
+    /// <summary>
+    /// Updates the position of the avatar being dragged and change the order of the squad units if tha avatar is dragged to the y-position of another avatar
+    /// </summary>
+    /// <param name="mousePos">Mouse pointer position in screen space.</param>
     public void UpdateDrag(Vector2 mousePos)
     {
+        // update avatar being dragged position
         _dragDummy.transform.position = new Vector3(
                                                 _dragDummy.transform.position.x, 
                                                 mousePos.y, 
@@ -68,6 +94,7 @@ public class SquadUnitsGUI : MonoBehaviour, IDragComponent<UnitAvatarGUI>
         int firstIndex = _indexDragElement;
         int secondIndex = firstIndex;
 
+        // checks if the dragged avatar is in the position of another one
         if (firstIndex < _nActiveAvatars-1 && _dragDummy.transform.position.y < _uAvatars[firstIndex+1].transform.position.y )
         {
             secondIndex = firstIndex+1;
@@ -77,6 +104,7 @@ public class SquadUnitsGUI : MonoBehaviour, IDragComponent<UnitAvatarGUI>
            secondIndex = firstIndex-1; 
         }
 
+        // Interchange avatars
         if (firstIndex != secondIndex)
         {
             var auxUnit = _uAvatars[firstIndex].Unit;
@@ -94,6 +122,9 @@ public class SquadUnitsGUI : MonoBehaviour, IDragComponent<UnitAvatarGUI>
         
     }
 
+    /// <summary>
+    /// Stops the drag of the avatar being dragged.
+    /// </summary>
     public void StopDrag()
     {
         _dragDummy.SetActive(false);

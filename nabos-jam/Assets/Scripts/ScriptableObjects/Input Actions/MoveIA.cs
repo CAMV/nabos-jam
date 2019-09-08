@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Class <c> MoveIA </c> models the action of moving the active units by te player.
+/// </summary>
 [CreateAssetMenu(menuName = "Input Settings/Move Input Setting")]
 public class MoveIA : InputAction
 {
@@ -10,6 +13,9 @@ public class MoveIA : InputAction
     [SerializeField]
     private int _terrainLayer = 8;
     
+    /// <summary>
+    /// Coroutine that creates and add a <c>MoveSquadCmd</c> to the player's squad manager based on the input given by the player
+    /// </summary>
     public override IEnumerator ExecuteAction()
     {
         bool isPreviewOn = false;
@@ -18,8 +24,6 @@ public class MoveIA : InputAction
         int layerMask = 1 << _terrainLayer; 
         RaycastHit hit;
         List<MoveCmd> commandOut = new List<MoveCmd>();
-
-        Debug.DrawRay(r.origin, r.direction*RAYCAST_LENGTH, Color.red, 5f);
 
         if (Physics.Raycast(r, out hit, RAYCAST_LENGTH, layerMask))
         {
@@ -46,12 +50,14 @@ public class MoveIA : InputAction
 
             do
             {   
+                // Checks if preview must be shown
                 if (elapsedTime >= TIME_TO_SHOW_PREVIEW)
                 {
 
                     oldMPos = newMPos;
                     newMPos = Input.mousePosition;
 
+                    // gets new traget of the rotation based on the preview
                     if (oldMPos != newMPos)
                     {
                         rPreview = Camera.main.ScreenPointToRay(newMPos); 
@@ -63,9 +69,11 @@ public class MoveIA : InputAction
 
                     if (!isPreviewOn)
                     {
-
                         isPreviewOn = true;
-                        GUIManager.Instance.MoveInFormationGUI.TurnOn();
+
+                        // Turn on the formation preview gizmos
+                        if (GUIManager.Instance.MoveInFormationGUI)
+                            GUIManager.Instance.MoveInFormationGUI.SetActive(true);
                     }
                     
                 }
@@ -74,16 +82,20 @@ public class MoveIA : InputAction
                    elapsedTime += Time.deltaTime; 
                 }          
 
+
+                // Calculate the target positions and rotations of the followers
                 if (isPreviewOn || rotations.Count == 0 || positions.Count == 0)
                 {
                     rotations.Clear();
                     positions.Clear();
 
+                    // Add leaders target postion and rotations first
                     rotations.Add(moveRot);
                     positions.Add(hit.point);
 
                     tPosMatrix.SetTRS(hit.point, moveRot, Vector3.one);
 
+                    // Add followers target position and rotation
                     for(int i = 0; i < GameManager.Instance.PlayerSquad.ActiveUnits.Count - 1; i++)
                     {
                         rotations.Add(Formation.GetFollowerRotation(
@@ -99,41 +111,44 @@ public class MoveIA : InputAction
                         ));
                     }
 
-                    GUIManager.Instance.MoveInFormationGUI.SetValues(positions, rotations);
+                    // Updates the preview gizmo values
+                    if (GUIManager.Instance.MoveInFormationGUI)
+                        GUIManager.Instance.MoveInFormationGUI.SetValues(positions, rotations);
                 }
                 
                 yield return new WaitForEndOfFrame();
 
-            } while (Input.GetButton(_buttomName));            
+            } while (Input.GetButton(_buttomName)); 
 
-                                                    
-            for(int i = 0; i < GameManager.Instance.PlayerSquad.ActiveUnits.Count; i++)
+            Command fMoveCmd;
+
+            // apply formation position offset
+            if (moveFormation)
             {
-    
-                Command fMoveCmd;
-
-                // apply formation position offset
-                if (moveFormation)
-                {
-                    fMoveCmd = new MoveCmd(
-                            GameManager.Instance.PlayerSquad.ActiveUnits[i], 
-                            positions[i],
-                            rotations[i]
-                        );
-                }
-                else
-                {
-                    fMoveCmd = new MoveCmd(
-                                GameManager.Instance.PlayerSquad.ActiveUnits[i], 
-                                positions[i]
-                            );
-                }
-                
-                GameManager.Instance.PlayerSquad.AddCommand(fMoveCmd);
+                fMoveCmd = new MoveSquadCmd(
+                                    GameManager.Instance.PlayerSquad.ActiveUnits,
+                                    positions[0],
+                                    rotations[0],
+                                    moveFormation
+                                );
             }
+            else
+            {
+                fMoveCmd = new MoveSquadCmd(
+                                    GameManager.Instance.PlayerSquad.ActiveUnits,
+                                    positions[0],
+                                    moveFormation
+                                );
+            }           
 
-            GUIManager.Instance.MoveInFormationGUI.TurnOff();    
-            GUIManager.Instance.MoveTargetGUI.Show(positions, rotations);        
+            GameManager.Instance.PlayerSquad.AddCommand(fMoveCmd);
+
+            // Turn on preview gizmos and shows the movement feedback
+            if (GUIManager.Instance.MoveInFormationGUI)
+                GUIManager.Instance.MoveInFormationGUI.SetActive(false);    
+
+            if (GUIManager.Instance.MoveTargetGUI)
+                GUIManager.Instance.MoveTargetGUI.Show(positions, rotations);        
         }
         
         yield return null;
