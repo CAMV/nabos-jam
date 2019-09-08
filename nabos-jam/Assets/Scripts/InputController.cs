@@ -6,7 +6,7 @@ public class InputController : MonoBehaviour
 {
 
     [SerializeField]
-    private List<InputAction> _inputActions;
+    private List<InputAction> _inputActions = new List<InputAction>();
 
     void Start()
     {

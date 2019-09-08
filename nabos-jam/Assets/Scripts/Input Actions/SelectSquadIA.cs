@@ -8,60 +8,74 @@ public class SelectSquadIA : InputAction
 
     public override IEnumerator ExecuteAction()
     {
-        List<Unit> sUnits = new List<Unit>();
-        sUnits.Clear();
+        // check if selected units are going to be reset by new selected unit
+        bool isReset = !Input.GetButton("Ctrl");
 
-        if (Input.GetButton("Ctrl"))                    // Multiple unit selection with Ctrl pressed
-        {
-            Vector2 startMousePos = Input.mousePosition;
-            Vector2 currentMousePos = Input.mousePosition;
+        List<Unit> selectedUnits = new List<Unit>();
+        // Units that could be selected if not already
+        List<Unit> nonSelectedUnits = new List<Unit>(GameManager.Instance.PlayerSquad.Units);
 
-            Rect r = new Rect();
+        selectedUnits.Clear();
 
-            while (Input.GetButton(_buttomName))
-            {
-                currentMousePos = Input.mousePosition;
+        Vector2 startMousePos = Input.mousePosition;
+        Vector2 currentMousePos = Input.mousePosition;
 
-                r.x = startMousePos.x >= currentMousePos.x ? startMousePos.x : currentMousePos.x;
-                r.y = startMousePos.y >= currentMousePos.y ? startMousePos.y : currentMousePos.y;
-                r.width = Mathf.Abs(startMousePos.x - currentMousePos.x);
-                r.height = Mathf.Abs(startMousePos.y - currentMousePos.y);
+        Rect rect = new Rect();
 
-                GUIManager.Instance.SetSelectSqr(r);
-                yield return new WaitForEndOfFrame();
-            }
-
-            // change rect position to represent the screenSpace correctly
-            r.x = startMousePos.x <= currentMousePos.x ? startMousePos.x : currentMousePos.x;
-            r.y = startMousePos.y <= currentMousePos.y ? startMousePos.y : currentMousePos.y;
-
-            foreach (Unit u in GameManager.Instance.PlayerSquad.Units)
-            {   
-                Vector2 unitPos = Camera.main.WorldToScreenPoint(u.transform.position);
-                
-                if (r.Contains(unitPos))
-                    sUnits.Add(u);
-            }
-
-            GUIManager.Instance.SetSelectSqr(Rect.zero);
-        }
-        else                                            // single unit selection                                   
+        while (Input.GetButton(_buttomName))
         {
             Ray r = Camera.main.ScreenPointToRay(Input.mousePosition); 
             RaycastHit hit;
 
-            foreach(Unit u in GameManager.Instance.PlayerSquad.Units)
+            // BUG RIGHT HERE: Unit is selected even if the final square selection does not include it
+            for(int i = 0; i< nonSelectedUnits.Count; i++)
             {
+                Unit u = nonSelectedUnits[i];
                 if (u.SelectCollider && u.SelectCollider.Raycast(r, out hit, RAYCAST_LENGTH))
                 {
-                    sUnits.Add(u);
-                    break;   
+                    selectedUnits.Add(u);
+                    nonSelectedUnits.Remove(u);
+                    break;
+                }
+            }
+
+            currentMousePos = Input.mousePosition;
+
+            rect.x = startMousePos.x >= currentMousePos.x ? startMousePos.x : currentMousePos.x;
+            rect.y = startMousePos.y >= currentMousePos.y ? startMousePos.y : currentMousePos.y;
+            rect.width = Mathf.Abs(startMousePos.x - currentMousePos.x);
+            rect.height = Mathf.Abs(startMousePos.y - currentMousePos.y);
+
+            GUIManager.Instance.SetSelectSqr(rect);
+            yield return new WaitForEndOfFrame();
+        }
+
+        // change rect position to represent the screenSpace correctly
+        rect.x = startMousePos.x <= currentMousePos.x ? startMousePos.x : currentMousePos.x;
+        rect.y = startMousePos.y <= currentMousePos.y ? startMousePos.y : currentMousePos.y;
+
+        foreach (Unit u in nonSelectedUnits)
+        {   
+            Vector2 unitPos = Camera.main.WorldToScreenPoint(u.transform.position);
+        
+            if (rect.Contains(unitPos))
+                selectedUnits.Add(u);
+        }
+
+        // if reset is not gonna happend, add newly selected units to existence active units
+        if (!isReset)
+        {
+            foreach(Unit u in GameManager.Instance.PlayerSquad.ActiveUnits)
+            {
+                if (!selectedUnits.Contains(u))
+                {
+                    selectedUnits.Add(u);
                 }
             }
         }
 
-        GameManager.Instance.PlayerSquad.AddCommand(new SelectCmd(sUnits));
+        GUIManager.Instance.SetSelectSqr(Rect.zero);    
+        GameManager.Instance.PlayerSquad.AddCommand(new SelectCmd(selectedUnits));
 
-        yield return null;
     }
 }

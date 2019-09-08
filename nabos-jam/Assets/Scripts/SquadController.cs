@@ -1,24 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class SquadController : MonoBehaviour
 {
 
     [SerializeField]
-    private List<Unit> _myUnits;
+    private List<Unit> _myUnits = new List<Unit>();
     [SerializeField]
-    private Formation _myFormation;
+    private Formation _myFormation = null;
 
-    private List<Unit> _activeUnits;
+    private List<Unit> _activeUnits = new List<Unit>();
     private Queue<Command> _cmdQ;
     private bool _isIdle = true;
 
+    
+    public List<Unit> Units {
+        get {
+            return _myUnits;
+        }
+    }
+
+    public Formation Formation {
+        get {
+            return _myFormation;
+        }
+    }
+
+    public int Size {
+        get {
+            return _myUnits.Count;
+        }
+    }
+
     public List<Unit> ActiveUnits {
         get {
-            if (_activeUnits.Count == 0)
-                _activeUnits.Add(_myUnits[0]);
-            
             return _activeUnits;
         }
 
@@ -40,38 +57,56 @@ public class SquadController : MonoBehaviour
                 {
                     _activeUnits.Clear();
 
+                    // Order active units folllowing _myUnits order
+                    SortedList sActiveUnits = new SortedList();
+
                     // only root leaders can be an active unit
                     foreach(Unit u in value) {
                         if (_myUnits.Contains(u.RootLeader) && !_activeUnits.Contains(u.RootLeader))
-                            _activeUnits.Add(u.RootLeader);
+                            sActiveUnits.Add(_myUnits.IndexOf(u.RootLeader), u.RootLeader);
                     }
-                    
+
+                    _activeUnits = sActiveUnits.GetValueList().Cast<Unit>().ToList();
+
                     UpdateSelectGizmo();
                 }
+
+                // Update GUI
+                GUIManager.Instance.SquadUnitsGUI.SetActiveAvatars(value);
+                
             }
-        }
-    }
-
-    public List<Unit> Units {
-        get {
-            return _myUnits;
-        }
-    }
-
-    public Formation Formation
-    {
-        get {
-            return _myFormation;
         }
     }
 
     public bool SwapUnitsOrer(int firstU, int secondU)
     {
-        if (firstU > 0 && firstU < _myUnits.Count && firstU > 0 && firstU < _myUnits.Count && firstU != secondU)
+        if (firstU >= 0 && firstU < _myUnits.Count && secondU >= 0 && secondU < _myUnits.Count && firstU != secondU)
         {
             Unit tmp = _myUnits[firstU];
             _myUnits[firstU] = _myUnits[secondU];
             _myUnits[secondU] = tmp;
+
+            Vector3 leaderPos = _activeUnits[0].transform.position;
+            Quaternion leaderRot = _activeUnits[0].transform.rotation;
+
+            // Order active units folllowing _myUnits order
+            SortedList sActiveUnits = new SortedList() ;
+
+            // only root leaders can be an active unit
+            foreach(Unit u in _activeUnits)
+                sActiveUnits.Add(_myUnits.IndexOf(u.RootLeader), u.RootLeader);
+
+            _activeUnits = sActiveUnits.GetValueList().Cast<Unit>().ToList();
+
+            AddCommand(
+                    new MoveSquadCmd(
+                                _activeUnits, 
+                                leaderPos,
+                                leaderRot,
+                                _myFormation
+                            )
+                    );
+
 
             return true;
         }

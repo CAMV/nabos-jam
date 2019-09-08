@@ -4,19 +4,35 @@ using System.Collections.Generic;
 
 public class Unit : MonoBehaviour
 {
-    private NavMeshAgent _myNavAgent;
-    public Character character;
     [SerializeField]
-    private UMovement _movement;
+    private Character _myChar = null;
+    
+    [SerializeField]
+    private CharacterBio _myCharBio = null;
 
     [SerializeField]
-    private USelectGizmo _gizmo;
+    private UMovement _movement = null;
 
     [SerializeField]
-    private Collider _selectCollider;
+    private USelectGizmo _gizmo = null;
+
+    [SerializeField]
+    private Collider _selectCollider = null;
 
     private List<Unit> _followers;
     private Unit _leader;
+
+    public Character Character {
+        get {
+            return _myChar;
+        }
+    }
+
+    public CharacterBio Bio {
+        get {
+            return _myCharBio;
+        }
+    }
 
     public UMovement Movement{
         get {
