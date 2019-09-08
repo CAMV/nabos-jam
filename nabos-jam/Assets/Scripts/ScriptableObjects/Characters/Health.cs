@@ -10,6 +10,11 @@ public class Health : ScriptableObject
     [SerializeField]
     public int currentHealth;
 
+    private void OnEnable()
+    {
+        currentHealth = maxHealth;
+    }
+
     public Health(int maxHealth) 
     {
         this.maxHealth = maxHealth;

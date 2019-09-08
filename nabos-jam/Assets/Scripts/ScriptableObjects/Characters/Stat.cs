@@ -14,8 +14,13 @@ public class Stat: ScriptableObject
     {
         statName = _statName;
         statValue = _statValue;
+        finalStat = _statValue;
     }
 
+    private void OnEnable()
+    {
+        CalculateFinalStat();
+    }        
     public void setStat(int baseStat)
     {
         statValue = baseStat;
