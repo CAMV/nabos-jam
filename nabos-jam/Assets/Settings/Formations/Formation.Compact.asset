@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e57ed3024d212047ad8a98203585587, type: 3}
-  m_Name: SimpleTrio
+  m_Name: Formation.Compact
   m_EditorClassIdentifier: 
-  _size: 3
+  _icon: {fileID: 21300000, guid: 95a97957fc9e1f74c82e93f6d29ba5fa, type: 3}
+  _size: 5
   _fTransform:
-  - {x: -1, y: 0, z: -1, w: 0}
-  - {x: 1, y: 0, z: -1, w: 0}
-  - {x: 1, y: 1, z: 1, w: 0}
+  - {x: 1.4, y: 0, z: 0, w: 0}
+  - {x: 0, y: 0, z: -1.6, w: 0}
+  - {x: 1.4, y: 0, z: -1.6, w: 0}
+  - {x: 0, y: 0, z: -3.2, w: 0}
+  - {x: 1.4, y: 0, z: -3.2, w: 0}
