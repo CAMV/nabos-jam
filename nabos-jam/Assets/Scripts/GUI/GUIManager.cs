@@ -15,6 +15,8 @@ public class GUIManager : Singleton<GUIManager>
     private MoveTargetGUI _moveTgGUI = null;
     [SerializeField]
     private SquadUnitsGUI _sqUnitsGUI = null;
+    [SerializeField]
+    private SquadFormationGUI _sqFormationGUI = null;
 
     /// <summary>
     /// Component that handles formation preview when holding Move Input Button.
@@ -56,6 +58,16 @@ public class GUIManager : Singleton<GUIManager>
     public SelectSquareGUI SelectSquareGUI {
         get {
             return _selectSqrGUI;
+        }
+    }
+
+    /// <summary>
+    /// Component that handles squad formation selection GUI.
+    /// </summary>
+    /// <value>SelectSquareGUI component.</value>
+    public SquadFormationGUI SquadFormationGUI {
+        get {
+            return _sqFormationGUI;
         }
     }
 

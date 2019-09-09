@@ -10,7 +10,7 @@ public class UMovement : MonoBehaviour
 {
     private NavMeshAgent _myNavAgent;
 
-    void Start()
+    void Awake()
     {
         _myNavAgent = GetComponent<NavMeshAgent>();
     }

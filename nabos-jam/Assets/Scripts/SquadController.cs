@@ -8,9 +8,8 @@ public class SquadController : MonoBehaviour
 
     [SerializeField]
     private List<Unit> _myUnits = new List<Unit>();
-    [SerializeField]
-    private Formation _myFormation = null;
 
+    private Formation _myFormation = null;
     private List<Unit> _activeUnits = new List<Unit>();
     private Queue<Command> _cmdQ;
     private bool _isIdle = true;
@@ -25,6 +24,19 @@ public class SquadController : MonoBehaviour
     public Formation Formation {
         get {
             return _myFormation;
+        }
+        set {
+            _myFormation = value;
+
+            if (_activeUnits.Count > 0)
+                AddCommand(
+                        new MoveSquadCmd(
+                                    _activeUnits, 
+                                    _activeUnits[0].transform.position,
+                                    _activeUnits[0].transform.rotation,
+                                    _myFormation
+                                )
+                        );
         }
     }
 

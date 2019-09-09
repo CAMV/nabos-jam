@@ -6,7 +6,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Formation")]
 public class Formation : ScriptableObject
 {
-
+    [SerializeField]
+    private Sprite _icon = null;
     // Number of units the formation can hold.
     [SerializeField]
     private int _size = 1;
@@ -21,6 +22,15 @@ public class Formation : ScriptableObject
     public int Size{
         get {
             return _size;
+        }
+    }
+
+    /// <summary>
+    /// Icon of the formation for GUI purposes.
+    /// </summary>
+    public Sprite Icon {
+        get {
+            return _icon;
         }
     }
     
