@@ -2,20 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Main <c>character</c> class that has all the information related to a character.
+/// This class also handles attacking
+/// </summary>
 [CreateAssetMenu(menuName = "Character/Character")]
 public class Character : ScriptableObject
 {
-    public string characterName;
-    public Health health;
-    public Health shieldHealth;
+    public string characterName;        //Name ID
+    public Health health;               //Health Resource
+    public Health shieldHealth;         //Shield Resource
     public float attackCooldown;
+    public float attackRange;
 
     public Stats stats;
     public CharacterClass charClass;
 
     public FormationsEnum formationType;
 
-    /** Performs damage reduction calculations and take the remainind damage */
+    /// <summary>
+    /// Performs damage reduction calculations and take the remaining damage
+    /// </summary>
+    /// <param name="damage">The amount of damage to that will be taken, as a positive value</param>
     public void TakeDamage(int damage) 
     {
         //Reduce damage by armor
@@ -36,9 +44,13 @@ public class Character : ScriptableObject
         Debug.Log(characterName + " took damage. remaining health " + health.currentHealth);
     }
 
-    //Reduce attack delay and Modifier cooldowns
+    /// <summary>
+    /// Reduce attack delay and Modifier cooldowns
+    /// </summary>
+    /// <param name="tick">A timestep, such as <c>Time.fixedDeltaTime</param>
     public void TickDurations(float tick)
     {
+        //Reduce attack cd here because it is not part of the stat values
         if (attackCooldown > 0)
         {
             attackCooldown -= tick;
@@ -46,7 +58,10 @@ public class Character : ScriptableObject
         stats.ReduceModifierDurations(tick);
     }
 
-    /** Attempt an attack on an enemy unit */
+    /// <summary>
+    /// Attempt an attack on an enemy unit
+    /// </summary>
+    /// <param name="enemyChar">The enemy unit to attack</param>
     public void PerformAttack(Character enemyChar) 
     {
         //Check character hit chance
@@ -69,13 +84,18 @@ public class Character : ScriptableObject
         }
     }
 
-    /** Actual attack once hit and dodge checks passed */
+    /// <summary>
+    /// Actual attack once hit and dodge checks passed
+    /// </summary>
+    /// <param name="enemyChar">The enemy to perform the attack on</param>
     public void Attack(Character enemyChar) 
     {
         enemyChar.TakeDamage(stats.damage.finalStat);
     }
 
-    //Set attack delay equal to character attack speed
+    /// <summary>
+    /// Set attack delay equal to character attack speed
+    /// </summary>
     public void ResetAttackCd() 
     {
         attackCooldown = stats.attackSpeed.finalStat;

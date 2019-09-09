@@ -15,6 +15,8 @@ MonoBehaviour:
   characterName: Shieldmaiden1
   health: {fileID: 11400000, guid: a641b655d20e05a4da5cb948990e4632, type: 2}
   shieldHealth: {fileID: 11400000, guid: 46d4fc465ae23d543870bed2d9331a77, type: 2}
+  attackCooldown: -0.019998658
+  attackRange: 3
   stats: {fileID: 11400000, guid: ad27ddb556c46b047bd6e31dd479e7a2, type: 2}
   charClass: {fileID: 11400000, guid: 7bd582b261886984580a6cfe783e502a, type: 2}
   formationType: 0

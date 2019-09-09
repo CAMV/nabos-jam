@@ -14,5 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statName: Armor
   statValue: 2
-  modifiers:
-  - {fileID: 0}
+  modifiers: []

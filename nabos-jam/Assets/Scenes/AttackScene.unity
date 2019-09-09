@@ -409,7 +409,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88e64a69b4a23664cbb5af30951c99d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 11400000, guid: f4f7863bae2a5f84e97157ec8fb12aa9, type: 2}
+  _myChar: {fileID: 11400000, guid: f4f7863bae2a5f84e97157ec8fb12aa9, type: 2}
+  _myCharBio: {fileID: 0}
   _movement: {fileID: 0}
   _gizmo: {fileID: 0}
   _selectCollider: {fileID: 0}
@@ -621,7 +622,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88e64a69b4a23664cbb5af30951c99d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 11400000, guid: 24046b61610055c4cbeeca463c15a10c, type: 2}
+  _myChar: {fileID: 11400000, guid: 24046b61610055c4cbeeca463c15a10c, type: 2}
+  _myCharBio: {fileID: 0}
   _movement: {fileID: 0}
   _gizmo: {fileID: 45347748}
   _selectCollider: {fileID: 0}
@@ -970,7 +972,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 950b0ea065b4c904bb2ab2b0f9888592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectSqr: {fileID: 0}
+  _selectSqrGUI: {fileID: 0}
+  _moveInFormGUI: {fileID: 0}
+  _moveTgGUI: {fileID: 0}
+  _sqUnitsGUI: {fileID: 0}
 --- !u!114 &1841679112
 MonoBehaviour:
   m_ObjectHideFlags: 0

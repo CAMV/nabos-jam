@@ -49,7 +49,7 @@ public class Stats : ScriptableObject
     public void updateDamage() 
     {
         Stat str = getStatValue("Strength");
-        damage.setStat(str.finalStat*2);
+        damage.statValue = str.finalStat*2;
         damage.CalculateFinalStat();
     }
 

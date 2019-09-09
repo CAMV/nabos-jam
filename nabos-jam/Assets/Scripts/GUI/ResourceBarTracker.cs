@@ -2,12 +2,16 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 
+/// <summary>
+/// Class that tracks and handles updating resource bars on the GUI, based on
+/// a given <c>Resource</c> class
+/// </summary>
 public class ResourceBarTracker : MonoBehaviour
 {
     [SerializeField]
-    private Image _bar;
+    private Image _bar;             //The fill bar to be updated
     [SerializeField]
-    private Resource _resource;
+    private Resource _resource;     //The resource to track
 
 
     // Update is called once per frame

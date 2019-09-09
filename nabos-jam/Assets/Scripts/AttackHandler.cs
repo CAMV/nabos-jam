@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class that handles attack interactions
+/// </summary>
 public class AttackHandler : MonoBehaviour
 {
     public Character character;

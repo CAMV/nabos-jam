@@ -2,12 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class that handles an attack input action pattern
+/// </summary>
 [CreateAssetMenu(menuName = "Input Settings/Attack Input Settings")]
 public class AttackIA : InputAction
 {
     [SerializeField]
     private int _enemyLayer;
-    
+
+    /// <summary>
+    /// Adds an attack command to the player's units via the
+    /// squad manager when an input is pressed.
+    /// </summary>
     public override IEnumerator ExecuteAction()
     {
         Ray r = Camera.main.ScreenPointToRay(Input.mousePosition); 
