@@ -9,10 +9,9 @@ using System.Collections.Generic;
 public class ResourceBarTracker : MonoBehaviour
 {
     [SerializeField]
-    private Image _bar;             //The fill bar to be updated
+    private Image _bar = null;             //The fill bar to be updated
     [SerializeField]
-    private Resource _resource;     //The resource to track
-
+    private Resource _resource = null;     //The resource to track
 
     // Update is called once per frame
     void Update()

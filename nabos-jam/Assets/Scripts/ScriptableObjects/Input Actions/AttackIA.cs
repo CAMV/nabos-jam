@@ -9,7 +9,7 @@ using UnityEngine;
 public class AttackIA : InputAction
 {
     [SerializeField]
-    private int _enemyLayer;
+    private int _enemyLayer = 0;
 
     /// <summary>
     /// Adds an attack command to the player's units via the
