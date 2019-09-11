@@ -27,7 +27,7 @@ public abstract class InputAction : ScriptableObject
     /// Checks if the Input Axes of the Input action is active
     /// </summary>
     /// <returns>is the input active</returns>
-    public bool CheckInput()
+    public virtual bool CheckInput()
     {
         _prevState = _currentState;
         _currentState = Input.GetButton(_buttomName); 
