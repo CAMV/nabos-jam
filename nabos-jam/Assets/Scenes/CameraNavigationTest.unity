@@ -5720,8 +5720,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f6cc0df0de70f4dbe93197617d4463, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 15, z: -8}
-  maxZoom: 14
+  offset: {x: 0, y: 15, z: -7.5}
+  maxZoom: 16
   minZoom: 3.5
   zoomSpeed: 5
   cam: {fileID: 192704370}
