@@ -1,19 +1,24 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
 /// Class <c> UnitAvatar </c> models a single unit avatar GUI. 
 /// </summary>
 [RequireComponent(typeof(RectTransform))]
-public class UnitAvatarGUI : MonoBehaviour
+public class UnitAvatarGUI : MonoBehaviour, IPointerClickHandler
 {
  
+    [SerializeField]
+    private UnitAvatarSkillGUI _skillGUI = null;
+
     [SerializeField]
     private Unit _myUnit;
 
     [SerializeField]
-    private Image _picture = null;
+    private Image _portrait = null;
     
     [SerializeField]
     private Text _showingName = null;
@@ -41,24 +46,52 @@ public class UnitAvatarGUI : MonoBehaviour
         
             if (value.Bio)
             {
-                _picture.sprite = value.Bio.Portrait;
-                _showingName.text = value.Bio.Name;
+                if (_portrait)
+                    _portrait.sprite = value.Bio.Portrait;
+                else
+                    Debug.Log("Can't display portrait, no Image UI for the Avatar " + gameObject.name + "given!");                    
+
+                if (_showingName)
+                    _showingName.text = value.Bio.Name;
+                else
+                    Debug.Log("Can't display name, no Text UI for the Avatar " + gameObject.name + " given!");
+
             }
 
             List<Unit> aUnits = GameManager.Instance.PlayerSquad.ActiveUnits;
 
             if (aUnits != null) 
                 SetSelectGizmo(aUnits.Contains(value));
+
+
+            // Init skill component if it has one
+            if (value.Skills)
+            {
+                for (int i = 0; i < value.Skills.Size; i++)
+                {
+                    _skillGUI[i] = value.Skills[i];
+                }
+            }
         
             _myUnit = value;
         }
     }
 
+    /// <summary>
+    /// Skill GUI componenet of the Avatar
+    /// </summary>
+    public UnitAvatarSkillGUI SkillGUI {
+        get {
+            return _skillGUI;
+        }
+    }
+
     void Start()
     {
+
         if (_myUnit && _myUnit.Bio)
         {
-            _picture.sprite = _myUnit.Bio.Portrait;
+            _portrait.sprite = _myUnit.Bio.Portrait;
             _showingName.text = _myUnit.Bio.Name;
         }
 
@@ -77,16 +110,41 @@ public class UnitAvatarGUI : MonoBehaviour
     } 
 
     /// <summary>
-    /// Get the rectangle of the space the avatar occupies on screen in screen space coord.
+    /// Action to execute when Avatar is clicked. The click comes from _picture.
     /// </summary>
-    /// <returns>Rect of the avatar in screen space.</returns>
-    public Rect GetScreenSpaceRect()
+    /// <param name="eventData"></param>
+    public void OnPointerClick (PointerEventData eventData)
     {
-        Rect rect = _myRectTransform.rect;
-        rect.x +=_myRectTransform.position.x;
-        rect.y +=_myRectTransform.position.y;
+        if (eventData.dragging)
+            return;
+        
+        // If an skill slot was clicked, skip draggin
+        if (eventData.rawPointerPress.GetComponentInParent<HotbarSlotGUI>())
+            return;
+            
+        SelectCmd selectCmd;
+        List<Unit> selectedUnits;
 
-        return rect;
+        if (Input.GetButton("Ctrl"))
+        {
+            selectedUnits = new List<Unit>(GameManager.Instance.PlayerSquad.ActiveUnits);
+
+            if (selectedUnits.Contains(_myUnit))
+                selectedUnits.Remove(_myUnit);
+            else
+                selectedUnits.Add(_myUnit);
+
+        }
+        else
+        {
+            selectedUnits = new List<Unit>();
+            selectedUnits.Add(_myUnit);
+         
+        }
+        selectCmd = new SelectCmd(selectedUnits);   
+
+        //StartCoroutine(CheckIfDraggingCO(selectCmd));
+        GameManager.Instance.PlayerSquad.AddCommand(selectCmd);
     }
 
 }

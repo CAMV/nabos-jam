@@ -7,9 +7,11 @@ using System.Collections.Generic;
 /// </summary>
 public class InputController : MonoBehaviour
 {
+    public static bool isAlwaysQuickCast = false;
 
     [SerializeField]
     private List<InputAction> _inputActions = new List<InputAction>();
+
 
     void Start()
     {

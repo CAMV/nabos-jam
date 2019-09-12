@@ -6,7 +6,6 @@ using System.Collections.Generic;
 /// </summary>
 public class GameManager : Singleton<GameManager>
 {
-
     [SerializeField]
     private SquadController _playerSquad = null;
 
@@ -31,6 +30,14 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    void Start()
+    { 
+        // Selects the first unit at the begining so a unit is always selected.
+        _playerSquad.AddCommand(new SelectCmd(new List<Unit>() {_playerSquad.Units[0]}));
+        // Assign the first available formation to the player squad.
+        ChangePlayerSquadFormation(0);
+    }
+
     /// <summary>
     /// Changes the formation of the plaer's squad from the list of available formation. 
     /// </summary>
@@ -39,14 +46,6 @@ public class GameManager : Singleton<GameManager>
     {
         if (_formationsAvailable.Count > 0 && option >= 0 && option < _formationsAvailable.Count)
             _playerSquad.Formation = _formationsAvailable[option];
-    }
-
-    void Start()
-    { 
-        // Selects the first unit at the begining so a unit is always selected.
-        _playerSquad.AddCommand(new SelectCmd(new List<Unit>() {_playerSquad.Units[0]}));
-        // Assign the first available formation to the player squad.
-        ChangePlayerSquadFormation(0);
     }
 
 

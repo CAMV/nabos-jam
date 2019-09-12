@@ -57,6 +57,26 @@ public class SquadController : MonoBehaviour
         }
     }
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        _cmdQ = new Queue<Command>();
+        _activeUnits = new List<Unit>();
+        UpdateSelectGizmo();
+        _isIdle = true;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (_cmdQ.Count > 0 && _isIdle)
+        {
+            Command currentCmd = _cmdQ.Dequeue();
+
+            currentCmd.Do();
+        }
+    }
+
     /// <summary>
     /// Units currently active in the squad
     /// </summary>
@@ -148,7 +168,7 @@ public class SquadController : MonoBehaviour
     }
 
     /// <summary>
-    /// Updates the select gizmos of the units of the party
+    /// Updates the select gizmos of the units of the party.
     /// </summary>
     private void UpdateSelectGizmo()
     {
@@ -173,31 +193,11 @@ public class SquadController : MonoBehaviour
     }
 
     /// <summary>
-    /// Adds a command to be executed by the party
+    /// Adds a command to be executed by the party.
     /// </summary>
     /// <param name="c">Command to be executed.</param>
     public void AddCommand(Command c)
     {
         _cmdQ.Enqueue(c);
-    }
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        _cmdQ = new Queue<Command>();
-        _activeUnits = new List<Unit>();
-        UpdateSelectGizmo();
-        _isIdle = true;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (_cmdQ.Count > 0 && _isIdle)
-        {
-            Command currentCmd = _cmdQ.Dequeue();
-
-            currentCmd.Do();
-        }
     }
 }

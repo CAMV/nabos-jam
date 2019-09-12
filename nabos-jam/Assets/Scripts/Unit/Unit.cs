@@ -22,9 +22,21 @@ public class Unit : MonoBehaviour
     [SerializeField]
     private Collider _selectCollider = null;
 
+    [SerializeField]
+    private USkills _skills = null;
+
     private List<Unit> _followers;
     // If the unit is part of a formations, tis variable holds its leader.
     private Unit _leader;
+
+    /// <summary>
+    /// Unit component that handles its skills.
+    /// </summary>
+    public USkills Skills {
+        get {
+            return _skills;
+        }
+    }
 
     /// <summary>
     /// The character associated to the unit.

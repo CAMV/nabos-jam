@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+
 using System.Collections.Generic;
 using System.Collections; 
 
@@ -8,6 +10,21 @@ using System.Collections;
 [CreateAssetMenu(menuName = "Input Settings/Select Squad Input Setting")]
 public class SelectSquadIA : InputAction
 {
+    /// <summary>
+    /// Redifene ChekInput to not just evaluate the input, but also evaluate the mouse is not over any GUI element.
+    /// </summary>
+    /// <returns>True if the input is correct and the mouse s not over any GUI element, otherwise, false.</returns>
+    override public bool CheckInput()
+    {
+        if (base.CheckInput())
+        {
+            if (!GUIManager.Instance.IsMouseOverGUI)
+                return true;
+
+        }
+        return false;
+    }
+
     /// <summary>
     /// Coroutine that creates and add a SelectCmd to the player's squad controller based on the player's input.
     /// </summary>
