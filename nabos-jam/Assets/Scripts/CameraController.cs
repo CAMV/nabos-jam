@@ -10,9 +10,9 @@ public class CameraController : Singleton<CameraController>
     [SerializeField]
     Vector3 offset = new Vector3(-3f, 15f, -8f);
     [SerializeField]
-    float maxZoom;
+    float maxZoom = 25f;
     [SerializeField]
-    float minZoom;
+    float minZoom = 7f;
     float _zoomAmount = 0;
     float _rotateAmount = 0;
     public float zoomSpeed;
@@ -30,10 +30,11 @@ public class CameraController : Singleton<CameraController>
                 GameObject leader = active_units[0].gameObject;
                 Vector3 leaderPos = leader.transform.position;
 
+                cam.transform.position = offset + leaderPos;
+
                 if (_rotateAmount != 0)
                 {
                     cam.transform.RotateAround(leaderPos, Vector3.up, rotateSpeed * _rotateAmount * Time.fixedDeltaTime);
-                    _rotateAmount = 0;
                 }
 
                 if (_zoomAmount != 0)
@@ -45,9 +46,15 @@ public class CameraController : Singleton<CameraController>
                     {
                         cam.transform.position = newPos;
                     }
-                    _zoomAmount = 0;
-
                 }
+
+                if (_zoomAmount != 0 || _rotateAmount != 0)
+                {
+                    offset = cam.transform.position - leaderPos;
+                    _zoomAmount = 0;
+                    _rotateAmount = 0;
+                }
+
                 cam.transform.LookAt(leaderPos, Vector3.up);
             }
         }
