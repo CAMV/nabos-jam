@@ -14,7 +14,9 @@ public class CameraController : Singleton<CameraController>
     [SerializeField]
     float minZoom;
     float _zoomAmount = 0;
+    float _rotateAmount = 0;
     public float zoomSpeed;
+    public float rotateSpeed;
     public GameObject cam;
 
     // Update is called once per frame
@@ -26,21 +28,27 @@ public class CameraController : Singleton<CameraController>
             if (active_units.Count > 0) 
             {
                 GameObject leader = active_units[0].gameObject;
-                Vector3 deltaScroll = new Vector3(0f, _zoomAmount * zoomSpeed , - _zoomAmount/2 * zoomSpeed);
-                
-                _zoomAmount = 0;
-                offset += deltaScroll;
-                if (offset.y < minZoom)
+                Vector3 leaderPos = leader.transform.position;
+
+                if (_rotateAmount != 0)
                 {
-                    offset.y = minZoom;
-                    offset.z = -minZoom / 2;
+                    cam.transform.RotateAround(leaderPos, Vector3.up, rotateSpeed * _rotateAmount * Time.fixedDeltaTime);
+                    _rotateAmount = 0;
                 }
-                if (offset.y > maxZoom)
+
+                if (_zoomAmount != 0)
                 {
-                    offset.y = maxZoom;
-                    offset.z = -maxZoom / 2;
+                    Vector3 newPos = Vector3.MoveTowards(cam.transform.position,leaderPos, - _zoomAmount * Time.fixedDeltaTime * zoomSpeed);
+                    float newDistance = Vector3.Distance(newPos, leaderPos);
+                    Debug.Log(newDistance);
+                    if (newDistance > minZoom && newDistance < maxZoom)
+                    {
+                        cam.transform.position = newPos;
+                    }
+                    _zoomAmount = 0;
+
                 }
-                cam.transform.position = leader.transform.position + offset;
+                cam.transform.LookAt(leaderPos, Vector3.up);
             }
         }
     }
@@ -52,5 +60,14 @@ public class CameraController : Singleton<CameraController>
     public void UpdateZoom(float zoomAmount)
     {
         _zoomAmount = zoomAmount;
+    }
+
+    /// <summary>
+    /// Adds a new zoom value 
+    /// </summary>
+    /// <param name="zoomAmount">Zoom value</param>
+    public void UpdateRotation(float rotateAmount)
+    {
+        _rotateAmount = rotateAmount;
     }
 }
