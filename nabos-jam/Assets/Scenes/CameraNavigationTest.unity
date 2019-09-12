@@ -5691,6 +5691,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 18f0abed8ce3bd948940c42494502771, type: 2}
   - {fileID: 11400000, guid: e9f1811728ac536469ec0cd1205a822a, type: 2}
   - {fileID: 11400000, guid: e7471221a6f69a04594699b0290d12cd, type: 2}
+  - {fileID: 11400000, guid: fc18712723d28e0479f9e24f55f73c43, type: 2}
 --- !u!114 &844205333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5721,9 +5722,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: 0, y: 15, z: -7.5}
-  maxZoom: 16
-  minZoom: 3.5
-  zoomSpeed: 5
+  maxZoom: 25
+  minZoom: 7
+  zoomSpeed: 200
+  rotateSpeed: 50
   cam: {fileID: 192704370}
 --- !u!1 &891868026
 GameObject:
