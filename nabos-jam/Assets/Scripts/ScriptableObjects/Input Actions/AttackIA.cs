@@ -31,8 +31,15 @@ public class AttackIA : InputAction
             {
                 //Queue attack command from unit to target
                 Unit unit = GameManager.Instance.PlayerSquad.ActiveUnits[i];
-                GameManager.Instance.PlayerSquad.AddCommand(new AttackCmd(unit, enemy));
+                AttackHandler attackHandler = unit.GetComponent<AttackHandler>();
+                if (attackHandler && !attackHandler.isAttacking)
+                {
+                    GameManager.Instance.PlayerSquad.AddCommand(new AttackCmd(unit, enemy));
+                    attackHandler.isAttacking = true;
+                }
             }
+
+            yield return new WaitForEndOfFrame();
         }
         
         yield return null;

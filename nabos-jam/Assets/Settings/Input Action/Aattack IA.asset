@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9befbecd04c43fc4ba674f86b2a6e98c, type: 3}
   m_Name: Aattack IA
   m_EditorClassIdentifier: 
-  _buttomName: Fire2
+  _buttomName: Z
   _myICheckType: 0
   _enemyLayer: 11
