@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3317afff0c621345b9bc062ccf818c7, type: 3}
-  m_Name: Skill.8
+  m_Name: Skill.Target
   m_EditorClassIdentifier: 
-  _name: 8
-  _icon: {fileID: 21300000, guid: c828192a41a808f459b02fde387f1f2e, type: 3}
+  _name: Target
+  _icon: {fileID: 21300000, guid: 0c570fef693b736419f327c7284681f5, type: 3}
   _baseCoolDownTime: 0

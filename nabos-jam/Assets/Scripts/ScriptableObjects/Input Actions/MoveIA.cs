@@ -25,7 +25,8 @@ public class MoveIA : InputAction
         RaycastHit hit;
         List<MoveCmd> commandOut = new List<MoveCmd>();
 
-        if (Physics.Raycast(r, out hit, RAYCAST_LENGTH, layerMask))
+        if (Physics.Raycast(r, out hit, RAYCAST_LENGTH, layerMask) && 
+            Vector3.Angle(Vector3.up, hit.normal) < 60)         //Check the angle of the surface is not too steep
         {
             Unit leader = GameManager.Instance.PlayerSquad.ActiveUnits[0];
             

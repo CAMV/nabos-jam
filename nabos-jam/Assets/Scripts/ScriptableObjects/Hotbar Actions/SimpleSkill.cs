@@ -19,8 +19,8 @@ public class SimpleSkill : Skill
     /// </summary>
     override public void Execute(bool isQuickCast)
     {
-        string qcMsg = isQuickCast ? "QuickCast " : "";
-        Debug.Log(qcMsg + "Skill " + _name + " casted!");
+        string qcMsg = isQuickCast ? "quick-casted " : "casted";
+        Debug.Log(_originUnit.name + " " + qcMsg  + _name + "!");
     }
 
 

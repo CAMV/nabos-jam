@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3317afff0c621345b9bc062ccf818c7, type: 3}
-  m_Name: Skill.9
+  m_Name: Skill.Slash
   m_EditorClassIdentifier: 
-  _name: 9
-  _icon: {fileID: 21300000, guid: ae749ae4c8b337b488809482eba0e96a, type: 3}
+  _name: Slash
+  _icon: {fileID: 21300000, guid: faaa14d9cd438ca45a197b153d55adfb, type: 3}
   _baseCoolDownTime: 0
