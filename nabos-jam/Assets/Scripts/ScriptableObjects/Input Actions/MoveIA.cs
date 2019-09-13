@@ -29,6 +29,16 @@ public class MoveIA : InputAction
             Vector3.Angle(Vector3.up, hit.normal) < 60)         //Check the angle of the surface is not too steep
         {
             Unit leader = GameManager.Instance.PlayerSquad.ActiveUnits[0];
+
+            //Stops units from attacking
+            for (int i = 0; i < GameManager.Instance.PlayerSquad.ActiveUnits.Count; i++) 
+            {
+                Unit unit =  GameManager.Instance.PlayerSquad.ActiveUnits[i];
+                if (unit.GetComponent<AttackHandler>())
+                {
+                    unit.GetComponent<AttackHandler>().isAttacking = false;
+                }
+            }
             
             Quaternion moveRot = leader.transform.rotation;
             moveRot.SetLookRotation(
