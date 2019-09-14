@@ -30,13 +30,16 @@ public class CameraController : Singleton<CameraController>
                 GameObject leader = active_units[0].gameObject;
                 Vector3 leaderPos = leader.transform.position;
 
+                //Keeps the position relative to the leader player if the player is moving
                 cam.transform.position = offset + leaderPos;
 
+                //Performs rotation movement
                 if (_rotateAmount != 0)
                 {
                     cam.transform.RotateAround(leaderPos, Vector3.up, rotateSpeed * _rotateAmount * Time.fixedDeltaTime);
                 }
 
+                //Performs zoom movement
                 if (_zoomAmount != 0)
                 {
                     Vector3 newPos = Vector3.MoveTowards(cam.transform.position,leaderPos, - _zoomAmount * Time.fixedDeltaTime * zoomSpeed);
@@ -48,6 +51,7 @@ public class CameraController : Singleton<CameraController>
                     }
                 }
 
+                //Updates the relative position to the leader player if a camera movement was done
                 if (_zoomAmount != 0 || _rotateAmount != 0)
                 {
                     offset = cam.transform.position - leaderPos;
@@ -55,6 +59,7 @@ public class CameraController : Singleton<CameraController>
                     _rotateAmount = 0;
                 }
 
+                //Looks directly at the leader
                 cam.transform.LookAt(leaderPos, Vector3.up);
             }
         }

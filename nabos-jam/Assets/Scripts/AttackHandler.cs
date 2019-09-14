@@ -8,6 +8,7 @@ using UnityEngine;
 public class AttackHandler : MonoBehaviour
 {
     public Character character;
+    public bool isAttacking = false;
     
     private void FixedUpdate() 
     {

@@ -38,6 +38,14 @@ public class UMovement : MonoBehaviour
     }
 
     /// <summary>
+    /// Stops unit movement
+    /// </summary>
+    public void StopMoving()
+    {
+        _myNavAgent.ResetPath();
+    }
+
+    /// <summary>
     /// Coroutines that aplies the rotation at the end of the movement.
     /// </summary>
     /// <param name="rotation">Rotation to set at the end of the movement.</param>
