@@ -10,12 +10,12 @@ public class SquadController : MonoBehaviour
 {
     // The order of the units defines who goes where in a formation.
     [SerializeField]
-    private List<Unit> _myUnits = new List<Unit>();
+    protected List<Unit> _myUnits = new List<Unit>();
 
-    private Formation _myFormation = null;
-    private List<Unit> _activeUnits = new List<Unit>();
-    private Queue<Command> _cmdQ;
-    private bool _isIdle = true;
+    protected Formation _myFormation = null;
+    protected List<Unit> _activeUnits = new List<Unit>();
+    protected Queue<Command> _cmdQ;
+    protected bool _isIdle = true;
 
     /// <summary>
     /// Units that cinforms the squad
@@ -58,16 +58,15 @@ public class SquadController : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         _cmdQ = new Queue<Command>();
         _activeUnits = new List<Unit>();
-        UpdateSelectGizmo();
         _isIdle = true;
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         if (_cmdQ.Count > 0 && _isIdle)
         {
@@ -78,50 +77,58 @@ public class SquadController : MonoBehaviour
     }
 
     /// <summary>
+    /// Set current active units in the squat
+    /// </summary>
+    /// <param name="value"></param>
+    protected void setActiveUnits(List<Unit> value)
+    {
+        if (value.Count > 0)
+        {
+            bool hasValidUnit = false;
+
+            foreach(Unit u in value)
+            {
+                if (_myUnits.Contains(u.RootLeader))
+                {
+                    hasValidUnit = true;
+                    break;
+                }
+            }
+
+            if (hasValidUnit)
+            {
+                _activeUnits.Clear();
+
+                // Order active units folllowing _myUnits order
+                SortedList sActiveUnits = new SortedList();
+
+                // only root leaders can be an active unit
+                foreach(Unit u in value) {
+                    if (_myUnits.Contains(u.RootLeader) && !_activeUnits.Contains(u.RootLeader))
+                        sActiveUnits.Add(_myUnits.IndexOf(u.RootLeader), u.RootLeader);
+                }
+
+                _activeUnits = sActiveUnits.GetValueList().Cast<Unit>().ToList();
+
+            }
+
+            // Update GUI
+            if (GUIManager.Instance.SquadUnitsGUI)
+                GUIManager.Instance.SquadUnitsGUI.SetSelectedAvatars(value);
+            
+        }
+    }
+
+    /// <summary>
     /// Units currently active in the squad
     /// </summary>
-    public List<Unit> ActiveUnits {
+    public virtual List<Unit> ActiveUnits {
         get {
             return _activeUnits;
         }
 
         set {
-            if (value.Count > 0)
-            {
-                bool hasValidUnit = false;
-
-                foreach(Unit u in value)
-                {
-                    if (_myUnits.Contains(u.RootLeader))
-                    {
-                        hasValidUnit = true;
-                        break;
-                    }
-                }
-
-                if (hasValidUnit)
-                {
-                    _activeUnits.Clear();
-
-                    // Order active units folllowing _myUnits order
-                    SortedList sActiveUnits = new SortedList();
-
-                    // only root leaders can be an active unit
-                    foreach(Unit u in value) {
-                        if (_myUnits.Contains(u.RootLeader) && !_activeUnits.Contains(u.RootLeader))
-                            sActiveUnits.Add(_myUnits.IndexOf(u.RootLeader), u.RootLeader);
-                    }
-
-                    _activeUnits = sActiveUnits.GetValueList().Cast<Unit>().ToList();
-
-                    UpdateSelectGizmo();
-                }
-
-                // Update GUI
-                if (GUIManager.Instance.SquadUnitsGUI)
-                    GUIManager.Instance.SquadUnitsGUI.SetSelectedAvatars(value);
-                
-            }
+            setActiveUnits(value);
         }
     }
 
@@ -165,31 +172,6 @@ public class SquadController : MonoBehaviour
         }
 
         return false;
-    }
-
-    /// <summary>
-    /// Updates the select gizmos of the units of the party.
-    /// </summary>
-    private void UpdateSelectGizmo()
-    {
-        foreach(Unit u in _myUnits)
-        {
-            if (u.SelectGizmo)
-            {
-                if (ActiveUnits.Contains(u))
-                {
-                    u.SelectGizmo.SetIntensity(USelectGizmo.SelectGizmoIntensity.High);
-                }
-                else if (u.IsFollower)
-                {
-                    u.SelectGizmo.SetIntensity(USelectGizmo.SelectGizmoIntensity.Low);
-                }
-                else
-                {
-                    u.SelectGizmo.SetIntensity(USelectGizmo.SelectGizmoIntensity.Medium);
-                }
-            }
-        }       
     }
 
     /// <summary>

@@ -14,6 +14,7 @@ public class Character : ScriptableObject
     public Health shieldHealth;         //Shield Resource
     public float attackCooldown;
     public float attackRange;
+    public float lineOfSight;           //Currently used by enemies to see characters
 
     public Stats stats;
     public CharacterClass charClass;

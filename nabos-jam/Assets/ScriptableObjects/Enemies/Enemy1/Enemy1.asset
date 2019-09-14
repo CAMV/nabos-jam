@@ -17,6 +17,7 @@ MonoBehaviour:
   shieldHealth: {fileID: 11400000, guid: 767c3328f5187564cb7ed7bbd2a9daf4, type: 2}
   attackCooldown: 2
   attackRange: 2
+  lineOfSight: 10
   stats: {fileID: 11400000, guid: effb63e0f59336e44861e993fdc4064a, type: 2}
   charClass: {fileID: 0}
   formationType: 0
