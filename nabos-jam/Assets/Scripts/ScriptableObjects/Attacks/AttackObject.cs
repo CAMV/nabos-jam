@@ -30,6 +30,9 @@ public abstract class AttackObject : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
+        if (other.GetType() == typeof(SphereCollider))
+            return;
+            
         Debug.Log("AJA");
         bool isTrigger = false;
 

@@ -18,7 +18,7 @@ public class CameraRotateIA : InputAction
     {
         if (CameraController.Instance != null)
         {
-            Debug.Log(Input.GetAxis(_buttomName));
+            //Debug.Log(Input.GetAxis(_buttomName));
             CameraController.Instance.UpdateRotation(-Input.GetAxis(_buttomName));
         }
         yield return null;

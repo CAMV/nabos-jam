@@ -4313,7 +4313,9 @@ MonoBehaviour:
   _myChar: {fileID: 11400000, guid: f4f7863bae2a5f84e97157ec8fb12aa9, type: 2}
   _myCharBio: {fileID: 0}
   _movement: {fileID: 398927181}
-  _gizmo: {fileID: 0}
+  _selectGizmo: {fileID: 0}
+  _vectorGizmo: {fileID: 0}
+  _areaGizmo: {fileID: 0}
   _selectCollider: {fileID: 0}
   _skills: {fileID: 0}
 --- !u!65 &398927177
@@ -11298,7 +11300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputActions:
-  - {fileID: 11400000, guid: 280f13a5c0f78f94e93b0e5c85e0280e, type: 2}
+  - {fileID: 11400000, guid: ae3c3befa06d06f4ebe0d41ab0ae158e, type: 2}
   - {fileID: 11400000, guid: e9f1811728ac536469ec0cd1205a822a, type: 2}
   - {fileID: 11400000, guid: 61cc06cc6ef89a348ba9aeec5e514bf7, type: 2}
   - {fileID: 11400000, guid: 48e996641bf8b4348b9157073fed1a74, type: 2}
@@ -27378,7 +27380,9 @@ MonoBehaviour:
   _myChar: {fileID: 11400000, guid: 24046b61610055c4cbeeca463c15a10c, type: 2}
   _myCharBio: {fileID: 11400000, guid: 7d0282539fb5b964b8781bca4286b6e4, type: 2}
   _movement: {fileID: 2084860512}
-  _gizmo: {fileID: 6946609435398357991}
+  _selectGizmo: {fileID: 0}
+  _vectorGizmo: {fileID: 0}
+  _areaGizmo: {fileID: 0}
   _selectCollider: {fileID: 2084860510}
   _skills: {fileID: 2084860511}
 --- !u!136 &2084860510
@@ -27407,9 +27411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4ba25be04222c049be0c4db98854b44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mySkills:
-  - {fileID: 11400000, guid: f8778f3be200f014dafd55476c4b4b7f, type: 2}
-  - {fileID: 11400000, guid: 20cf12e2703041f40a0239db895b0e3d, type: 2}
+  _mySkills: []
 --- !u!114 &2084860512
 MonoBehaviour:
   m_ObjectHideFlags: 0
