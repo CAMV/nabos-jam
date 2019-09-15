@@ -11,13 +11,13 @@ public class Unit : MonoBehaviour
     private Character _myChar = null;
     
     [SerializeField]
-    private CharacterBio _myCharBio = null;
+    protected CharacterBio _myCharBio = null;
 
     [SerializeField]
-    private UMovement _movement = null;
+    protected UMovement _movement = null;
 
     [SerializeField]
-    private USelectGizmo _selectGizmo = null;
+    protected USelectGizmo _selectGizmo = null;
 
     [SerializeField]
     private UVectorGizmo _vectorGizmo = null;
@@ -25,13 +25,14 @@ public class Unit : MonoBehaviour
     [SerializeField]
     private UAreaGizmo _areaGizmo = null;
 
-    [SerializeField]
-    private Collider _selectCollider = null;
 
     [SerializeField]
-    private USkills _skills = null;
+    protected Collider _selectCollider = null;
 
-    private List<Unit> _followers;
+    [SerializeField]
+    protected USkills _skills = null;
+
+    protected List<Unit> _followers;
     // If the unit is part of a formations, tis variable holds its leader.
     private Unit _leader;
 
@@ -203,7 +204,7 @@ public class Unit : MonoBehaviour
         return false;         
     }
 
-    void Start()
+    protected virtual void Start()
     {
         _leader = null;
         _followers = new List<Unit>();

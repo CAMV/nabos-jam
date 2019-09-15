@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Armor
   m_EditorClassIdentifier: 
   statName: Armor
-  statValue: 5
+  statValue: 2
   modifiers: []

@@ -45,6 +45,21 @@ public class UMovement : MonoBehaviour
         _myNavAgent.ResetPath();
     }
 
+    public bool isMoving()
+    {
+        if (!_myNavAgent.pathPending)
+        {
+            if (_myNavAgent.remainingDistance <= _myNavAgent.stoppingDistance)
+            {
+                if (!_myNavAgent.hasPath || _myNavAgent.velocity.sqrMagnitude == 0f)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     /// <summary>
     /// Coroutines that aplies the rotation at the end of the movement.
     /// </summary>

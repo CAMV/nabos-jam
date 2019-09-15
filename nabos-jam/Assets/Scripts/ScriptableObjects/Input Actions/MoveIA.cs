@@ -34,7 +34,7 @@ public class MoveIA : InputAction
                 Unit unit =  GameManager.Instance.PlayerSquad.ActiveUnits[i];
                 if (unit.GetComponent<AttackHandler>())
                 {
-                    unit.GetComponent<AttackHandler>().isAttacking = false;
+                    unit.GetComponent<AttackHandler>().StopAttacking();
                 }
             }
             
