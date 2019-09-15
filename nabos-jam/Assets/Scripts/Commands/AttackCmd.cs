@@ -17,7 +17,7 @@ public class AttackCmd : Command
 
     override public void Do()
     {
-        _myUnit.GetComponent<AttackHandler>().Attack(_enemyUnit);
+        _myUnit.GetComponent<AttackHandler>().SetAttackTarget(_enemyUnit);
     }
 
     /// <summary>

@@ -9,13 +9,50 @@ public class AttackHandler : MonoBehaviour
 {
     public Character character;
     public bool isAttacking = false;
+    public Unit targetUnit {get; private set;}
     private bool _isChasing = false;
-    
+    [SerializeField]
+    private SphereCollider losCollider;
+    [SerializeField]
+    public int aggresiveLayer;    //The layer this Unit will be aggressive towards   
+
+    private void Start()
+    {
+        if (losCollider)
+        {
+            losCollider.radius = character.lineOfSight;
+        }
+    }
+
+
     private void FixedUpdate() 
     {
         //Reduce character cooldowns
         float tick = Time.fixedDeltaTime;
         character.TickDurations(tick);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //
+        if (other.GetComponent<Unit>() && other.gameObject.layer == aggresiveLayer)
+        {
+            SetAttackTarget(other.GetComponent<Unit>());
+        }
+    }
+
+    public void SetAttackTarget(Unit target)
+    {
+        targetUnit = target;
+        isAttacking = true;
+    }
+
+    private void Update() 
+    {
+        if (isAttacking)
+        {
+           Attack(targetUnit); 
+        }
     }
 
     public void Attack(Unit _enemyUnit)
@@ -57,9 +94,12 @@ public class AttackHandler : MonoBehaviour
             }
 
         }
-        if (_myUnit.GetComponent<AttackHandler>().isAttacking)
-        {
-            GameManager.Instance.PlayerSquad.AddCommand(new AttackCmd(_myUnit, _enemyUnit));
-        }
     }
+
+    public void StopAttacking() 
+    {
+        isAttacking = false;
+        targetUnit = null;
+    }
+
 }

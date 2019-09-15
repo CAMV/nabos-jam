@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AISquadController : SquadController
 {
-    [SerializeField] AICommandHandler _AIHandler;
+    [SerializeField] 
+    AICommandHandler _AIHandler;
 
     protected override void Update() {
         foreach (AIUnit u in _myUnits)

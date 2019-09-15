@@ -35,7 +35,6 @@ public class AttackIA : InputAction
                 if (attackHandler && !attackHandler.isAttacking)
                 {
                     GameManager.Instance.PlayerSquad.AddCommand(new AttackCmd(unit, enemy));
-                    attackHandler.isAttacking = true;
                 }
             }
 
