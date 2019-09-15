@@ -67,10 +67,14 @@ public class UnitAvatarGUI : MonoBehaviour, IPointerClickHandler
             // Init skill component if it has one
             if (value.Skills)
             {
-                for (int i = 0; i < value.Skills.Size; i++)
+                for ( int i = 0; i < _skillGUI.Size; i++)
                 {
-                    _skillGUI[i] = value.Skills[i];
+                    if (i < value.Skills.Size)
+                        _skillGUI[i] = value.Skills[i];
+                    else
+                        _skillGUI[i] = null;
                 }
+
             }
         
             _myUnit = value;
