@@ -44,7 +44,7 @@ public class CameraController : Singleton<CameraController>
                 {
                     Vector3 newPos = Vector3.MoveTowards(cam.transform.position,leaderPos, - _zoomAmount * Time.fixedDeltaTime * zoomSpeed);
                     float newDistance = Vector3.Distance(newPos, leaderPos);
-                    Debug.Log(newDistance);
+                    // Debug.Log(newDistance);
                     if (newDistance > minZoom && newDistance < maxZoom)
                     {
                         cam.transform.position = newPos;

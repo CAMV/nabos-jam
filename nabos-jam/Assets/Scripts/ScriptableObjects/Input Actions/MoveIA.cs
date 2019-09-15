@@ -9,9 +9,6 @@ using System.Collections.Generic;
 public class MoveIA : InputAction
 {
     private const float TIME_TO_SHOW_PREVIEW = .2f;
-
-    [SerializeField]
-    private int _terrainLayer = 8;
     
     /// <summary>
     /// Coroutine that creates and add a <c>MoveSquadCmd</c> to the player's squad manager based on the input given by the player
@@ -21,12 +18,13 @@ public class MoveIA : InputAction
         bool isPreviewOn = false;
 
         Ray r = Camera.main.ScreenPointToRay(Input.mousePosition); 
-        int layerMask = 1 << _terrainLayer; 
+        int layerMask = 1 << TERRAIN_LAYER; 
         RaycastHit hit;
         List<MoveCmd> commandOut = new List<MoveCmd>();
 
-        if (Physics.Raycast(r, out hit, RAYCAST_LENGTH, layerMask) && 
-            Vector3.Angle(Vector3.up, hit.normal) < 60)         //Check the angle of the surface is not too steep
+        if (Physics.Raycast(r, out hit, RAYCAST_LENGTH) && 
+            Vector3.Angle(Vector3.up, hit.normal) < 60 &&           //Check the angle of the surface is not too steep
+            hit.transform.tag == "Floor")                           //Check the object hitted is targged as floor
         {
             Unit leader = GameManager.Instance.PlayerSquad.ActiveUnits[0];
 

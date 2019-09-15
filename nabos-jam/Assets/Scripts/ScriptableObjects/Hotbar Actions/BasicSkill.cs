@@ -4,7 +4,7 @@ using UnityEngine;
 /// Class <c> SimpleSkill </c> represents a skill that does not need further input, just to be executed.
 /// </summary>
 [CreateAssetMenu(menuName = "Skills/Simple Skill")]
-public class SimpleSkill : Skill
+public class BasicSkill : Skill
 {
     /// <summary>
     /// Checks if the conditions for the skill to be casted are met.

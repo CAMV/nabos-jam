@@ -76,7 +76,7 @@ public abstract class Skill : ScriptableObject, IHotbarAction
     /// <summary>
     /// Executes the skill
     /// </summary>
-    public virtual void Execute(bool isQuickCast){}
+    public abstract void Execute(bool isQuickCast);
 
 
     public virtual bool Compare(IHotbarAction action) 
@@ -92,6 +92,7 @@ public abstract class Skill : ScriptableObject, IHotbarAction
 
         return true;
     }
+
     /// <summary>
     /// Cooldown timer for the skill
     /// </summary>

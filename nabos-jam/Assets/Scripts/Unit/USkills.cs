@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
@@ -10,8 +11,12 @@ public class USkills : MonoBehaviour
     [SerializeField]
     private List<Skill> _mySkills = new List<Skill>();
 
+    private Unit _myUnit;
+
     void Awake()
     {
+        _myUnit = GetComponent<Unit>();
+
         for (int i = 0; i < _mySkills.Count; i++)
         {
             _mySkills[i] = ScriptableObject.Instantiate(_mySkills[i]);
@@ -65,8 +70,72 @@ public class USkills : MonoBehaviour
             newSkil.Initialize(GetComponent<Unit>()); 
             _mySkills.Add(newSkil);
         }
+    }
 
 
+    /// <summary>
+    /// Executes a coroutine that gets a vector through user input for an skill.
+    /// </summary>
+    /// <param name="skill">Skill to be send the inpu.t</param>
+    /// <param name="type">Type of Gizmo required.</param>
+    public void ExecuteSkillInput(Skill skill, VectorSkillType type)
+    {
+        
+        StartCoroutine(ExecuteSkillInputCO(skill, type));
+    }
+
+    /// <summary>
+    /// coroutine that gets a vector through user input for an skill.
+    /// </summary>
+    /// <param name="skill">Skill to be send the inpu.t</param>
+    /// <param name="type">Type of Gizmo required.</param>
+    public IEnumerator ExecuteSkillInputCO(Skill skill, VectorSkillType type)
+    {
+        bool cancel = false;
+        Vector3 hitpoint = Vector3.zero;
+
+        do
+        {
+            float rayPoint;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Plane newPlane = new Plane(Vector3.up, transform.position);
+
+            // Get raycast point
+            if (newPlane.Raycast(ray, out rayPoint))
+                hitpoint = ray.GetPoint(rayPoint);
+
+            // Set the gizmo
+            switch (type)
+            {
+                case VectorSkillType.Vector:
+                    if (_myUnit.VectorGizmo)
+                        _myUnit.VectorGizmo.Show(hitpoint, ((VectorSkill) skill).Range);
+                break;
+                case VectorSkillType.Direction:
+                    if (_myUnit.VectorGizmo)
+                        _myUnit.VectorGizmo.Show(hitpoint, 1);
+                break;
+                case VectorSkillType.Area:
+                    if (_myUnit.AreaGizmo)
+                        _myUnit.AreaGizmo.Show(hitpoint, 1);
+                break;
+            }
+
+            cancel = Input.GetButtonDown("Cancel");
+            yield return new WaitForEndOfFrame();
+
+        } while (!Input.GetButton("Fire1") || cancel);
+
+        if (!cancel)
+        {
+            skill.Execute(true);
+        }
+
+        if (_myUnit.AreaGizmo)
+            _myUnit.AreaGizmo.Hide();
+
+        if (_myUnit.VectorGizmo)
+            _myUnit.VectorGizmo.Hide();
     }
     
 } 

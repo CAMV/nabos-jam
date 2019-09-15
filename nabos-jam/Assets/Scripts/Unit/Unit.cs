@@ -17,7 +17,13 @@ public class Unit : MonoBehaviour
     private UMovement _movement = null;
 
     [SerializeField]
-    private USelectGizmo _gizmo = null;
+    private USelectGizmo _selectGizmo = null;
+
+    [SerializeField]
+    private UVectorGizmo _vectorGizmo = null;
+
+    [SerializeField]
+    private UAreaGizmo _areaGizmo = null;
 
     [SerializeField]
     private Collider _selectCollider = null;
@@ -95,7 +101,25 @@ public class Unit : MonoBehaviour
     /// </summary>
     public USelectGizmo SelectGizmo{
         get {
-            return _gizmo;
+            return _selectGizmo;
+        }
+    }
+
+    /// <summary>
+    /// The vector gizmo component of the unit, if it has it.
+    /// </summary>
+    public UVectorGizmo VectorGizmo{
+        get {
+            return _vectorGizmo;
+        }
+    }
+
+    /// <summary>
+    /// The area gizmo component of the unit, if it has it.
+    /// </summary>
+    public UAreaGizmo AreaGizmo{
+        get {
+            return _areaGizmo;
         }
     }
 

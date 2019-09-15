@@ -13,7 +13,7 @@ public class UnitAvatarSkillGUI : MonoBehaviour
     [SerializeField]
     private HotbarSlotGUI[] _skillSlotGUI = new HotbarSlotGUI[4];
 
-    private bool _isExpanded = false;
+    // private bool _isExpanded = false;
 
     /// <summary>
     /// Indexer to set the skills in the GUI

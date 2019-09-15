@@ -7,7 +7,9 @@ using UnityEngine.UI;
 /// </summary>
 public abstract class InputAction : ScriptableObject
 {
-    protected const float RAYCAST_LENGTH = 100;
+    public static float RAYCAST_LENGTH = 100;
+    public static int TERRAIN_LAYER = 8;
+
 
     // Name of the Input Axes in the Input Setting of the project
     [SerializeField]
@@ -18,6 +20,16 @@ public abstract class InputAction : ScriptableObject
     enum InputCheckType
     {
         OnPress, AfterPress
+    }
+
+    /// <summary>
+    /// Returns the name of the button associated with the Input Action
+    /// </summary>
+    /// <value></value>
+    public string ButtonName {
+        get {
+            return _buttomName;
+        }
     }
 
     private bool _currentState;

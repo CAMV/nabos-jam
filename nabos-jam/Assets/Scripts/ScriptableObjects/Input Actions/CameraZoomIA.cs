@@ -18,7 +18,7 @@ public class CameraZoomIA : InputAction
     {
         if (CameraController.Instance != null)
         {
-            Debug.Log(Input.GetAxis(_buttomName));
+            // Debug.Log(Input.GetAxis(_buttomName));
             CameraController.Instance.UpdateZoom(-Input.GetAxis(_buttomName));
         }
         yield return null;
