@@ -55,15 +55,16 @@ public class MoveIA : InputAction
             Matrix4x4 tPosMatrix = new Matrix4x4();
             
             Ray rPreview = Camera.main.ScreenPointToRay(newMPos);
-            RaycastHit pHit = hit;
 
             Formation moveFormation = GameManager.Instance.PlayerSquad.Formation;
+            Plane previewPlane = new Plane(Vector3.up, hit.point);
 
             do
             {   
                 // Checks if preview must be shown
                 if (elapsedTime >= TIME_TO_SHOW_PREVIEW)
                 {
+                    float enter;
 
                     oldMPos = newMPos;
                     newMPos = Input.mousePosition;
@@ -72,9 +73,8 @@ public class MoveIA : InputAction
                     if (oldMPos != newMPos)
                     {
                         rPreview = Camera.main.ScreenPointToRay(newMPos); 
-
-                        if (Physics.Raycast(rPreview, out pHit, RAYCAST_LENGTH, layerMask))
-                            moveRot = Quaternion.LookRotation(pHit.point - hit.point, Vector3.up);
+                        if (previewPlane.Raycast(rPreview, out enter))
+                            moveRot = Quaternion.LookRotation(rPreview.GetPoint(enter) - hit.point, Vector3.up);
                         
                     }
 
