@@ -22,9 +22,9 @@ public class CameraController : Singleton<CameraController>
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (GameManager.Instance != null && GameManager.Instance.PlayerSquad.ActiveUnits != null)
+        if (GameManager.Instance != null && GameManager.Instance.PlayerParty.ActiveUnits != null)
         {
-            List<Unit> active_units = GameManager.Instance.PlayerSquad.ActiveUnits;
+            List<Unit> active_units = GameManager.Instance.PlayerParty.ActiveUnits;
             if (active_units.Count > 0) 
             {
                 GameObject leader = active_units[0].gameObject;

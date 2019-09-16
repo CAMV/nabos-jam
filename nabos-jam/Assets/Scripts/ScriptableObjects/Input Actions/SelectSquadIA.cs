@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Collections; 
 
 /// <summary>
-/// Class <c> SelectSquadIa </c> models the action of selecting squad member units.
+/// Class <c> SelectPartyIa </c> models the action of selecting party member units.
 /// </summary>
-[CreateAssetMenu(menuName = "Input Settings/Select Squad Input Setting")]
-public class SelectSquadIA : InputAction
+[CreateAssetMenu(menuName = "Input Settings/Select Party Input Setting")]
+public class SelectPartyIA : InputAction
 {
     /// <summary>
     /// Redifene ChekInput to not just evaluate the input, but also evaluate the mouse is not over any GUI element.
@@ -26,7 +26,7 @@ public class SelectSquadIA : InputAction
     }
 
     /// <summary>
-    /// Coroutine that creates and add a SelectCmd to the player's squad controller based on the player's input.
+    /// Coroutine that creates and add a SelectCmd to the player's party controller based on the player's input.
     /// </summary>
     public override IEnumerator ExecuteAction()
     {
@@ -35,7 +35,7 @@ public class SelectSquadIA : InputAction
 
         List<Unit> selectedUnits = new List<Unit>();
         // Units that could be selected if not already
-        List<Unit> nonSelectedUnits = new List<Unit>(GameManager.Instance.PlayerSquad.Units);
+        List<Unit> nonSelectedUnits = new List<Unit>(GameManager.Instance.PlayerParty.Units);
 
         Vector2 startMousePos = Input.mousePosition;
         Vector2 currentMousePos = Input.mousePosition;
@@ -90,7 +90,7 @@ public class SelectSquadIA : InputAction
         // if reset is not gonna happend, add newly selected units to existence active units
         if (!isReset)
         {
-            foreach(Unit u in GameManager.Instance.PlayerSquad.ActiveUnits)
+            foreach(Unit u in GameManager.Instance.PlayerParty.ActiveUnits)
             {
                 if (!selectedUnits.Contains(u))
                 {
@@ -103,7 +103,7 @@ public class SelectSquadIA : InputAction
         if (GUIManager.Instance.SelectSquareGUI)
             GUIManager.Instance.SelectSquareGUI.SetSquare(Rect.zero);    
 
-        GameManager.Instance.PlayerSquad.AddCommand(new SelectCmd(selectedUnits));
+        GameManager.Instance.PlayerParty.AddCommand(new SelectCmd(selectedUnits));
 
     }
 }

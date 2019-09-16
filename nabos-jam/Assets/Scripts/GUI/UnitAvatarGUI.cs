@@ -58,7 +58,7 @@ public class UnitAvatarGUI : MonoBehaviour, IPointerClickHandler
 
             }
 
-            List<Unit> aUnits = GameManager.Instance.PlayerSquad.ActiveUnits;
+            List<Unit> aUnits = GameManager.Instance.PlayerParty.ActiveUnits;
 
             if (aUnits != null) 
                 SetSelectGizmo(aUnits.Contains(value));
@@ -131,7 +131,7 @@ public class UnitAvatarGUI : MonoBehaviour, IPointerClickHandler
 
         if (Input.GetButton("Ctrl"))
         {
-            selectedUnits = new List<Unit>(GameManager.Instance.PlayerSquad.ActiveUnits);
+            selectedUnits = new List<Unit>(GameManager.Instance.PlayerParty.ActiveUnits);
 
             if (selectedUnits.Contains(_myUnit))
                 selectedUnits.Remove(_myUnit);
@@ -148,7 +148,7 @@ public class UnitAvatarGUI : MonoBehaviour, IPointerClickHandler
         selectCmd = new SelectCmd(selectedUnits);   
 
         //StartCoroutine(CheckIfDraggingCO(selectCmd));
-        GameManager.Instance.PlayerSquad.AddCommand(selectCmd);
+        GameManager.Instance.PlayerParty.AddCommand(selectCmd);
     }
 
 }

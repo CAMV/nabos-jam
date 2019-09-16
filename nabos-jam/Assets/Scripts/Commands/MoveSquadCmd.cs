@@ -4,7 +4,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Command that moves a group of units, decomposing the command in different MoveCmd for each unit.
 /// </summary>
-public class MoveSquadCmd : Command
+public class MovePartyCmd : Command
 {
     private List<Unit> _unitsToMove;
     private Formation _formation;
@@ -16,13 +16,13 @@ public class MoveSquadCmd : Command
     private List<Quaternion> _calculatedRotations;
 
     /// <summary>
-    /// Constructs the commmand given a target position and a target rotation for the whole squad.
+    /// Constructs the commmand given a target position and a target rotation for the whole party.
     /// </summary>
     /// <param name="units">Units to be moved</param>
-    /// <param name="position">Target position for the whole squad</param>
-    /// <param name="rotation">Target rotation for the whole squad</param>
-    /// <param name="formation">Formation to be followed by the squad</param>
-    public MoveSquadCmd(List<Unit> units, Vector3 position, Quaternion rotation, Formation formation = null)
+    /// <param name="position">Target position for the whole party</param>
+    /// <param name="rotation">Target rotation for the whole party</param>
+    /// <param name="formation">Formation to be followed by the party</param>
+    public MovePartyCmd(List<Unit> units, Vector3 position, Quaternion rotation, Formation formation = null)
     {
         _unitsToMove = units;
         _formation = formation;
@@ -35,12 +35,12 @@ public class MoveSquadCmd : Command
     }
 
     /// <summary>
-    /// Constructs the commmand given a target position for the whole squad.
+    /// Constructs the commmand given a target position for the whole party.
     /// </summary>
     /// <param name="units">Units to be moved</param>
-    /// <param name="position">Target position for the whole squad</param>
-    /// <param name="formation">Formation to be followed by the squad</param>
-    public MoveSquadCmd(List<Unit> units, Vector3 position, Formation formation = null)
+    /// <param name="position">Target position for the whole party</param>
+    /// <param name="formation">Formation to be followed by the party</param>
+    public MovePartyCmd(List<Unit> units, Vector3 position, Formation formation = null)
     {
         _unitsToMove = units;
         _formation = formation;
@@ -57,7 +57,7 @@ public class MoveSquadCmd : Command
     /// <param name="units"Units to be moved</param>
     /// <param name="positions">Positions for each unit</param>
     /// <param name="rotations">Rotations for each unit</param>
-    public MoveSquadCmd(List<Unit> units, List<Vector3> positions, List<Quaternion> rotations)
+    public MovePartyCmd(List<Unit> units, List<Vector3> positions, List<Quaternion> rotations)
     {
         _unitsToMove = units;
         _calculatedPositions = positions;
@@ -70,8 +70,8 @@ public class MoveSquadCmd : Command
     /// </summary>
     /// <param name="units"Units to be moved</param>
     /// <param name="positions">Positions for each unit</param>
-    /// <param name="formation">Formation to be followed by the squad</param>
-    public MoveSquadCmd(List<Unit> units, List<Vector3> positions, Formation formation = null)
+    /// <param name="formation">Formation to be followed by the party</param>
+    public MovePartyCmd(List<Unit> units, List<Vector3> positions, Formation formation = null)
     {
         _unitsToMove = units;
         _formation = formation;
@@ -106,7 +106,7 @@ public class MoveSquadCmd : Command
         }
 
         Matrix4x4 tPosMatrix = new Matrix4x4();
-        int nUnitsToMove = GameManager.Instance.PlayerSquad.ActiveUnits.Count;
+        int nUnitsToMove = GameManager.Instance.PlayerParty.ActiveUnits.Count;
 
         // Calculate leader transform matrix and, if need, the target positions
         if (_calculatedPositions.Count == 0)
@@ -153,12 +153,12 @@ public class MoveSquadCmd : Command
             Command fMoveCmd;
 
             fMoveCmd = new MoveCmd(
-                    GameManager.Instance.PlayerSquad.ActiveUnits[i], 
+                    GameManager.Instance.PlayerParty.ActiveUnits[i], 
                     _calculatedPositions[i],
                     _calculatedRotations[i]
                 );
             
-            GameManager.Instance.PlayerSquad.AddCommand(fMoveCmd);
+            GameManager.Instance.PlayerParty.AddCommand(fMoveCmd);
         }
     }
 

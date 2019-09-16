@@ -18,7 +18,7 @@ public class MoveInFormationGUI : MonoBehaviour
     {
         if (active)
         {
-            for (int i = 0; i < GameManager.Instance.PlayerSquad.ActiveUnits.Count; i++)
+            for (int i = 0; i < GameManager.Instance.PlayerParty.ActiveUnits.Count; i++)
             {   
             _unitGizmos[i].SetActive(true);
             }           

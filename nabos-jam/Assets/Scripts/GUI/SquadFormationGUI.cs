@@ -3,9 +3,9 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 /// <summary>
-/// GUI component that hadles the changes of formation for the player's squad using a dropdown menu component.
+/// GUI component that hadles the changes of formation for the player's party using a dropdown menu component.
 /// </summary>
-public class SquadFormationGUI : MonoBehaviour
+public class PartyFormationGUI : MonoBehaviour
 {
     [SerializeField]
     private Dropdown _dropdownMenu = null;
@@ -35,6 +35,6 @@ public class SquadFormationGUI : MonoBehaviour
     public void UpdateFormation()
     {
         if (_dropdownMenu)
-             GameManager.Instance.ChangePlayerSquadFormation(_dropdownMenu.value); 
+             GameManager.Instance.ChangePlayerPartyFormation(_dropdownMenu.value); 
     }
 }

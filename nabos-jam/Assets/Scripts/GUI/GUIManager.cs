@@ -17,9 +17,9 @@ public class GUIManager : Singleton<GUIManager>
     [SerializeField]
     private MoveTargetGUI _moveTgGUI = null;
     [SerializeField]
-    private SquadUnitsGUI _sqUnitsGUI = null;
+    private PartyUnitsGUI _sqUnitsGUI = null;
     [SerializeField]
-    private SquadFormationGUI _sqFormationGUI = null;
+    private PartyFormationGUI _sqFormationGUI = null;
     [SerializeField]
     private Hotbar _hotbar = null;
 
@@ -49,10 +49,10 @@ public class GUIManager : Singleton<GUIManager>
     }
 
     /// <summary>
-    /// Component that handles squad units avatars GUI.
+    /// Component that handles party units avatars GUI.
     /// </summary>
-    /// <value>SquadUnitsGUI component.</value>
-    public SquadUnitsGUI SquadUnitsGUI
+    /// <value>PartyUnitsGUI component.</value>
+    public PartyUnitsGUI PartyUnitsGUI
     {
         get {
             return _sqUnitsGUI;
@@ -70,10 +70,10 @@ public class GUIManager : Singleton<GUIManager>
     }
 
     /// <summary>
-    /// Component that handles squad formation selection GUI.
+    /// Component that handles party formation selection GUI.
     /// </summary>
     /// <value>SelectSquareGUI component.</value>
-    public SquadFormationGUI SquadFormationGUI {
+    public PartyFormationGUI PartyFormationGUI {
         get {
             return _sqFormationGUI;
         }

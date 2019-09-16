@@ -4,9 +4,9 @@ using UnityEngine;
 using System.Linq;
 
 /// <summary>
-/// Class <c> SquasController </c> handles ther order given to a squad or group of unit.
+/// Class <c> SquasController </c> handles ther order given to a party or group of unit.
 /// </summary>
-public class SquadController : MonoBehaviour
+public class PartyController : MonoBehaviour
 {
     // The order of the units defines who goes where in a formation.
     [SerializeField]
@@ -18,7 +18,7 @@ public class SquadController : MonoBehaviour
     protected bool _isIdle = true;
 
     /// <summary>
-    /// Units that cinforms the squad
+    /// Units that cinforms the party
     /// </summary>
     public List<Unit> Units {
         get {
@@ -27,7 +27,7 @@ public class SquadController : MonoBehaviour
     }
 
     /// <summary>
-    /// Meta fromation that the squad follows when moving.
+    /// Meta fromation that the party follows when moving.
     /// </summary>
     public Formation Formation {
         get {
@@ -38,7 +38,7 @@ public class SquadController : MonoBehaviour
 
             if (_activeUnits.Count > 0)
                 AddCommand(
-                        new MoveSquadCmd(
+                        new MovePartyCmd(
                                     _activeUnits, 
                                     _activeUnits[0].transform.position,
                                     _activeUnits[0].transform.rotation,
@@ -49,7 +49,7 @@ public class SquadController : MonoBehaviour
     }
 
     /// <summary>
-    /// Size of the Squad
+    /// Size of the Party
     /// </summary>
     public int Size {
         get {
@@ -113,14 +113,14 @@ public class SquadController : MonoBehaviour
             }
 
             // Update GUI
-            if (GUIManager.Instance.SquadUnitsGUI)
-                GUIManager.Instance.SquadUnitsGUI.SetSelectedAvatars(value);
+            if (GUIManager.Instance.PartyUnitsGUI)
+                GUIManager.Instance.PartyUnitsGUI.SetSelectedAvatars(value);
             
         }
     }
 
     /// <summary>
-    /// Units currently active in the squad
+    /// Units currently active in the party
     /// </summary>
     public virtual List<Unit> ActiveUnits {
         get {
@@ -159,7 +159,7 @@ public class SquadController : MonoBehaviour
             _activeUnits = sActiveUnits.GetValueList().Cast<Unit>().ToList();
 
             AddCommand(
-                    new MoveSquadCmd(
+                    new MovePartyCmd(
                                 _activeUnits, 
                                 leaderPos,
                                 leaderRot,

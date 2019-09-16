@@ -7,17 +7,17 @@ using System.Collections.Generic;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField]
-    private SquadController _playerSquad = null;
+    private PartyController _playerParty = null;
 
     [SerializeField]
     private List<Formation> _formationsAvailable = new List<Formation>();
 
     /// <summary>
-    /// Player's squad controller
+    /// Player's party controller
     /// </summary>
-    public SquadController PlayerSquad {
+    public PartyController PlayerParty {
         get {
-            return _playerSquad;
+            return _playerParty;
         }
     }
 
@@ -33,19 +33,19 @@ public class GameManager : Singleton<GameManager>
     void Start()
     { 
         // Selects the first unit at the begining so a unit is always selected.
-        _playerSquad.AddCommand(new SelectCmd(new List<Unit>() {_playerSquad.Units[0]}));
-        // Assign the first available formation to the player squad.
-        ChangePlayerSquadFormation(0);
+        _playerParty.AddCommand(new SelectCmd(new List<Unit>() {_playerParty.Units[0]}));
+        // Assign the first available formation to the player party.
+        ChangePlayerPartyFormation(0);
     }
 
     /// <summary>
-    /// Changes the formation of the plaer's squad from the list of available formation. 
+    /// Changes the formation of the plaer's party from the list of available formation. 
     /// </summary>
     /// <param name="option">Index of the formation available</param>
-    public void ChangePlayerSquadFormation(int option)
+    public void ChangePlayerPartyFormation(int option)
     {
         if (_formationsAvailable.Count > 0 && option >= 0 && option < _formationsAvailable.Count)
-            _playerSquad.Formation = _formationsAvailable[option];
+            _playerParty.Formation = _formationsAvailable[option];
     }
 
 

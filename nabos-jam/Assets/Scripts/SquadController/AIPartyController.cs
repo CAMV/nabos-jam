@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AISquadController : SquadController
+public class AIPartyController : PartyController
 {
     [SerializeField] 
     AICommandHandler _AIHandler;

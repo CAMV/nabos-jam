@@ -4,15 +4,15 @@ using UnityEngine;
 using System.Linq;
 
 /// <summary>
-/// Class <c> SquasController </c> handles ther order given to a squad or group of unit.
+/// Class <c> SquasController </c> handles ther order given to a party or group of unit.
 /// </summary>
-public class PlayerSquadController : SquadController
+public class PlayerPartyController : PartyController
 {
     // The order of the units defines who goes where in a formation.
 
 
     /// <summary>
-    /// Units currently active in the squad
+    /// Units currently active in the party
     /// </summary>
     public override List<Unit> ActiveUnits {
         get {

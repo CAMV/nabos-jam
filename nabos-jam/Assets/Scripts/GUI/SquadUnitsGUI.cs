@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 
 /// <summary>
-/// Class <c> SquadUnitGUI </c> handles all avatars in the GUI of the units in the squad. Setting them and reordering them with a drag & drop behaviour
+/// Class <c> PartyUnitGUI </c> handles all avatars in the GUI of the units in the party. Setting them and reordering them with a drag & drop behaviour
 /// </summary>
-public class SquadUnitsGUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class PartyUnitsGUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     [SerializeField]
     private GameObject _dragDummy = null;  
@@ -37,7 +37,7 @@ public class SquadUnitsGUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
     void Start()
     {
-        List<Unit> units = GameManager.Instance.PlayerSquad.Units;
+        List<Unit> units = GameManager.Instance.PlayerParty.Units;
         _dragDummy.SetActive(false);
         
         for (int i = 0; i < units.Count; i++)
@@ -89,7 +89,7 @@ public class SquadUnitsGUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     }
 
     /// <summary>
-    /// Updates the position of the avatar being dragged and change the order of the squad units if tha avatar is dragged to the y-position of another avatar
+    /// Updates the position of the avatar being dragged and change the order of the party units if tha avatar is dragged to the y-position of another avatar
     /// </summary>
     public void OnDrag(PointerEventData e)  
     {
@@ -127,7 +127,7 @@ public class SquadUnitsGUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
             _uAvatars[firstIndex].gameObject.SetActive(true);
             _uAvatars[secondIndex].gameObject.SetActive(false);
 
-            GameManager.Instance.PlayerSquad.SwapUnitsOrer(firstIndex, secondIndex);
+            GameManager.Instance.PlayerParty.SwapUnitsOrer(firstIndex, secondIndex);
 
             _indexDragElement = secondIndex;
         }
