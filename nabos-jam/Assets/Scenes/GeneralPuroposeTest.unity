@@ -19509,7 +19509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79be737bacca00345aa45eb425ff87ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerSquad: {fileID: 844205330}
+  _playerParty: {fileID: 844205330}
   _formationsAvailable:
   - {fileID: 11400000, guid: 3526be394849f6341b8fd63399977961, type: 2}
   - {fileID: 11400000, guid: fc472b9410dcd704e9859cb2c0965323, type: 2}
