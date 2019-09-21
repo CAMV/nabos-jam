@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec8caad461782764288cf70bb53cc1e5, type: 3}
-  m_Name: InitialStateCircularTransition
+  m_Name: T Keep Wandering
   m_EditorClassIdentifier: 
   targetState: {fileID: 11400000, guid: 124be6994216a7f4f910b19d283d02ad, type: 2}
-  actions: {fileID: 0}
+  actions: {fileID: 11400000, guid: 887073679be69ca419e5f43c2a2d9fec, type: 2}
   condition: {fileID: 11400000, guid: 9c532901fb44f144992c382332ea9698, type: 2}

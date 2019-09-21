@@ -34,7 +34,6 @@ public class AttackHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //
         if (other.GetComponent<Unit>() && other.gameObject.layer == aggresiveLayer)
         {
             SetAttackTarget(other.GetComponent<Unit>());
@@ -47,52 +46,27 @@ public class AttackHandler : MonoBehaviour
         isAttacking = true;
     }
 
-    private void Update() 
-    {
-        if (isAttacking)
-        {
-           Attack(targetUnit); 
-        }
-    }
-
+    /// <summary>
+    /// Attacks a target enemy unity
+    /// </summary>
+    /// <param name="_enemyUnit"></param>
     public void Attack(Unit _enemyUnit)
     {
         Unit _myUnit = GetComponent<Unit>();
         float attackCd = character.attackCooldown;
-        //Checks if unit hasn't died
-        if (_enemyUnit != null) 
+        //Checks if unit hasn't died and attack cd is ready
+        if (_enemyUnit != null && attackCd <= 0) 
         {
-            if (character.attackRange > Vector3.Distance(transform.position, _enemyUnit.transform.position))
+            _myUnit.Character.PerformAttack(_enemyUnit.Character);
+            //Reset attack delay
+            _myUnit.Character.ResetAttackCd();
+
+            //Unit died, destroy it
+            if (_enemyUnit.Character.health.currentHealth <= 0) 
             {
-                //Stops moving once withing range
-                if (_isChasing && _myUnit.Movement)
-                {
-                    _isChasing = false;
-                    _myUnit.Movement.StopMoving();
-                }
-                //Checks if attack cooldown is ready
-                if (attackCd <= 0)
-                {
-                    _myUnit.Character.PerformAttack(_enemyUnit.Character);
-                    //Reset attack delay
-                    _myUnit.Character.ResetAttackCd();
-
-                    //Unit died, destroy it
-                    if (_enemyUnit.Character.health.currentHealth <= 0) 
-                    {
-                        Object.Destroy(_enemyUnit.gameObject);
-                        _myUnit.GetComponent<AttackHandler>().isAttacking = false;
-                    }
-                }
-
+                Object.Destroy(_enemyUnit.gameObject);
+                _myUnit.GetComponent<AttackHandler>().isAttacking = false;
             }
-            else 
-            {
-                if (_myUnit.Movement && !_isChasing)
-                    _isChasing = true;
-                    _myUnit.Movement.Move(_enemyUnit.transform.position);
-            }
-
         }
     }
 

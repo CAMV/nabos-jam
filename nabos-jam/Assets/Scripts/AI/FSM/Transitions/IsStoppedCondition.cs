@@ -5,9 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "AI/Conditions/IsStopped")]
 public class IsStoppedCondition : Condition
 {
-    [SerializeField]
-    Unit unit;
     public override bool IsTriggered() {
-        return (unit.Movement && !unit.Movement.isMoving());
+        return (_unit.Movement && !_unit.Movement.isMoving());
     }
 }

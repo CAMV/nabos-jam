@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49971283b52249e44b65a7e5aec0695c, type: 3}
-  m_Name: New Is Stopped Condition
+  m_Script: {fileID: 11500000, guid: 5f8197279e30f4e499b8d4f1099479a9, type: 3}
+  m_Name: Attack Target AL
   m_EditorClassIdentifier: 
-  unit: {fileID: 9010060406138952198, guid: 5989cdb6465ee0a45bbf42f906244c0b, type: 3}
+  actions:
+  - {fileID: 11400000, guid: 10f05303ed38da148a80accbb943bd69, type: 2}

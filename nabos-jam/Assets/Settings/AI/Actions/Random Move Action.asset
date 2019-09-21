@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1618969bfe10a6541a64f9f21b88814c, type: 3}
-  m_Name: SMHealth
+  m_Script: {fileID: 11500000, guid: e2f4fdb0f6ae07d43a8ab1b6629aca52, type: 3}
+  m_Name: Random Move Action
   m_EditorClassIdentifier: 
-  maxResource: 100
-  currentResource: 0
+  usesUnitInfo: 1
+  _unit: {fileID: 0}

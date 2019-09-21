@@ -14,7 +14,10 @@ public class FSMTransition : ScriptableObject
     [SerializeField]
     private Condition condition;
 
+    public void Initialize(Unit unit) {condition.Initialize(unit);}
+
     public bool IsTriggered() {return condition.IsTriggered();} 
+    public bool UsesUnitInfo() {return condition.usesUnitInfo;}
     public FSMState GetTargetState() {return targetState;}
     public List<Action> GetAction() {return actions.GetActions();}
 }
