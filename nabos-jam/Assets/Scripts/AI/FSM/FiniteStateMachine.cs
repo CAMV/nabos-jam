@@ -46,17 +46,32 @@ public class FiniteStateMachine : MonoBehaviour
 
     }
 
-    private void Update()
+    private FSMTransition GetValidTransition(FSMState state)
     {
         FSMTransition triggeredTransition = null;
-
-        foreach (FSMTransition t in currentState.GetTransitions())
+        foreach (FSMTransition t in state.GetTransitions())
         {
             if (t.IsTriggered())
             {
                 triggeredTransition = t;
                 break;
             }
+        }
+        return triggeredTransition;
+    }
+
+    private void Update()
+    {
+        FSMTransition triggeredTransition = null;
+
+        if (anyState)
+        {
+            triggeredTransition = GetValidTransition(anyState);
+        }
+
+        if (!triggeredTransition)
+        {
+            triggeredTransition = GetValidTransition(currentState);
         }
 
         List<Action> actions = new List<Action>();
