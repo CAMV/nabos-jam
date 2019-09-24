@@ -2,46 +2,26 @@ using UnityEngine;
 
 public enum VectorSkillType 
 {
-    Direction, Vector, Area
+    Direction, Vector, Area, Unit
 }
 
 [CreateAssetMenu(menuName = "Skills/Vector Skill")]
-[RequireComponent(typeof(MeshRenderer))]
-
+/// <summary>
+/// Represents all skills that requieres a vector3 to be executed.
+/// </summary>
 public class VectorSkill : Skill
-{
-
-
-    [SerializeField]
-    protected Projectile _projectile;
-    
+{   
     [SerializeField]
     protected VectorSkillType _type = VectorSkillType.Vector;
-    
-    [Range(0, 10)]
-    [SerializeField]
-    protected int _range;
 
-    protected Vector3 _targetPosition;
-    
-    public int Range {
-        get {
-            return _range;
-        }
-    }
-    
+    protected Vector3 _inputVector;
+
     /// <summary>
-    /// Checks if the conditions for the skill to be casted are met.
+    /// Exceute function for hotbar action
     /// </summary>
-    override protected bool CheckPreCondition()
-    {
-        return true;
-    }
-
     override public void Execute(bool isQuickCast)
     {
-        string qcMsg = isQuickCast ? "quick-casted " : "casted";
-        Debug.Log(_originUnit.name + " " + qcMsg  + _name + "!");
+        base.Execute(isQuickCast);
 
         if (isQuickCast)
         {
@@ -52,36 +32,35 @@ public class VectorSkill : Skill
             float rayPoint;
             newPlane.Raycast(ray, out rayPoint);
             
-            _targetPosition = ray.GetPoint(rayPoint);
+            _inputVector = ray.GetPoint(rayPoint);
 
-            CastSkillObject();
+            Cast(_inputVector);
         }
         else
         {
-            _originUnit.Skills.ExecuteSkillInput(this, _type);
-            
+            _originUnit.Skills.GetSkillInput(this, _type);      
         }
     }
 
-    private void CastSkillObject()
+    /// <summary>
+    /// Cast the skill
+    /// </summary>
+    override public void Cast()
     {
-
-        Ray throwRay = new Ray(_originUnit.transform.position, _targetPosition);    
-
-        float distanceToThrow = Vector3.Distance(_originUnit.transform.position, _targetPosition);
-        distanceToThrow = distanceToThrow > _range ? _range : distanceToThrow;
-
-        
-
-        Projectile currentP = GameObject.Instantiate(
-                        _projectile, 
-                        _originUnit.transform.position + Vector3.up*1.5f + (_targetPosition - _originUnit.transform.position).normalized, 
-                        Quaternion.LookRotation(_targetPosition - _originUnit.transform.position, Vector3.up)
-                    );
-
-        currentP.Initialize(_originUnit, throwRay.GetPoint(Mathf.Max(1, distanceToThrow)));
+        base.Cast();
+        for (int i = 0; i < _actionObjects.Length; i++)
+        {
+            InitializeActionObjects(i, _inputVector);
+        }
     }
 
-
-
+    /// <summary>
+    /// Cast the skill with a given vector position as a reference.
+    /// </summary>
+    /// <param name="input"></param>
+    public void Cast(Vector3 input)
+    {
+        _inputVector = input;
+        Cast();
+    }
 }

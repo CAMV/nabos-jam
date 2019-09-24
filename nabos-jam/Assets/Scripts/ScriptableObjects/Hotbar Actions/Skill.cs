@@ -7,36 +7,43 @@ using System.Collections;
 public abstract class Skill : ScriptableObject, IHotbarAction
 {
     [SerializeField]
-    protected string _name = "";
+    protected GUIData _guiData;
 
     [SerializeField]
-    protected Sprite _icon = null;
+    protected ActionObject[] _actionObjects = new ActionObject[0];
+
+    [SerializeField]
+    protected UnitPart[] _spawnPoints;
 
     [SerializeField]
     protected float _baseCoolDownTime = 0;
+
+    [SerializeField]
+    private VfxAction[] _castEffects;
+
+    [SerializeField]
+    private UnitResource[] _resourceCost;
+
+    [SerializeField]
+    private int[] _valueCost;
+    
+    [Range(0, 10)]
+    [SerializeField]
+    protected int _range;
 
     protected Unit _originUnit;
     protected bool _isReady;
     protected float _currentCoolDown;
 
+    //////////////// PROPERTIES ////////////////
 
     /// <summary>
-    /// Get the name of the Skill.
+    /// Get the GUIData of the Skill.
     /// </summary>
-    /// <value></value>
-    public string Name {
+    public GUIData GUIData {
         get {
-            return _name;
+            return _guiData;
         } 
-    }
-
-    /// <summary>
-    /// Get the icon of the Skill for GUI purpposes
-    /// </summary>
-    public Sprite Icon {
-        get {
-            return _icon;
-        }
     }
 
     /// <summary>
@@ -59,38 +66,70 @@ public abstract class Skill : ScriptableObject, IHotbarAction
     }
 
     /// <summary>
+    /// Maximun range allowed for the skill
+    /// </summary>
+    /// <value></value>
+    public int Range {
+        get {
+            return _range;
+        }
+    }
+
+    //////////////// METHODS ////////////////
+
+    /// <summary>
     /// Initialize the skill with the unit caster.
     /// </summary>
     /// <param name="oUnit">Unit that cast the skill</param>
     public void Initialize(Unit oUnit)
     {
         this._originUnit = oUnit;
+
+        for (int i = 0; i < _actionObjects.Length; i++)
+        {
+            _actionObjects[i]  =ScriptableObject.Instantiate(_actionObjects[i]);
+            _actionObjects[i].Initialice(oUnit);
+        }
+
         this._isReady = false;
     }
 
     /// <summary>
     /// Checks if the conditions for the skill to be casted are met.
     /// </summary>
-    protected abstract bool CheckPreCondition();
+    protected virtual bool CheckPreCondition(){
+        
+        if (_currentCoolDown > 0)
+            return false;
+
+
+        // Check the cost in resources of the skill
+        for (int i = 0; i < _resourceCost.Length; i++)
+        {
+            UnitResource currentResource = _originUnit.Properties.GetResource(_resourceCost[i]);
+            if (currentResource)
+            {
+                if (currentResource.CurrentValue > _valueCost[i])
+                    return false;
+            }
+            else
+                return false;
+
+        }
+
+        return true;
+    }
 
     /// <summary>
     /// Executes the skill
     /// </summary>
-    public abstract void Execute(bool isQuickCast);
-
-
-    public virtual bool Compare(IHotbarAction action) 
+    public virtual void Execute(bool isQuickCast)
     {
-        if (this.GetType() != action.GetType())
-            return false;
-
-        if (this.Name != action.Name)
-            return false;
-
-        if (this._originUnit != ((Skill)action)._originUnit)
-            return false;
-
-        return true;
+        if (!CheckPreCondition())
+            return;
+            
+        string qcMsg = isQuickCast ? "quick-casted " : "casted";
+        Debug.Log(_originUnit.name + " " + qcMsg  + _guiData.Name + "!");
     }
 
     /// <summary>
@@ -105,6 +144,45 @@ public abstract class Skill : ScriptableObject, IHotbarAction
         }
 
         _currentCoolDown = 0;
+    }
+
+    /// <summary>
+    /// Remove the amount of resources neede to cast the spell. 
+    /// </summary>
+    protected void PayThCost()
+    {
+        for (int i = 0; i < _resourceCost.Length; i++)
+        {
+            _originUnit.Properties.GetResource(_resourceCost[i]).ChangeBase(_valueCost[i]);
+        }
+    }
+
+    /// <summary>
+    /// Creates the actions objects and Vfx Associated with the skill.
+    /// </summary>
+    public virtual void Cast()
+    {
+        PayThCost();
+    }
+
+    /// <summary>
+    /// Initialize all action objects associated with the the skills
+    /// </summary>
+    /// <param name="actionIndex">Index of the action in the action list of the skill.</param>
+    /// <param name="spawnPosition">Position in world coord where to spawn the object.</param>
+    protected void InitializeActionObjects(int actionIndex, Vector3 spawnPosition)
+    {
+        ActionObject currentAction;
+
+        if ( _actionObjects[actionIndex].GetType() == typeof(AreaAction))
+            currentAction = GameObject.Instantiate(_actionObjects[actionIndex], spawnPosition, Quaternion.identity);    
+        else
+            currentAction = GameObject.Instantiate(_actionObjects[actionIndex], _originUnit.Animation[_spawnPoints[actionIndex]]);
+
+        currentAction.Initialice(_originUnit);
+
+        if ( _actionObjects[actionIndex].GetType() == typeof(ProjectileAction))
+            ((ProjectileAction) currentAction).Launch(spawnPosition);
     }
 
 

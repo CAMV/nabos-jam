@@ -11,7 +11,7 @@ public class MoveIA : InputAction
     private const float TIME_TO_SHOW_PREVIEW = .2f;
     
     /// <summary>
-    /// Coroutine that creates and add a <c>MoveSquadCmd</c> to the player's squad manager based on the input given by the player
+    /// Coroutine that creates and add a <c>MovePartyCmd</c> to the player's party manager based on the input given by the player
     /// </summary>
     public override IEnumerator ExecuteAction()
     {
@@ -26,17 +26,17 @@ public class MoveIA : InputAction
             Vector3.Angle(Vector3.up, hit.normal) < 60 &&           //Check the angle of the surface is not too steep
             hit.transform.tag == "Floor")                           //Check the object hitted is targged as floor
         {
-            Unit leader = GameManager.Instance.PlayerSquad.ActiveUnits[0];
+            Unit leader = GameManager.Instance.PlayerParty.ActiveUnits[0];
 
             //Stops units from attacking
-            for (int i = 0; i < GameManager.Instance.PlayerSquad.ActiveUnits.Count; i++) 
-            {
-                Unit unit =  GameManager.Instance.PlayerSquad.ActiveUnits[i];
-                if (unit.GetComponent<AttackHandler>())
-                {
-                    unit.GetComponent<AttackHandler>().StopAttacking();
-                }
-            }
+            // for (int i = 0; i < GameManager.Instance.PlayerParty.ActiveUnits.Count; i++) 
+            // {
+            //     Unit unit =  GameManager.Instance.PlayerParty.ActiveUnits[i];
+            //     if (unit.GetComponent<AttackHandler>())
+            //     {
+            //         unit.GetComponent<AttackHandler>().StopAttacking();
+            //     }
+            // }
             
             Quaternion moveRot = leader.transform.rotation;
             moveRot.SetLookRotation(
@@ -54,7 +54,7 @@ public class MoveIA : InputAction
             
             Ray rPreview = Camera.main.ScreenPointToRay(newMPos);
 
-            Formation moveFormation = GameManager.Instance.PlayerSquad.Formation;
+            Formation moveFormation = GameManager.Instance.PlayerParty.Formation;
             Plane previewPlane = new Plane(Vector3.up, hit.point);
 
             do
@@ -77,13 +77,7 @@ public class MoveIA : InputAction
                     }
 
                     if (!isPreviewOn)
-                    {
                         isPreviewOn = true;
-
-                        // Turn on the formation preview gizmos
-                        if (GUIManager.Instance.MoveInFormationGUI)
-                            GUIManager.Instance.MoveInFormationGUI.SetActive(true);
-                    }
                     
                 }
                 else
@@ -105,7 +99,7 @@ public class MoveIA : InputAction
                     tPosMatrix.SetTRS(hit.point, moveRot, Vector3.one);
 
                     // Add followers target position and rotation
-                    for(int i = 0; i < GameManager.Instance.PlayerSquad.ActiveUnits.Count - 1; i++)
+                    for(int i = 0; i < GameManager.Instance.PlayerParty.ActiveUnits.Count - 1; i++)
                     {
                         rotations.Add(Formation.GetFollowerRotation(
                                 moveFormation, 
@@ -121,8 +115,8 @@ public class MoveIA : InputAction
                     }
 
                     // Updates the preview gizmo values
-                    if (GUIManager.Instance.MoveInFormationGUI)
-                        GUIManager.Instance.MoveInFormationGUI.SetValues(positions, rotations);
+                    if (GUIManager.Instance.FormationPreviewGizmo)
+                        GUIManager.Instance.FormationPreviewGizmo.Show(positions, rotations);
                 }
                 
                 yield return new WaitForEndOfFrame();
@@ -134,8 +128,8 @@ public class MoveIA : InputAction
             // apply formation position offset
             if (moveFormation)
             {
-                fMoveCmd = new MoveSquadCmd(
-                                    GameManager.Instance.PlayerSquad.ActiveUnits,
+                fMoveCmd = new MovePartyCmd(
+                                    GameManager.Instance.PlayerParty.ActiveUnits,
                                     positions[0],
                                     rotations[0],
                                     moveFormation
@@ -143,21 +137,21 @@ public class MoveIA : InputAction
             }
             else
             {
-                fMoveCmd = new MoveSquadCmd(
-                                    GameManager.Instance.PlayerSquad.ActiveUnits,
+                fMoveCmd = new MovePartyCmd(
+                                    GameManager.Instance.PlayerParty.ActiveUnits,
                                     positions[0],
                                     moveFormation
                                 );
             }           
 
-            GameManager.Instance.PlayerSquad.AddCommand(fMoveCmd);
+            GameManager.Instance.PlayerParty.AddCommand(fMoveCmd);
 
             // Turn on preview gizmos and shows the movement feedback
-            if (GUIManager.Instance.MoveInFormationGUI)
-                GUIManager.Instance.MoveInFormationGUI.SetActive(false);    
+            if (GUIManager.Instance.FormationPreviewGizmo)
+                GUIManager.Instance.FormationPreviewGizmo.Hide();    
 
-            if (GUIManager.Instance.MoveTargetGUI)
-                GUIManager.Instance.MoveTargetGUI.Show(positions, rotations);        
+            if (GUIManager.Instance.MovementFeedbackGizmo)
+                GUIManager.Instance.MovementFeedbackGizmo.Show(positions, rotations);        
         }
         
         yield return null;

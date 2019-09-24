@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 /// <summary>
-/// Command that tells the player's squad controller to set as activate units a list of units
+/// Command that tells the player's party controller to set as activate units a list of units
 /// </summary>
 public class SelectCmd : Command
 {
@@ -18,12 +18,12 @@ public class SelectCmd : Command
     }
 
     /// <summary>
-    /// Set the player's squad controller active units with its units.
+    /// Set the player's party controller active units with its units.
     /// </summary>
     override public void Do()
     {
-        _oldActiveUnits = GameManager.Instance.PlayerSquad.ActiveUnits;
-        GameManager.Instance.PlayerSquad.ActiveUnits = _newActiveUnits;
+        _oldActiveUnits = GameManager.Instance.PlayerParty.ActiveUnits;
+        GameManager.Instance.PlayerParty.ActiveUnits = _newActiveUnits;
     }
 
     /// <summary>

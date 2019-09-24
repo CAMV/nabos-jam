@@ -13,7 +13,7 @@ public class AttackIA : InputAction
 
     /// <summary>
     /// Adds an attack command to the player's units via the
-    /// squad manager when an input is pressed.
+    /// party manager when an input is pressed.
     /// </summary>
     public override IEnumerator ExecuteAction()
     {
@@ -27,15 +27,15 @@ public class AttackIA : InputAction
         {
             //Get targetted unit
             Unit enemy = hit.transform.GetComponent<Unit>();
-            for(int i = 0; i < GameManager.Instance.PlayerSquad.ActiveUnits.Count; i++) 
+            for(int i = 0; i < GameManager.Instance.PlayerParty.ActiveUnits.Count; i++) 
             {
                 //Queue attack command from unit to target
-                Unit unit = GameManager.Instance.PlayerSquad.ActiveUnits[i];
-                AttackHandler attackHandler = unit.GetComponent<AttackHandler>();
-                if (attackHandler && !attackHandler.isAttacking)
-                {
-                    GameManager.Instance.PlayerSquad.AddCommand(new AttackCmd(unit, enemy));
-                }
+                Unit unit = GameManager.Instance.PlayerParty.ActiveUnits[i];
+                //AttackHandler attackHandler = unit.GetComponent<AttackHandler>();
+                // if (attackHandler && !attackHandler.isAttacking)
+                // {
+                //     GameManager.Instance.PlayerParty.AddCommand(new AttackCmd(unit, enemy));
+                // }
             }
 
             yield return new WaitForEndOfFrame();

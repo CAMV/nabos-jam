@@ -12,10 +12,10 @@ public interface IHotbarAction
     void Execute(bool isQuickCast);
 
     /// <summary>
-    /// Gets the icon to be display in the hotbar
+    /// Gets the GUIData to be display in the hotbar
     /// </summary>
     /// <value>GUI Icon of the Skill</value>
-    Sprite Icon {
+    GUIData GUIData {
         get;
     }
 
@@ -37,20 +37,5 @@ public interface IHotbarAction
     bool isActivable {
         get;
     }
-
-    /// <summary>
-    /// Gets the name of the action.
-    /// </summary>
-    string Name { 
-        get;
-    }
-
-    /// <summary>
-    /// Compare currentaction with a given one
-    /// </summary>
-    /// <param name="action">action to compare with</param>
-    /// <returns></returns>
-    bool Compare (IHotbarAction action);
-
 
 }

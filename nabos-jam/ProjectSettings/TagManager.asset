@@ -4,10 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Fire
-  - Floor
-  - World
   - EvilNpc
+  - GoodNpc
+  - NeutralNpc
+  - Floor
   layers:
   - Default
   - TransparentFX
@@ -19,8 +19,8 @@ TagManager:
   - 
   - World
   - Gizmos
-  - Allies
-  - Enemies
+  - Attackable
+  - 
   - 
   - 
   - 

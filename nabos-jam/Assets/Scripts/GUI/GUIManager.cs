@@ -11,17 +11,20 @@ public class GUIManager : Singleton<GUIManager>
 {
 
     [SerializeField]
-    private SelectSquareGUI _selectSqrGUI = null;
+    private ScreenSelectionGizmo _screenSelectionGizmo = null;
     [SerializeField]
-    private MoveInFormationGUI _moveInFormGUI = null;
+    private FormationPreviewGizmo _fPreviewGizmo = null;
     [SerializeField]
-    private MoveTargetGUI _moveTgGUI = null;
+    private MovementFeedbackGizmo _mFeedbackGizmo = null;
     [SerializeField]
-    private SquadUnitsGUI _sqUnitsGUI = null;
+    private PartyAvatarsHandler _partyAvatarsH = null;
     [SerializeField]
-    private SquadFormationGUI _sqFormationGUI = null;
+    private FormationHotbar _formationHotbar = null;
     [SerializeField]
     private Hotbar _hotbar = null;
+
+    [SerializeField]
+    private HotbarSlot _dummySlot = null;
 
     private GraphicRaycaster[] _graphicRCasters;
     private EventSystem _eventSystem;
@@ -30,10 +33,10 @@ public class GUIManager : Singleton<GUIManager>
     /// Component that handles formation preview when holding Move Input Button.
     /// </summary>
     /// <value> MoveInFormationGUI component.</value>
-    public MoveInFormationGUI MoveInFormationGUI
+    public FormationPreviewGizmo FormationPreviewGizmo
     {
         get {
-            return _moveInFormGUI;
+            return _fPreviewGizmo;
         }
     } 
 
@@ -41,21 +44,21 @@ public class GUIManager : Singleton<GUIManager>
     /// Component that handles movement feedback when moving.
     /// </summary>
     /// <value>MoveTargetGUI component.</value>
-    public MoveTargetGUI MoveTargetGUI
+    public MovementFeedbackGizmo MovementFeedbackGizmo
     {
         get {
-            return _moveTgGUI;
+            return _mFeedbackGizmo;
         }
     }
 
     /// <summary>
-    /// Component that handles squad units avatars GUI.
+    /// Component that handles party units avatars GUI.
     /// </summary>
-    /// <value>SquadUnitsGUI component.</value>
-    public SquadUnitsGUI SquadUnitsGUI
+    /// <value>PartyUnitsGUI component.</value>
+    public PartyAvatarsHandler PlayerAvatarsHandler
     {
         get {
-            return _sqUnitsGUI;
+            return _partyAvatarsH;
         }
     }
 
@@ -63,19 +66,19 @@ public class GUIManager : Singleton<GUIManager>
     /// Component that handles selection area GUI.
     /// </summary>
     /// <value>SelectSquareGUI component.</value>
-    public SelectSquareGUI SelectSquareGUI {
+    public ScreenSelectionGizmo ScreenSelectionGizmo {
         get {
-            return _selectSqrGUI;
+            return _screenSelectionGizmo;
         }
     }
 
     /// <summary>
-    /// Component that handles squad formation selection GUI.
+    /// Component that handles party formation selection GUI.
     /// </summary>
     /// <value>SelectSquareGUI component.</value>
-    public SquadFormationGUI SquadFormationGUI {
+    public FormationHotbar FormationHotbar {
         get {
-            return _sqFormationGUI;
+            return _formationHotbar;
         }
     }
 
@@ -119,6 +122,17 @@ public class GUIManager : Singleton<GUIManager>
 
             return false;
         }
+    }
+
+    /// <summary>
+    /// Given a hotbarAction, returns a dummy hotbarSlot to use for draggin visualization purposes.
+    /// </summary>
+    /// <param name="hAction">Hotbar action to be held by the dummy.</param>
+    /// <returns>HotbarSlotGUI to be dragged around.</returns>
+    public HotbarSlot GetDummySlot(IHotbarAction hAction)
+    {
+        _dummySlot.Initialize(hAction);
+        return _dummySlot;
     }
 
     override protected void OnAwake()
