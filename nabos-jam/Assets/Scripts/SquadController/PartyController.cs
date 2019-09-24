@@ -113,8 +113,8 @@ public class PartyController : MonoBehaviour
             }
 
             // Update GUI
-            if (GUIManager.Instance.PartyUnitsGUI)
-                GUIManager.Instance.PartyUnitsGUI.SetSelectedAvatars(value);
+            if (GUIManager.Instance.PlayerAvatarsHandler)
+                GUIManager.Instance.PlayerAvatarsHandler.SetSelectedAvatars(value);
             
         }
     }

@@ -6,8 +6,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Formation")]
 public class Formation : ScriptableObject
 {
-    [SerializeField]
-    private Sprite _icon = null;
     // Number of units the formation can hold.
     [SerializeField]
     private int _size = 1;
@@ -16,21 +14,14 @@ public class Formation : ScriptableObject
     [SerializeField]
     private Vector4[] _fTransform = new Vector4[1];
 
+    //////////////// PROPERTIES ////////////////
+
     /// <summary>
     /// Maximun number of units the formation can hold
     /// </summary>
     public int Size{
         get {
             return _size;
-        }
-    }
-
-    /// <summary>
-    /// Icon of the formation for GUI purposes.
-    /// </summary>
-    public Sprite Icon {
-        get {
-            return _icon;
         }
     }
     
@@ -47,6 +38,8 @@ public class Formation : ScriptableObject
             _fTransform[index] = value;
         }
     }
+
+    //////////////// METHODS ////////////////
 
     /// <summary>
     /// Returns the rotation in world space of a follower, given the leader transform matrix.
@@ -74,33 +67,5 @@ public class Formation : ScriptableObject
                                                 formation[index].y, 
                                                 formation[index].z)
                                             );
-    }
-
-    //
-
-    /// <summary>
-    /// Returns the position of a follower in local space position, with the leader at (0,0,0).
-    /// </summary>
-    /// <param name="index">Position of the follower in the formation, where 0 is the first follower.</param>
-    /// <returns>Vector3 with position of the follower in local space</returns>
-    public Vector3 GetPosOffset(int index)
-    {
-        if (index >= 0 && index < _size)
-            return new Vector3(_fTransform[index].x, _fTransform[index].y, _fTransform[index].z);
-
-        return Vector3.zero;
-    }
-
-    /// <summary>
-    /// Returns the y-rotation angle of a follower in local space rotation, with the leader of the formation with 0.
-    /// </summary>
-    /// <param name="index">Position of the follower in the formation, where 0 is the first follower.</param>
-    /// <returns>Y-rotation angle of the follower in local space</returns>
-    public float GetEAOffset(int index)
-    {
-        if (index > 0 && index < _size)
-            return _fTransform[index].w;
-
-        return -1;
     }
 }

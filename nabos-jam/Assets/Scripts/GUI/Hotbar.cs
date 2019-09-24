@@ -10,10 +10,7 @@ public class Hotbar : MonoBehaviour, IPointerClickHandler
     private const int N_OF_SLOTS = 8;
 
     [SerializeField]
-    private List<HotbarSlotGUI> _slots = new List<HotbarSlotGUI>(N_OF_SLOTS);
-
-    [SerializeField]
-    private HotbarSlotGUI _dummySlot = null;
+    private List<HotbarSlot> _slots = new List<HotbarSlot>(N_OF_SLOTS);
 
     /// <summary>
     /// Indexer to handle the slots as an array of Skills
@@ -36,17 +33,6 @@ public class Hotbar : MonoBehaviour, IPointerClickHandler
         get {
             return _slots.Count;
         }
-    }
-
-    /// <summary>
-    /// Given a hotbarAction, returns a dummy hotbarSlot to use for draggin visualization purposes.
-    /// </summary>
-    /// <param name="hAction">Hotbar action to be held by the dummy.</param>
-    /// <returns>HotbarSlotGUI to be dragged around.</returns>
-    public HotbarSlotGUI GetDummySlot(IHotbarAction hAction)
-    {
-        _dummySlot.Initialize(hAction);
-        return _dummySlot;
     }
 
     /// <summary>
@@ -97,7 +83,7 @@ public class Hotbar : MonoBehaviour, IPointerClickHandler
     /// <param name="eventData"></param>
     public void OnPointerClick(PointerEventData eventData)
     {
-        HotbarSlotGUI slotClicked =  eventData.rawPointerPress.GetComponentInParent<HotbarSlotGUI>();
+        HotbarSlot slotClicked =  eventData.rawPointerPress.GetComponentInParent<HotbarSlot>();
 
         if (!slotClicked)
             return;

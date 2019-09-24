@@ -20,7 +20,7 @@ public class FormationVisualizer : MonoBehaviour
             if (i < limit)
             {
                 unitPlaceholders[i].SetActive(true);
-                unitPlaceholders[i].transform.position = transform.localToWorldMatrix.MultiplyPoint(formation.GetPosOffset(i));
+                unitPlaceholders[i].transform.position = transform.localToWorldMatrix.MultiplyPoint(formation[i]);
                 unitPlaceholders[i].transform.eulerAngles = transform.localToWorldMatrix.MultiplyVector(transform.eulerAngles);
             }
             else

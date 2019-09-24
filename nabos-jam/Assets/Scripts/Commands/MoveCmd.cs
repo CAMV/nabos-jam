@@ -47,12 +47,12 @@ public class MoveCmd : Command
     {
         _lastPosition = _myUnit.transform.position;
 
-        if (!_myUnit.Movement)
+        if (!_myUnit.Movements)
             Debug.Log(_myUnit.name + " does not have a Movement component!");
         else if (_hasRotation)
-            _myUnit.Movement.Move(_myTarget, _myRotation);
+            _myUnit.Movements.Move(_myTarget, _myRotation);
         else
-            _myUnit.Movement.Move(_myTarget);
+            _myUnit.Movements.Move(_myTarget);
             
     }
 

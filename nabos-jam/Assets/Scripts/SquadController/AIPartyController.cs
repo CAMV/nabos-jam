@@ -5,14 +5,14 @@ using UnityEngine;
 public class AIPartyController : PartyController
 {
     [SerializeField] 
-    AICommandHandler _AIHandler;
+    AICommandHandler _AIHandler = null;
 
     protected override void Update() {
         foreach (AIUnit u in _myUnits)
         {
             if (u.IsIdle)
             {
-                _AIHandler.ExecuteAction(u);
+                //_AIHandler.ExecuteAction(u);
             }
         }
     }

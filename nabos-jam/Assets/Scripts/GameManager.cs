@@ -1,4 +1,6 @@
 using UnityEngine;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
@@ -10,7 +12,13 @@ public class GameManager : Singleton<GameManager>
     private PartyController _playerParty = null;
 
     [SerializeField]
-    private List<Formation> _formationsAvailable = new List<Formation>();
+    private List<FormationAction> _formationsAvailable = new List<FormationAction>();
+
+    public event EventHandler<TickEventArgs> tickHandler;
+    
+    private const float TICK_TIME = .200f;
+
+    //////////////// PROPERTIES ////////////////
 
     /// <summary>
     /// Player's party controller
@@ -24,28 +32,40 @@ public class GameManager : Singleton<GameManager>
     /// <summary>
     /// Get a list of the formation availables to the player
     /// </summary>
-    public List<Formation> FormationAvailable {
+    public List<FormationAction> FormationAvailable {
         get {
             return _formationsAvailable;
         }
     }
 
-    void Start()
-    { 
-        // Selects the first unit at the begining so a unit is always selected.
-        _playerParty.AddCommand(new SelectCmd(new List<Unit>() {_playerParty.Units[0]}));
-        // Assign the first available formation to the player party.
-        ChangePlayerPartyFormation(0);
+    //////////////// METHODS ////////////////
+    
+    /// <summary>
+    /// Send tick message to all subcribed events
+    /// </summary>
+    /// <param name="tickValue">deltaTime between each tick.</param>
+    private IEnumerator Tick(float tickValue)
+    {
+        float time = Time.time;
+        
+        EventHandler<TickEventArgs> handler = tickHandler;
+
+        while (true)
+        {
+            time = Time.time - time;
+            handler = tickHandler;
+            if (handler != null)
+            {
+                handler(this, new TickEventArgs(time));
+            }
+
+            yield return new WaitForSeconds(tickValue);
+        }
     }
 
-    /// <summary>
-    /// Changes the formation of the plaer's party from the list of available formation. 
-    /// </summary>
-    /// <param name="option">Index of the formation available</param>
-    public void ChangePlayerPartyFormation(int option)
+    void Start()
     {
-        if (_formationsAvailable.Count > 0 && option >= 0 && option < _formationsAvailable.Count)
-            _playerParty.Formation = _formationsAvailable[option];
+        StartCoroutine(Tick(TICK_TIME));
     }
 
 

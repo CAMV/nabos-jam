@@ -31,11 +31,11 @@ public class AttackIA : InputAction
             {
                 //Queue attack command from unit to target
                 Unit unit = GameManager.Instance.PlayerParty.ActiveUnits[i];
-                AttackHandler attackHandler = unit.GetComponent<AttackHandler>();
-                if (attackHandler && !attackHandler.isAttacking)
-                {
-                    GameManager.Instance.PlayerParty.AddCommand(new AttackCmd(unit, enemy));
-                }
+                //AttackHandler attackHandler = unit.GetComponent<AttackHandler>();
+                // if (attackHandler && !attackHandler.isAttacking)
+                // {
+                //     GameManager.Instance.PlayerParty.AddCommand(new AttackCmd(unit, enemy));
+                // }
             }
 
             yield return new WaitForEndOfFrame();

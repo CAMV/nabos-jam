@@ -53,8 +53,8 @@ public class SelectPartyIA : InputAction
             rect.height = Mathf.Abs(startMousePos.y - currentMousePos.y);
 
             // GUI update
-            if (GUIManager.Instance.SelectSquareGUI)
-                GUIManager.Instance.SelectSquareGUI.SetSquare(rect);
+            if (GUIManager.Instance.ScreenSelectionGizmo)
+                GUIManager.Instance.ScreenSelectionGizmo.Show(rect);
 
             yield return new WaitForEndOfFrame();
         }
@@ -100,8 +100,8 @@ public class SelectPartyIA : InputAction
         }
 
         // GUI Update
-        if (GUIManager.Instance.SelectSquareGUI)
-            GUIManager.Instance.SelectSquareGUI.SetSquare(Rect.zero);    
+        if (GUIManager.Instance.ScreenSelectionGizmo)
+            GUIManager.Instance.ScreenSelectionGizmo.Hide();    
 
         GameManager.Instance.PlayerParty.AddCommand(new SelectCmd(selectedUnits));
 

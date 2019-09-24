@@ -62,15 +62,15 @@ public class PlayerPartyController : PartyController
             {
                 if (ActiveUnits.Contains(u))
                 {
-                    u.SelectGizmo.SetIntensity(USelectGizmo.SelectGizmoIntensity.High);
+                    u.SelectGizmo.SetIntensity(UnitGizmoIntensity.High);
                 }
                 else if (u.IsFollower)
                 {
-                    u.SelectGizmo.SetIntensity(USelectGizmo.SelectGizmoIntensity.Low);
+                    u.SelectGizmo.SetIntensity(UnitGizmoIntensity.Low);
                 }
                 else
                 {
-                    u.SelectGizmo.SetIntensity(USelectGizmo.SelectGizmoIntensity.Medium);
+                    u.SelectGizmo.SetIntensity(UnitGizmoIntensity.Medium);
                 }
             }
         }       

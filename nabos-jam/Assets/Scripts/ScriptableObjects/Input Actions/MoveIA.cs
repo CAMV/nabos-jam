@@ -29,14 +29,14 @@ public class MoveIA : InputAction
             Unit leader = GameManager.Instance.PlayerParty.ActiveUnits[0];
 
             //Stops units from attacking
-            for (int i = 0; i < GameManager.Instance.PlayerParty.ActiveUnits.Count; i++) 
-            {
-                Unit unit =  GameManager.Instance.PlayerParty.ActiveUnits[i];
-                if (unit.GetComponent<AttackHandler>())
-                {
-                    unit.GetComponent<AttackHandler>().StopAttacking();
-                }
-            }
+            // for (int i = 0; i < GameManager.Instance.PlayerParty.ActiveUnits.Count; i++) 
+            // {
+            //     Unit unit =  GameManager.Instance.PlayerParty.ActiveUnits[i];
+            //     if (unit.GetComponent<AttackHandler>())
+            //     {
+            //         unit.GetComponent<AttackHandler>().StopAttacking();
+            //     }
+            // }
             
             Quaternion moveRot = leader.transform.rotation;
             moveRot.SetLookRotation(
@@ -77,13 +77,7 @@ public class MoveIA : InputAction
                     }
 
                     if (!isPreviewOn)
-                    {
                         isPreviewOn = true;
-
-                        // Turn on the formation preview gizmos
-                        if (GUIManager.Instance.MoveInFormationGUI)
-                            GUIManager.Instance.MoveInFormationGUI.SetActive(true);
-                    }
                     
                 }
                 else
@@ -121,8 +115,8 @@ public class MoveIA : InputAction
                     }
 
                     // Updates the preview gizmo values
-                    if (GUIManager.Instance.MoveInFormationGUI)
-                        GUIManager.Instance.MoveInFormationGUI.SetValues(positions, rotations);
+                    if (GUIManager.Instance.FormationPreviewGizmo)
+                        GUIManager.Instance.FormationPreviewGizmo.Show(positions, rotations);
                 }
                 
                 yield return new WaitForEndOfFrame();
@@ -153,11 +147,11 @@ public class MoveIA : InputAction
             GameManager.Instance.PlayerParty.AddCommand(fMoveCmd);
 
             // Turn on preview gizmos and shows the movement feedback
-            if (GUIManager.Instance.MoveInFormationGUI)
-                GUIManager.Instance.MoveInFormationGUI.SetActive(false);    
+            if (GUIManager.Instance.FormationPreviewGizmo)
+                GUIManager.Instance.FormationPreviewGizmo.Hide();    
 
-            if (GUIManager.Instance.MoveTargetGUI)
-                GUIManager.Instance.MoveTargetGUI.Show(positions, rotations);        
+            if (GUIManager.Instance.MovementFeedbackGizmo)
+                GUIManager.Instance.MovementFeedbackGizmo.Show(positions, rotations);        
         }
         
         yield return null;
