@@ -20,7 +20,6 @@ public class MoveIA : InputAction
         Ray r = Camera.main.ScreenPointToRay(Input.mousePosition); 
         int layerMask = 1 << TERRAIN_LAYER; 
         RaycastHit hit;
-        List<MoveCmd> commandOut = new List<MoveCmd>();
 
         if (Physics.Raycast(r, out hit, RAYCAST_LENGTH, layerMask) && 
             Vector3.Angle(Vector3.up, hit.normal) < 60 &&           //Check the angle of the surface is not too steep
@@ -123,28 +122,35 @@ public class MoveIA : InputAction
 
             } while (Input.GetButton(_buttomName)); 
 
-            Command fMoveCmd;
-
             // apply formation position offset
             if (moveFormation)
             {
-                fMoveCmd = new MovePartyCmd(
-                                    GameManager.Instance.PlayerParty.ActiveUnits,
-                                    positions[0],
-                                    rotations[0],
-                                    moveFormation
-                                );
+                GameManager.Instance.PlayerParty.MoveParty(
+                                                    GameManager.Instance.PlayerParty.ActiveUnits,
+                                                    positions[0],
+                                                    rotations[0],
+                                                    moveFormation
+                                                );
             }
             else
             {
-                fMoveCmd = new MovePartyCmd(
+                // Calculate dummy rotation to use if none is given
+                Unit dummyLeader = GameManager.Instance.PlayerParty.ActiveUnits[0];
+                Quaternion dummyRotation = leader.transform.rotation;
+                Vector3 endPoint = positions[0];
+
+                dummyRotation.SetLookRotation(
+                                        (endPoint - leader.transform.position).normalized,
+                                        Vector3.up
+                                    );
+
+                GameManager.Instance.PlayerParty.MoveParty(
                                     GameManager.Instance.PlayerParty.ActiveUnits,
                                     positions[0],
+                                    dummyRotation,
                                     moveFormation
                                 );
             }           
-
-            GameManager.Instance.PlayerParty.AddCommand(fMoveCmd);
 
             // Turn on preview gizmos and shows the movement feedback
             if (GUIManager.Instance.FormationPreviewGizmo)

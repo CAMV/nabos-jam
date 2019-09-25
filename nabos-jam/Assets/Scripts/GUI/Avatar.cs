@@ -126,7 +126,6 @@ public class Avatar : MonoBehaviour, IPointerClickHandler
         if (eventData.rawPointerPress.GetComponentInParent<HotbarSlot>())
             return;
             
-        SelectCmd selectCmd;
         List<Unit> selectedUnits;
 
         if (Input.GetButton("Ctrl"))
@@ -145,10 +144,8 @@ public class Avatar : MonoBehaviour, IPointerClickHandler
             selectedUnits.Add(_myUnit);
          
         }
-        selectCmd = new SelectCmd(selectedUnits);   
 
-        //StartCoroutine(CheckIfDraggingCO(selectCmd));
-        GameManager.Instance.PlayerParty.AddCommand(selectCmd);
+        GameManager.Instance.PlayerParty.ActiveUnits = selectedUnits;   
     }
 
 }

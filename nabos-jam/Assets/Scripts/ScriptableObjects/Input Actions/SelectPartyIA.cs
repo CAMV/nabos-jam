@@ -103,7 +103,7 @@ public class SelectPartyIA : InputAction
         if (GUIManager.Instance.ScreenSelectionGizmo)
             GUIManager.Instance.ScreenSelectionGizmo.Hide();    
 
-        GameManager.Instance.PlayerParty.AddCommand(new SelectCmd(selectedUnits));
+        GameManager.Instance.PlayerParty.ActiveUnits = selectedUnits;
 
     }
 }

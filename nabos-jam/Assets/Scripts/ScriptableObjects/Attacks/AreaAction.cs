@@ -9,16 +9,6 @@ public class AreaAction : ActionObject
     //////////////// METHODS ////////////////
 
     /// <summary>
-    /// Intialice the AreaAction with a given parent unit
-    /// </summary>
-    /// <param name="unit">Unit that is creating the area</param>
-    public override void Initialice(Unit unit)
-    {
-        base.Initialice(unit);
-
-    }
-
-    /// <summary>
     /// Tick that updates the lifespan of the area and apply the effects.
     /// </summary>
     protected override void UpdateTick(object sender, TickEventArgs e)
