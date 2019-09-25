@@ -7,7 +7,7 @@ public class AIPartyController : PartyController
     [SerializeField] 
     AICommandHandler _AIHandler = null;
 
-    protected override void Update() {
+    protected  void Update() {
         foreach (AIUnit u in _myUnits)
         {
             if (u.IsIdle)

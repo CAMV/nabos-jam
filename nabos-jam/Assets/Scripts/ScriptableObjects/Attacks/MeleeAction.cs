@@ -3,14 +3,17 @@ using System.Collections;
 
 public class MeleeAction : ActionObject
 {
+    [SerializeField]
+    private UnitPart _unitPart;
+
     /// <summary>
-    /// atach the object to a given transform that should be the active part of a weapon.
+    /// Same initalice but attach the object to the weapon to follow it during the attack animation.
     /// </summary>
-    /// <param name="weapon">Transform to be atached.</param>
-    public void AttachToWeapon(Transform weapon)
-    {
-        transform.parent = weapon;
+    /// <param name="unit"></param>
+    override public void Initialice(Unit unit){
+        base.Initialice(unit);
+        transform.parent = _parentUnit.Animation[_unitPart];
         transform.localPosition = Vector3.zero;
         transform.localEulerAngles = Vector3.zero;
-    }
+    } 
 }

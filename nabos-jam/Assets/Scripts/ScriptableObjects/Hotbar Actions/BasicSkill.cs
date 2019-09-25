@@ -24,7 +24,7 @@ public class BasicSkill : Skill
     [SerializeField]
     protected int _numTargets;
 
-    private List<Unit> _targetUnits;
+    protected List<Unit> _targetUnits;
 
     //////////////// METHODS ////////////////
 

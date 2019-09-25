@@ -14,7 +14,6 @@ public class PartyController : MonoBehaviour
 
     protected Formation _myFormation = null;
     protected List<Unit> _activeUnits = new List<Unit>();
-    protected Queue<Command> _cmdQ;
     protected bool _isIdle = true;
 
     /// <summary>
@@ -36,14 +35,12 @@ public class PartyController : MonoBehaviour
         set {
             _myFormation = value;
 
-            if (_activeUnits.Count > 0)
-                AddCommand(
-                        new MovePartyCmd(
-                                    _activeUnits, 
-                                    _activeUnits[0].transform.position,
-                                    _activeUnits[0].transform.rotation,
-                                    _myFormation
-                                )
+            if (_activeUnits.Count > 0)                
+                MoveParty(
+                            _activeUnits, 
+                            _activeUnits[0].transform.position,
+                            _activeUnits[0].transform.rotation,
+                            _myFormation
                         );
         }
     }
@@ -60,21 +57,111 @@ public class PartyController : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        _cmdQ = new Queue<Command>();
         _activeUnits = new List<Unit>();
         _isIdle = true;
     }
 
-    // Update is called once per frame
-    protected virtual void Update()
+    /// <summary>
+    /// Move the units given of the squad to a given position, ith a given final rotation and an optional formation to follow.
+    /// </summary>
+    /// <param name="units">Units to move</param>
+    /// <param name="tPosition">Target position</param>
+    /// <param name="rotation">Target rotation</param>
+    /// <param name="formation">Optional formation</param>
+    public void MoveParty(List<Unit> units, Vector3 tPosition, Quaternion rotation, Formation formation = null)
     {
-        if (_cmdQ.Count > 0 && _isIdle)
-        {
-            Command currentCmd = _cmdQ.Dequeue();
+        var _tRotation = rotation;
+        var _hasRotation = true;
 
-            currentCmd.Do();
+        List<Vector3> _calculatedPositions = new List<Vector3>();
+        List<Quaternion> _calculatedRotations = new List<Quaternion>();
+
+        // If not rotations given, calculate it based on a look at rotation from the start point(defacto leader position) to the end point of the movement
+        if (!_hasRotation)
+        {
+            _tRotation = units[0].transform.rotation;
+
+            Vector3 endPoint;
+
+            if (_calculatedPositions.Count == 0)
+                endPoint = tPosition;
+            else
+                endPoint = _calculatedPositions[0];
+
+            _tRotation.SetLookRotation(
+                (endPoint - units[0].transform.position).normalized,
+                Vector3.up
+            );
+            
+        }
+
+        Matrix4x4 tPosMatrix = new Matrix4x4();
+        int nUnitsToMove = GameManager.Instance.PlayerParty.ActiveUnits.Count;
+
+        // Calculate leader transform matrix and, if need, the target positions
+        if (_calculatedPositions.Count == 0)
+        {
+            tPosMatrix.SetTRS(tPosition, _tRotation, Vector3.one);
+
+            // Add leader position
+            _calculatedPositions.Add(tPosition);
+
+            // Calculate and add non-leader positions
+            for(int i = 0; i < nUnitsToMove - 1; i++)
+            {
+                _calculatedPositions.Add(Formation.GetFollowerPosition(
+                    (Formation)formation, 
+                    i,
+                    tPosMatrix
+                ));
+            }
+
+        } 
+        else 
+            tPosMatrix.SetTRS(_calculatedPositions[0], _tRotation, Vector3.one);
+
+        
+        // If needed, calculate the target rotations
+        if (_calculatedRotations.Count == 0)
+        {
+            _calculatedRotations.Add(_tRotation);
+
+            for(int i = 0; i < nUnitsToMove - 1; i++)
+            {
+                _calculatedRotations.Add(Formation.GetFollowerRotation(
+                        (Formation)formation, 
+                        i,
+                        tPosMatrix
+                    ));
+            }
+        }      
+
+        // Add single unit move commands
+        for(int i = 0; i < nUnitsToMove; i++)
+        {
+            MoveUnit(
+                GameManager.Instance.PlayerParty.ActiveUnits[i], 
+                _calculatedPositions[i],
+                _calculatedRotations[i]
+            );
         }
     }
+
+    /// <summary>
+    /// Moves a given unit to a target postion.
+    /// </summary>
+    /// <param name="unit">Unit to move</param>
+    /// <param name="targetPos">Target position</param>
+    /// <param name="direction">Target rotation</param>
+    public void MoveUnit(Unit unit, Vector3 targetPos, Quaternion direction)
+    {
+        if (!unit.Movements)
+            Debug.Log(unit.name + " does not have a Movement component!");
+        else
+            unit.Movements.Move(targetPos, direction);
+
+    }
+
 
     /// <summary>
     /// Set current active units in the squat
@@ -158,28 +245,16 @@ public class PartyController : MonoBehaviour
 
             _activeUnits = sActiveUnits.GetValueList().Cast<Unit>().ToList();
 
-            AddCommand(
-                    new MovePartyCmd(
-                                _activeUnits, 
-                                leaderPos,
-                                leaderRot,
-                                _myFormation
-                            )
-                    );
-
+            MoveParty(
+                    _activeUnits, 
+                    leaderPos,
+                    leaderRot,
+                    _myFormation
+                );
 
             return true;
         }
 
         return false;
-    }
-
-    /// <summary>
-    /// Adds a command to be executed by the party.
-    /// </summary>
-    /// <param name="c">Command to be executed.</param>
-    public void AddCommand(Command c)
-    {
-        _cmdQ.Enqueue(c);
     }
 }

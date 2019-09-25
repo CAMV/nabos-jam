@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 /// <summary>
 /// 
@@ -16,7 +17,6 @@ public class Unitskill : BasicSkill
 
         if (isQuickCast)
         {
-
             // Get raycast point
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -39,12 +39,11 @@ public class Unitskill : BasicSkill
     /// <summary>
     /// Cast the skill
     /// </summary>
-    override public void Cast()
+    public void Cast(Unit target)
     {
-        base.Cast();
-        for (int i = 0; i < _actionObjects.Length; i++)
-        {
-            InitializeActionObjects(i, _unitInput.transform.position);
-        }
+        _targetUnits = new List<Unit>();
+        _targetUnits.Add(target);
+
+        Cast();
     }
 }
