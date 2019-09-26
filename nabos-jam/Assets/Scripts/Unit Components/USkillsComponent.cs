@@ -5,7 +5,6 @@ using System.Collections.Generic;
 /// <summary>
 /// Class <c> USkills </c> handles the skills of a unit.
 /// </summary>
-[RequireComponent(typeof(Unit))]
 public class USkillsComponent : MonoBehaviour 
 {
     [SerializeField]
@@ -15,7 +14,7 @@ public class USkillsComponent : MonoBehaviour
 
     void Awake()
     {
-        _myUnit = GetComponent<Unit>();
+        _myUnit = GetComponentInParent<Unit>();
 
         for (int i = 0; i < _mySkills.Count; i++)
         {

@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-
+/// <summary>
+/// Class that models the specific modifier of a property
+/// </summary>
+[Serializable]
 public class PropertyModifier {
 
     [SerializeField]

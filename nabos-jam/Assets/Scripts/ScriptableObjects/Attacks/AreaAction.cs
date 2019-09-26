@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Class that models an action that ocurrs in an area
+/// </summary>
 public class AreaAction : ActionObject
 {
     private List<Unit> _affectedUnits = new List<Unit>();

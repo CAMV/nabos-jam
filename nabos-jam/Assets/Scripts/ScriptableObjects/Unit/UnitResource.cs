@@ -6,6 +6,7 @@ using UnityEngine;
 /// Class that represents a Unit's Resource. It depends on attributes to be calculated.
 /// The _baseValue represent the proportion of the maxValue of the resource the unit currently have.
 /// </summary>
+[CreateAssetMenu(menuName = "Properties/Resource")]   
 public class UnitResource : UnitStat
 {
     [SerializeField]

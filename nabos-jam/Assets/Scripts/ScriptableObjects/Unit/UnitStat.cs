@@ -5,6 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Class that represents a Unit's Stat. It depends on attributes to be calculated.
 /// </summary>
+[CreateAssetMenu(menuName = "Properties/Stat")]   
 public class UnitStat : UnitProperty
 {
     [SerializeField]

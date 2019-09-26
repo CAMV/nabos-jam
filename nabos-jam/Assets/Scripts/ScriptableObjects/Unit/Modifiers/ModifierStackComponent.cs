@@ -4,6 +4,7 @@ using System;
 /// <summary>
 /// Module of a modifier that handles its stacks.
 /// </summary>
+[Serializable]
 public class ModifierStackComponent
 {
     [SerializeField]

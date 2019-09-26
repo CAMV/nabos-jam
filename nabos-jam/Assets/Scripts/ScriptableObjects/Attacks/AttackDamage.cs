@@ -3,6 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Class that defines the types of damages an action can deal.
 /// </summary>
+[CreateAssetMenu(menuName = "AttackDamage")]
 public class AttackDamage : ScriptableObject
 {
     

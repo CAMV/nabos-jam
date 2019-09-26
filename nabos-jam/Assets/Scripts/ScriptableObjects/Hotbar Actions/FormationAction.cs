@@ -3,6 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Represents a formation command that can be assigned as a hotbar action.
 /// </summary>
+[CreateAssetMenu(menuName = "Hotbar/FormationAction")] 
 public class FormationAction : ScriptableObject, IHotbarAction
 {
     [SerializeField]

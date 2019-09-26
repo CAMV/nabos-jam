@@ -4,7 +4,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Class <c> SimpleSkill </c> represents a skill that does not need further input, just to be executed.
 /// </summary>
-[CreateAssetMenu(menuName = "Skills/Simple Skill")]
+[CreateAssetMenu(menuName = "Skills/BasicSkill")]
 public class BasicSkill : Skill
 {
 

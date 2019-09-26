@@ -5,6 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Class that represents a modifier that can affect a unit.
 /// </summary>
+[CreateAssetMenu(menuName = "Modifier")] 
 public class Modifier : ScriptableObject
 {
     [SerializeField]
