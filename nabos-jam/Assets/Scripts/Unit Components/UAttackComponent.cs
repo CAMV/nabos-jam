@@ -8,6 +8,7 @@ public class UAttackComponent : MonoBehaviour
     private bool _isInit = false;
     private bool _isAttacking = false;
     private Unit _myUnit;
+    private UnitStat _attackSpeed;
 
     private Unit _targetUnit;
 
@@ -76,9 +77,17 @@ public class UAttackComponent : MonoBehaviour
 
         _targetUnit = target;
         _isAttacking = true;
-        _basicAttack.Cast();
 
-        
+        if (!CheckIfInRange())
+            _myUnit.Movements.MoveWithinRange();
+
+        _basicAttack.Cast();
+    }
+
+    public void CancelAttack()
+    {
+        _targetUnit = null;
+        _isAttacking = false;
     }
 
     void Start()

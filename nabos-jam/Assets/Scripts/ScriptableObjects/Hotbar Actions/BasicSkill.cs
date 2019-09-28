@@ -15,8 +15,9 @@ public class BasicSkill : Skill
         AllButMe
     }
 
+    // If true all _numTarget units must be available to cast, if not, with just one, the skill is casted
     [SerializeField]
-    private bool _isHardCondition;
+    private bool _isHardCondition = false;
 
     [SerializeField]
     protected SkillTarget _targetType;
