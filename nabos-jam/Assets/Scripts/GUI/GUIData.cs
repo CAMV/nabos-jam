@@ -1,5 +1,7 @@
 using UnityEngine;
+using System;
 
+[CreateAssetMenu(menuName = "GUIData")]
 public class GUIData : ScriptableObject
 {
     [SerializeField]

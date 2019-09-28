@@ -7,7 +7,7 @@ using System.Collections;
 public class MeleeAction : ActionObject
 {
     [SerializeField]
-    private UnitPart _unitPart;
+    private UnitPart _unitPart = UnitPart.Base;
 
     /// <summary>
     /// Same initalice but attach the object to the weapon to follow it during the attack animation.

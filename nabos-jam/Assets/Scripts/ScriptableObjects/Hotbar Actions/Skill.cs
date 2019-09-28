@@ -22,10 +22,13 @@ public abstract class Skill : ScriptableObject, IHotbarAction
     private VfxAction[] _castEffects;
 
     [SerializeField]
-    private UnitResource[] _resourceCost;
+    private UnitResource[] _resourceCost = new UnitResource[0];
 
     [SerializeField]
-    private int[] _valueCost;
+    private UnitStat[] _attackSpeeds = new UnitStat[0];
+
+    [SerializeField]
+    private int[] _valueCost = new int[0];
     
     [Range(0, 10)]
     [SerializeField]
@@ -34,6 +37,7 @@ public abstract class Skill : ScriptableObject, IHotbarAction
     protected Unit _originUnit;
     protected bool _isReady;
     protected float _currentCoolDown;
+    protected float _realCooldown;
 
     //////////////// PROPERTIES ////////////////
 
@@ -47,11 +51,25 @@ public abstract class Skill : ScriptableObject, IHotbarAction
     }
 
     /// <summary>
+    /// Gets the cooldown after taking into accunt attack speed from unit stats.
+    /// </summary>
+    public float RealCooldown {
+        get {
+            float statsSpeed = 0;
+            foreach (UnitStat speed in _attackSpeeds )
+            {
+                statsSpeed += speed.CurrentValue;
+            }
+            return _baseCoolDownTime / statsSpeed;
+        }
+    }
+
+    /// <summary>
     /// Gets the current cool down of the skill. Where 0, the skill is ready to be executed and 1 the skill has just being executed.
     /// </summary>
     public float CurrentCooldown {
         get {
-            return _currentCoolDown/_baseCoolDownTime;
+            return _currentCoolDown/RealCooldown;
         }
     }
 
@@ -87,7 +105,7 @@ public abstract class Skill : ScriptableObject, IHotbarAction
 
         for (int i = 0; i < _actionObjects.Length; i++)
         {
-            _actionObjects[i]  =ScriptableObject.Instantiate(_actionObjects[i]);
+            _actionObjects[i]  = ScriptableObject.Instantiate(_actionObjects[i]);
             _actionObjects[i].Initialice(oUnit);
         }
 
@@ -101,7 +119,6 @@ public abstract class Skill : ScriptableObject, IHotbarAction
         
         if (_currentCoolDown > 0)
             return false;
-
 
         // Check the cost in resources of the skill
         for (int i = 0; i < _resourceCost.Length; i++)
@@ -163,6 +180,7 @@ public abstract class Skill : ScriptableObject, IHotbarAction
     public virtual void Cast()
     {
         PayThCost();
+        _currentCoolDown = RealCooldown;
     }
 
     /// <summary>
