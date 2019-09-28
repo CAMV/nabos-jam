@@ -5,7 +5,7 @@ public enum VectorSkillType
     Direction, Vector, Area, Unit
 }
 
-[CreateAssetMenu(menuName = "Skills/Vector Skill")]
+[CreateAssetMenu(menuName = "Skills/VectorSkill")]
 /// <summary>
 /// Represents all skills that requieres a vector3 to be executed.
 /// </summary>

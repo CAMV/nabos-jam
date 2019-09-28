@@ -2,8 +2,9 @@ using UnityEngine;
 using System.Collections.Generic;
 
 /// <summary>
-/// 
+/// Skill that has as a traget a given unit
 /// </summary>
+[CreateAssetMenu(menuName = "Skills/UnitSkill")]
 public class Unitskill : BasicSkill
 {
     protected Unit _unitInput;

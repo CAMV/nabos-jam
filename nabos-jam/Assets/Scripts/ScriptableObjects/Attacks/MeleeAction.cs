@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Action that ocurr if an specific object touches a unit
+/// </summary>
 public class MeleeAction : ActionObject
 {
     [SerializeField]

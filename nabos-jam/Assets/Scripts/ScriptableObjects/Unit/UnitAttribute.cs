@@ -5,6 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Class that represents a Unit Attribute. Should not be instantiated in runtime after an stat that depends on it.
 /// </summary>
+[CreateAssetMenu(menuName = "Properties/Attribute")]  
 public class UnitAttribute : UnitProperty
 {
     //////////////// PROPERTIES ////////////////

@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Class that models an action wich object is thrown
+/// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class ProjectileAction : ActionObject
 {

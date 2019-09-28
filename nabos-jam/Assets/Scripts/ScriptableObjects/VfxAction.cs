@@ -4,7 +4,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Class that represent a preset of a vfx to be instantiated in a particular part o a unit.
 /// </summary>
-public class VfxAction {
+public class VfxAction : MonoBehaviour {
     [SerializeField]
     private GameObject _effectGO = null;
 
