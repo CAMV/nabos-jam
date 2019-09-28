@@ -38,17 +38,33 @@ public class UPropertyComponent : MonoBehaviour
     public void Initialize()
     {
         for (int i = 0; i < _attributes.Count; i++)
-            AddAttribute(_attributes[i], _initialAttributes[i]);
+        {
+            UnitAttribute attribute = _attributes[i];
+            UnitAttribute propertyToAdd = ScriptableObject.Instantiate(attribute);
+            propertyToAdd.Initialize(GetComponentInParent<Unit>(), _initialAttributes[i]); 
+            ReplaceElement(_attributes, propertyToAdd, attribute);
+        }
 
         for (int i = 0; i < _stats.Count; i++)
-            AddStat(_stats[i], _initialStats[i]);
+        {
+            UnitStat stat = _stats[i];
+            UnitStat statToAdd = ScriptableObject.Instantiate(stat);
+            statToAdd.Initialize(GetComponentInParent<Unit>(), _initialStats[i]);
+            ReplaceElement(_stats, statToAdd, stat);
+        }
 
-        for (int i = 0; i < _attributes.Count; i++)
-            AddResource(_resoursces[i], _initialMaxResources[i], _isResourceFull[i]);
+        for (int i = 0; i < _resoursces.Count; i++)
+        {
+            UnitResource resource = _resoursces[i];
+            UnitResource resourceToAdd = ScriptableObject.Instantiate(resource);
+            resourceToAdd.Initialize(GetComponentInParent<Unit>(), _initialStats[i]);
+            ReplaceElement(_resoursces, resourceToAdd, resource);
+        }
     }
 
     /// <summary>
-    /// Adds a given Attribute to the unit with an initial base value. It would not update any already added stat that depends on the attribute.
+    /// Adds a given Attribute to the unit with an initial base value. 
+    /// It would not update any already added stat that depends on the attribute.
     /// </summary>
     /// <param name="attribute"></param>
     /// <param name="baseValue"></param>
@@ -96,6 +112,29 @@ public class UPropertyComponent : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Replaces an element in a list with a new element. 
+    /// If the element to replace wasn't found, the new element
+    /// is added at the end.
+    /// </summary>
+    /// <param name="list"></param>
+    /// <param name="ElementToAdd"></param>
+    /// <param name="ElementToReplace"></param>
+    /// <typeparam name="T"></typeparam>
+    public void ReplaceElement<T>(List<T> list, T elementToAdd, T elementToReplace)
+    {
+        int index = list.IndexOf(elementToReplace);
+        if (index != -1)
+        {
+            list.RemoveAt(index);
+            list.Insert(index, elementToAdd);
+        }
+        else
+        {
+            list.Add(elementToAdd);
+        }
+    }
+
     // Finders
 
     /// <summary>
@@ -132,7 +171,7 @@ public class UPropertyComponent : MonoBehaviour
     {
         for (int i = 0; i < _attributes.Count; i++)
         {
-            if (_attributes[i].GUIData.name == name)
+            if (_attributes[i].GUIData.Name == name)
                 return _attributes[i];
         }
 
@@ -158,7 +197,7 @@ public class UPropertyComponent : MonoBehaviour
     {
         for (int i = 0; i < _resoursces.Count; i++)
         {
-            if (_resoursces[i].GUIData.name == name)
+            if (_resoursces[i].GUIData.Name == name)
                 return _resoursces[i];
         }
 
@@ -184,7 +223,7 @@ public class UPropertyComponent : MonoBehaviour
     {
         for (int i = 0; i < _stats.Count; i++)
         {
-            if (_stats[i].GUIData.name == name)
+            if (_stats[i].GUIData.Name == name)
                 return _stats[i];
         }
 

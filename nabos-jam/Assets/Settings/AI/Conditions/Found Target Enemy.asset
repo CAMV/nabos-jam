@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9536ab59fd8c8ed459d68be6813d19b0, type: 3}
-  m_Name: LineOfSight
+  m_Script: {fileID: 11500000, guid: 9177dbef70fe69f4dac3c5912584126d, type: 3}
+  m_Name: Found Target Enemy
   m_EditorClassIdentifier: 
-  _guiData: {fileID: 0}
+  usesUnitInfo: 1
+  _unit: {fileID: 0}
+  negateCondition: 0

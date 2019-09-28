@@ -78,12 +78,22 @@ public class UAttackComponent : MonoBehaviour
         if (!_isInit)
             return;
 
-        _targetUnit = target;
-        _isAttacking = true;
+        SetAttackTarget(target);
 
         if (!CheckIfInRange())
             _myUnit.Movements.MoveWithinRange();
 
+        _basicAttack.Cast();
+    }
+
+    public void SetAttackTarget(Unit target)
+    {
+        _targetUnit = target;
+        _isAttacking = true;
+    }
+
+    public void PerformAttack()
+    {
         _basicAttack.Cast();
     }
 

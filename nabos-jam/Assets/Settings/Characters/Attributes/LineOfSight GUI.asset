@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d4b1a801e1a05f4ea64b36a0d7b2f8a, type: 3}
-  m_Name: Has Target Enemy Condition
+  m_Script: {fileID: 11500000, guid: 9ac711f9175a4c8429012663416940b8, type: 3}
+  m_Name: LineOfSight GUI
   m_EditorClassIdentifier: 
-  usesUnitInfo: 1
-  _unit: {fileID: 0}
+  _icon: {fileID: 0}
+  _name: 
+  _description: 

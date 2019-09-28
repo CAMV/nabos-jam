@@ -39,7 +39,7 @@ public class UModifiersComponent : MonoBehaviour
     {
         for (int i = 0; i < _modifiers.Count; i++)
         {
-            if (_modifiers[i].GUIData.name == mod.GUIData.name)
+            if (_modifiers[i].GUIData.Name == mod.GUIData.Name)
             {
                 index = i;
                 return true;

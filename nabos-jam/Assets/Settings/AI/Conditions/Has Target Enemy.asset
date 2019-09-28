@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49971283b52249e44b65a7e5aec0695c, type: 3}
-  m_Name: Is Stopped Condition
+  m_Script: {fileID: 11500000, guid: 4d4b1a801e1a05f4ea64b36a0d7b2f8a, type: 3}
+  m_Name: Has Target Enemy
   m_EditorClassIdentifier: 
   usesUnitInfo: 1
   _unit: {fileID: 0}
+  negateCondition: 0

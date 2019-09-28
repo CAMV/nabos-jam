@@ -13,7 +13,7 @@ public class MoveTowardsTargetAction : Action
             if (ac)
             {
                 Unit target = ac.Target;
-                if (target && _unit.Movements) _unit.Movements.MoveWithinRange(target.transform.position);
+                if (target && _unit.Movements) _unit.Movements.MoveWithinRange();
             }
         }
     }

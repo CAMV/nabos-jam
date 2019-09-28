@@ -10,11 +10,10 @@ public class AttackUnitAction : Action
         if (_unit)
         {
             UAttackComponent ac = _unit.GetComponent<UAttackComponent>();
-            // AttackHandler ah = _unit.GetComponent<AttackHandler>();
             if (ac)
             {
                 Unit target = ac.Target;
-                if (target) ac.Attack(target);
+                if (target) ac.PerformAttack();
             }
         }
     }

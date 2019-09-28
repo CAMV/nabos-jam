@@ -6,15 +6,16 @@ using UnityEngine;
 public class TargetFarAwayCondition : Condition
 {
     private Unit target;
+    UAttackComponent ac;
 
     public override void Initialize(Unit unit)
     {
         base.Initialize(unit);
-        // AttackHandler ah = _unit.GetComponent<AttackHandler>();
-        // if (ah) 
-        // {
-        //     target = ah.targetUnit;
-        // }
+        ac = _unit.GetComponent<UAttackComponent>();
+        if (ac) 
+        {
+            target = ac.Target;
+        }
     }
 
     public override bool IsTriggered()
@@ -23,20 +24,19 @@ public class TargetFarAwayCondition : Condition
         {
             if (!target)
             {
-                // AttackHandler ah = _unit.GetComponent<AttackHandler>();
-                // if (ah) 
-                // {
-                //     target = ah.targetUnit;
-                // }
+                if (ac) 
+                {
+                    target = ac.Target;
+                }
             }
             else
             {
-                // bool isFarAway = Vector3.Distance(target.transform.position, _unit.transform.position) > _unit.Character.attackRange;
-                // if (negateCondition)
-                // {
-                //     isFarAway = !isFarAway;
-                // }
-                // return isFarAway;
+                bool isFarAway = ac.CheckIfInRange();
+                if (negateCondition)
+                {
+                    isFarAway = !isFarAway;
+                }
+                return isFarAway;
             }
         }
         return false;

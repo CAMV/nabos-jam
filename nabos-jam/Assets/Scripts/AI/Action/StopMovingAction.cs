@@ -7,7 +7,8 @@ public class StopMovingAction : Action
 {
 
     public override void PerformAction() {
-        if (_unit && _unit.Movements)  {
+        if (_unit && _unit.Movements)  
+        {
             _unit.Movements.StopMoving();
         }
     }
