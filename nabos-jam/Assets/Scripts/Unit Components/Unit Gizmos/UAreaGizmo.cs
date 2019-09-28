@@ -1,17 +1,16 @@
 using UnityEngine;
+using System;
 
 /// <summary>
 /// Class that handles the area gizmo
 /// </summary>
-[RequireComponent(typeof(SkinnedMeshRenderer))]
-public class UAreaGizmo : MonoBehaviour
+[Serializable]
+public class UAreaGizmo
 {
-    SkinnedMeshRenderer _myRender;
+    [SerializeField]
+    SkinnedMeshRenderer _areaGizmoRender = null;
 
-    public void OnAwake()
-    {
-        _myRender = GetComponent<SkinnedMeshRenderer>();
-    }
+    //////////////// METHODS ////////////////
 
     /// <summary>
     /// Given a position and the radius of the area, display the skill area gizmo.
@@ -23,12 +22,9 @@ public class UAreaGizmo : MonoBehaviour
         if (radius < 1 && radius > 10)
             return;
 
-        if (!_myRender)
-            _myRender = GetComponent<SkinnedMeshRenderer>();
+        _areaGizmoRender.SetBlendShapeWeight(0, radius*10);
 
-        _myRender.SetBlendShapeWeight(0, radius*10);
-
-        transform.position = position;
+        _areaGizmoRender.transform.position = position;
     }
 
     /// <summary>
@@ -36,11 +32,6 @@ public class UAreaGizmo : MonoBehaviour
     /// </summary>
     public void Hide()
     {
-        if (!_myRender)
-            _myRender = GetComponent<SkinnedMeshRenderer>();
-
-        _myRender.enabled = false;
+        _areaGizmoRender.enabled = false;
     }
-
-
 }

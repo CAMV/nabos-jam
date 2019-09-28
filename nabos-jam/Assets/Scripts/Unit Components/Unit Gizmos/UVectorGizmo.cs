@@ -1,12 +1,15 @@
 using UnityEngine;
+using System;
 
-[RequireComponent(typeof(SkinnedMeshRenderer))]
-public class UVectorGizmo : MonoBehaviour 
+[Serializable]
+public class UVectorGizmo 
 {
+    
+    [SerializeField]
+    protected SkinnedMeshRenderer _vectorGizmoRender;
+
     private float _maxValue = 10;
-
-    SkinnedMeshRenderer _myRender;
-
+    
     /// <summary>
     /// Set the maximun value the vector can have
     /// </summary>
@@ -18,10 +21,7 @@ public class UVectorGizmo : MonoBehaviour
         }
     }
 
-    public void OnAwake()
-    {
-        _myRender = GetComponent<SkinnedMeshRenderer>();
-    }
+    //////////////// METHODS ////////////////
 
     /// <summary>
     /// Sets the length of the vector gizmos and activates it
@@ -31,19 +31,17 @@ public class UVectorGizmo : MonoBehaviour
     {
         _maxValue = maxValue;
 
-        transform.LookAt(target);   
+        _vectorGizmoRender.transform.LookAt(target);   
 
 
-        float distance = Vector3.Distance(transform.position, target);
+        float distance = Vector3.Distance(_vectorGizmoRender.transform.position, target);
         if (distance > _maxValue)
             distance = _maxValue;
 
-        if (!_myRender)
-            _myRender = GetComponent<SkinnedMeshRenderer>();
 
-        _myRender.SetBlendShapeWeight(0, Mathf.Max(1, distance)*10);
+        _vectorGizmoRender.SetBlendShapeWeight(0, Mathf.Max(1, distance)*10);
 
-        _myRender.enabled = true;
+        _vectorGizmoRender.enabled = true;
     }
 
     /// <summary>
@@ -51,9 +49,6 @@ public class UVectorGizmo : MonoBehaviour
     /// </summary>
     public void Hide()
     {
-        if (!_myRender)
-            _myRender = GetComponent<SkinnedMeshRenderer>();
-
-        _myRender.enabled = false;
+        _vectorGizmoRender.enabled = false;
     }
 }
