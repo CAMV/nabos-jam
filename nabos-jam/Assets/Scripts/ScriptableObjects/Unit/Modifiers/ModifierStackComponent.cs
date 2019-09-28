@@ -34,7 +34,7 @@ public class ModifierStackComponent
     /// <summary>
     /// Returns true if the stacks are removed all at once
     /// </summary>
-    public bool AreStacksRomvedAtOnce {
+    public bool AreStacksRemovedAtOnce {
         get {
             return _areStacksRemovedAtOnce;
         }
