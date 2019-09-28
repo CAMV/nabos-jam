@@ -10,11 +10,11 @@ public class TargetFarAwayCondition : Condition
     public override void Initialize(Unit unit)
     {
         base.Initialize(unit);
-        AttackHandler ah = _unit.GetComponent<AttackHandler>();
-        if (ah) 
-        {
-            target = ah.targetUnit;
-        }
+        // AttackHandler ah = _unit.GetComponent<AttackHandler>();
+        // if (ah) 
+        // {
+        //     target = ah.targetUnit;
+        // }
     }
 
     public override bool IsTriggered()
@@ -23,20 +23,20 @@ public class TargetFarAwayCondition : Condition
         {
             if (!target)
             {
-                AttackHandler ah = _unit.GetComponent<AttackHandler>();
-                if (ah) 
-                {
-                    target = ah.targetUnit;
-                }
+                // AttackHandler ah = _unit.GetComponent<AttackHandler>();
+                // if (ah) 
+                // {
+                //     target = ah.targetUnit;
+                // }
             }
             else
             {
-                bool isFarAway = Vector3.Distance(target.transform.position, _unit.transform.position) > _unit.Character.attackRange;
-                if (negateCondition)
-                {
-                    isFarAway = !isFarAway;
-                }
-                return isFarAway;
+                // bool isFarAway = Vector3.Distance(target.transform.position, _unit.transform.position) > _unit.Character.attackRange;
+                // if (negateCondition)
+                // {
+                //     isFarAway = !isFarAway;
+                // }
+                // return isFarAway;
             }
         }
         return false;

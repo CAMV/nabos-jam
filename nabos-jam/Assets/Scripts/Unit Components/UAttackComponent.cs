@@ -33,9 +33,12 @@ public class UAttackComponent : MonoBehaviour
 
     public void Initialize()
     {
-        _basicAttack = ScriptableObject.Instantiate(_basicAttack);
-        _basicAttack.Initialize(_myUnit);
-        _isInit = true;
+        if (_basicAttack)
+        {
+            _basicAttack = ScriptableObject.Instantiate(_basicAttack);
+            _basicAttack.Initialize(_myUnit);
+            _isInit = true;
+        }
     }
 
     /// <summary>

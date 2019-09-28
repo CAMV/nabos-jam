@@ -4289,10 +4289,10 @@ GameObject:
   - component: {fileID: 398927177}
   - component: {fileID: 398927176}
   - component: {fileID: 398927182}
-  - component: {fileID: 398927181}
   - component: {fileID: 398927184}
-  - component: {fileID: 398927183}
   - component: {fileID: 398927185}
+  - component: {fileID: 398927183}
+  - component: {fileID: 398927181}
   m_Layer: 11
   m_Name: Cube
   m_TagString: Untagged
@@ -4313,14 +4313,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 596f8299302769047a70be565a638f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _myChar: {fileID: 11400000, guid: f4f7863bae2a5f84e97157ec8fb12aa9, type: 2}
-  _myCharBio: {fileID: 0}
-  _movement: {fileID: 398927181}
+  _GUIData: {fileID: 0}
   _selectGizmo: {fileID: 0}
   _vectorGizmo: {fileID: 0}
   _areaGizmo: {fileID: 0}
   _selectCollider: {fileID: 0}
+  _movement: {fileID: 0}
   _skills: {fileID: 0}
+  _properties: {fileID: 0}
+  _attack: {fileID: 0}
+  _modifiers: {fileID: 0}
+  _animations: {fileID: 0}
 --- !u!65 &398927177
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4401,9 +4404,8 @@ Transform:
 --- !u!114 &398927181
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 9010060406138952195, guid: 5989cdb6465ee0a45bbf42f906244c0b,
-    type: 3}
-  m_PrefabInstance: {fileID: 9010060405984100174}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 398927175}
   m_Enabled: 1
@@ -4437,20 +4439,16 @@ NavMeshAgent:
 --- !u!114 &398927183
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 9010060406138952193, guid: 5989cdb6465ee0a45bbf42f906244c0b,
-    type: 3}
-  m_PrefabInstance: {fileID: 9010060405984100174}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 398927175}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20f81a62951bdda4088aeb3f6d3aecb7, type: 3}
+  m_Script: {fileID: 11500000, guid: c50a0f22962f53145901eaa32c746b49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 11400000, guid: f4f7863bae2a5f84e97157ec8fb12aa9, type: 2}
-  isAttacking: 0
-  losCollider: {fileID: 398927184}
-  aggresiveLayer: 10
+  _basicAttack: {fileID: 0}
 --- !u!135 &398927184
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5850,6 +5848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dropdownMenu: {fileID: 153086484}
+  _currentFormation: {fileID: 0}
 --- !u!114 &478743166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10754,12 +10753,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 950b0ea065b4c904bb2ab2b0f9888592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectSqrGUI: {fileID: 1762755150}
-  _moveInFormGUI: {fileID: 306837173}
-  _moveTgGUI: {fileID: 1759042373}
-  _sqUnitsGUI: {fileID: 493685256}
-  _sqFormationGUI: {fileID: 478743165}
+  _screenSelectionGizmo: {fileID: 0}
+  _fPreviewGizmo: {fileID: 0}
+  _mFeedbackGizmo: {fileID: 0}
+  _partyAvatarsH: {fileID: 0}
+  _formationHotbar: {fileID: 0}
   _hotbar: {fileID: 1404930419}
+  _dummySlot: {fileID: 0}
 --- !u!4 &797988515
 Transform:
   m_ObjectHideFlags: 0
@@ -11332,11 +11332,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79be737bacca00345aa45eb425ff87ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerSquad: {fileID: 844205330}
+  _playerParty: {fileID: 0}
   _formationsAvailable:
-  - {fileID: 11400000, guid: 3526be394849f6341b8fd63399977961, type: 2}
-  - {fileID: 11400000, guid: fc472b9410dcd704e9859cb2c0965323, type: 2}
-  - {fileID: 11400000, guid: 4bf23be1f66a1e64abea089c3a64ce72, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &844205334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17840,7 +17840,6 @@ MonoBehaviour:
   - {fileID: 1949915903}
   - {fileID: 1427292837}
   - {fileID: 1674618788}
-  _dummySlot: {fileID: 468430757}
 --- !u!114 &1404930420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20370,6 +20369,7 @@ MonoBehaviour:
     - Selection Change
     - Selection Change
     - Selection Change
+    - Remove MonoBehaviour
     - Selection Change
     - Selection Change
     - Selection Change
@@ -20381,497 +20381,13 @@ MonoBehaviour:
     - Selection Change
     - Selection Change
     - Selection Change
+    - Remove MonoBehaviour
     - Selection Change
     - Selection Change
     - Selection Change
     - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Move
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Inspector
-    - Selection Change
+    - Add UAttackComponent
+    - Add UMovementComponent
 --- !u!4 &1585283514
 Transform:
   m_ObjectHideFlags: 3
@@ -27956,14 +27472,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88e64a69b4a23664cbb5af30951c99d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _myChar: {fileID: 11400000, guid: 24046b61610055c4cbeeca463c15a10c, type: 2}
-  _myCharBio: {fileID: 11400000, guid: 7d0282539fb5b964b8781bca4286b6e4, type: 2}
-  _movement: {fileID: 2084860512}
+  _GUIData: {fileID: 0}
   _selectGizmo: {fileID: 0}
   _vectorGizmo: {fileID: 0}
   _areaGizmo: {fileID: 0}
   _selectCollider: {fileID: 2084860510}
+  _movement: {fileID: 2084860512}
   _skills: {fileID: 2084860511}
+  _properties: {fileID: 0}
+  _attack: {fileID: 0}
+  _modifiers: {fileID: 0}
+  _animations: {fileID: 0}
 --- !u!136 &2084860510
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -29037,5 +28556,6 @@ PrefabInstance:
       propertyPath: actions.Array.size
       value: 4
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 5989cdb6465ee0a45bbf42f906244c0b, type: 3}

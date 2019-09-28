@@ -36,7 +36,9 @@ public abstract class UnitProperty : ScriptableObject
     [SerializeField]
     protected GUIData _guiData;
 
+
     // Value of the property before any calculations
+    [SerializeField]
     protected float _baseValue = 0;
     protected Unit _originUnit = null;
 

@@ -9,8 +9,8 @@ public class HasTargetEnemyCondition : Condition
     {
         if (_unit)
         {
-            AttackHandler ah = _unit.GetComponent<AttackHandler>();
-            return (ah && ah.isAttacking);
+            // AttackHandler ah = _unit.GetComponent<AttackHandler>();
+            // return (ah && ah.isAttacking);
         }
         return false;
     }

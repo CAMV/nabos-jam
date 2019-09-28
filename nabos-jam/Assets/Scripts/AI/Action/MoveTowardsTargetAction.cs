@@ -9,11 +9,11 @@ public class MoveTowardsTargetAction : Action
     public override void PerformAction() {
         if (_unit)
         {
-            AttackHandler ah = _unit.GetComponent<AttackHandler>();
-            if (ah)
+            UAttackComponent ac = _unit.GetComponent<UAttackComponent>();
+            if (ac)
             {
-                Unit target = _unit.GetComponent<AttackHandler>().targetUnit;
-                if (target && _unit.Movement) _unit.Movement.Move(target.transform.position);
+                Unit target = ac.Target;
+                if (target && _unit.Movements) _unit.Movements.MoveWithinRange(target.transform.position);
             }
         }
     }

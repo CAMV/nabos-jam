@@ -29,7 +29,7 @@ public class Unitskill : BasicSkill
             if (!_unitInput)
                 return;
 
-            Cast();
+            Cast(_unitInput);
         }
         else
         {

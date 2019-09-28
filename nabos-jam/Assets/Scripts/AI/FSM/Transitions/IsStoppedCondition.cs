@@ -6,6 +6,7 @@ using UnityEngine;
 public class IsStoppedCondition : Condition
 {
     public override bool IsTriggered() {
-        return (_unit.Movement && !_unit.Movement.isMoving());
+        // return (_unit.Movement && !_unit.Movement.isMoving());
+        return false;
     }
 }
