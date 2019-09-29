@@ -15,13 +15,7 @@ public class Unit : MonoBehaviour
 
     // gizmos
     [SerializeField]
-    protected USelectGizmo _selectGizmo = null;
-
-    [SerializeField]
-    private UVectorGizmo _vectorGizmo = null;
-
-    [SerializeField]
-    private UAreaGizmo _areaGizmo = null;
+    protected UGizmos _gizmos = null;
 
     // Components
 
@@ -125,27 +119,9 @@ public class Unit : MonoBehaviour
     /// <summary>
     /// The select gizmo component of the unit, if it has it.
     /// </summary>
-    public USelectGizmo SelectGizmo{
+    public UGizmos Gizmo{
         get {
-            return _selectGizmo;
-        }
-    }
-
-    /// <summary>
-    /// The vector gizmo component of the unit, if it has it.
-    /// </summary>
-    public UVectorGizmo VectorGizmo{
-        get {
-            return _vectorGizmo;
-        }
-    }
-
-    /// <summary>
-    /// The area gizmo component of the unit, if it has it.
-    /// </summary>
-    public UAreaGizmo AreaGizmo{
-        get {
-            return _areaGizmo;
+            return _gizmos;
         }
     }
 

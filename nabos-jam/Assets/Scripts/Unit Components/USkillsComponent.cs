@@ -107,16 +107,16 @@ public class USkillsComponent : MonoBehaviour
             switch (type)
             {
                 case VectorSkillType.Vector:
-                    if (_myUnit.VectorGizmo)
-                        _myUnit.VectorGizmo.Show(hitpoint, ((VectorSkill) skill).Range);
+                    if (_myUnit.Gizmo.VectorGizmo != null)
+                        _myUnit.Gizmo.VectorGizmo.Show(hitpoint, ((VectorSkill) skill).Range);
                 break;
                 case VectorSkillType.Direction:
-                    if (_myUnit.VectorGizmo)
-                        _myUnit.VectorGizmo.Show(hitpoint, 1);
+                    if (_myUnit.Gizmo.VectorGizmo != null)
+                        _myUnit.Gizmo.VectorGizmo.Show(hitpoint, 1);
                 break;
                 case VectorSkillType.Area:
-                    if (_myUnit.AreaGizmo)
-                        _myUnit.AreaGizmo.Show(hitpoint, 1);
+                    if (_myUnit.Gizmo.AreaGizmo != null)
+                        _myUnit.Gizmo.AreaGizmo.Show(hitpoint, 1);
                 break;
             }
 
@@ -130,11 +130,11 @@ public class USkillsComponent : MonoBehaviour
             skill.Execute(true);
         }
 
-        if (_myUnit.AreaGizmo)
-            _myUnit.AreaGizmo.Hide();
+        if (_myUnit.Gizmo.AreaGizmo != null)
+            _myUnit.Gizmo.AreaGizmo.Hide();
 
-        if (_myUnit.VectorGizmo)
-            _myUnit.VectorGizmo.Hide();
+        if (_myUnit.Gizmo.VectorGizmo != null)
+            _myUnit.Gizmo.VectorGizmo.Hide();
     }
     
 } 

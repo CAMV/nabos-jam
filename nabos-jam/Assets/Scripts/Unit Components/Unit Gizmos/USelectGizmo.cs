@@ -1,26 +1,19 @@
 using UnityEngine;
+using System;
 
 /// <summary>
 /// Unit component that handles the selection gizmo of the unit.
 /// </summary>
-[RequireComponent(typeof(MeshRenderer))]
-public class USelectGizmo : MonoBehaviour
+[Serializable]
+public class USelectGizmo
 {
     [SerializeField]
     SelectGizmoSetting materialSettings = null;
 
-    private Material _hMaterial, _mMaterial, _lMaterial;
+    [SerializeField]
+    private MeshRenderer _selectGizmoRenderer = null;
 
-    private MeshRenderer _myMR;
-
-    void Awake()
-    {
-        _hMaterial = materialSettings.hightIntensityMat;
-        _mMaterial = materialSettings.mediumIntensityMat;
-        _lMaterial = materialSettings.lowIntensityMat;
-
-        _myMR = GetComponent<MeshRenderer>();
-    }
+    //////////////// METHODS ////////////////
 
     /// <summary>
     /// Turns on and sets the type of the highlight of the gizmo. 
@@ -28,17 +21,17 @@ public class USelectGizmo : MonoBehaviour
     /// <param name="intensity">Type of the highlifht.</param>
     public void SetIntensity(UnitGizmoIntensity intensity)
     {
-        _myMR.enabled = true;
+        _selectGizmoRenderer.enabled = true;
         switch (intensity)
         {
             case (UnitGizmoIntensity.High):
-                _myMR.material = _hMaterial;
+                _selectGizmoRenderer.material = materialSettings.hightIntensityMat;
             break;
             case (UnitGizmoIntensity.Medium):
-                _myMR.material = _mMaterial;
+                _selectGizmoRenderer.material = materialSettings.mediumIntensityMat;
             break;
             case (UnitGizmoIntensity.Low):
-                _myMR.material = _lMaterial;
+                _selectGizmoRenderer.material = materialSettings.lowIntensityMat;
             break;
         }
     }
@@ -48,7 +41,7 @@ public class USelectGizmo : MonoBehaviour
     /// </summary>
     public void Disable()
     {
-        _myMR.enabled = false;
+        _selectGizmoRenderer.enabled = false;
     }
 
 }

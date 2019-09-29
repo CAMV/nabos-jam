@@ -181,6 +181,8 @@ public abstract class Skill : ScriptableObject, IHotbarAction
     {
         PayThCost();
         _currentCoolDown = RealCooldown;
+        _originUnit.Skills.StartCoroutine(CoolDownTimer());
+        
     }
 
     /// <summary>

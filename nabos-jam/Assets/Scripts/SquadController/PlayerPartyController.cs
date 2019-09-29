@@ -57,19 +57,19 @@ public class PlayerPartyController : PartyController
     {
         foreach(Unit u in _myUnits)
         {
-            if (u.SelectGizmo)
+            if (u.Gizmo.SelectGizmo != null)
             {
                 if (ActiveUnits.Contains(u))
                 {
-                    u.SelectGizmo.SetIntensity(UnitGizmoIntensity.High);
+                    u.Gizmo.SelectGizmo.SetIntensity(UnitGizmoIntensity.High);
                 }
                 else if (u.IsFollower)
                 {
-                    u.SelectGizmo.SetIntensity(UnitGizmoIntensity.Low);
+                    u.Gizmo.SelectGizmo.SetIntensity(UnitGizmoIntensity.Low);
                 }
                 else
                 {
-                    u.SelectGizmo.SetIntensity(UnitGizmoIntensity.Medium);
+                    u.Gizmo.SelectGizmo.SetIntensity(UnitGizmoIntensity.Medium);
                 }
             }
         }       
