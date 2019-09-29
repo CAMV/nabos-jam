@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: SMHealth
   m_EditorClassIdentifier: 
   maxResource: 100
-  currentResource: 100
+  currentResource: 0

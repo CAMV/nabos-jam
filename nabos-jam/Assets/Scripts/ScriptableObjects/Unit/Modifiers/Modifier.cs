@@ -123,7 +123,7 @@ public class Modifier : ScriptableObject
     /// </summary>
     private bool OnTimerExpired()
     {
-        if (!_stacks.AreStacksRomvedAtOnce && _stacks.Value > 1)
+        if (!_stacks.AreStacksRemovedAtOnce && _stacks.Value > 1)
             _timer.StartTimer();
 
         _stacks.RemoveStack();

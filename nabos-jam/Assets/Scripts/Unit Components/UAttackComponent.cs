@@ -34,9 +34,12 @@ public class UAttackComponent : MonoBehaviour
 
     public void Initialize()
     {
-        _basicAttack = ScriptableObject.Instantiate(_basicAttack);
-        _basicAttack.Initialize(_myUnit);
-        _isInit = true;
+        if (_basicAttack)
+        {
+            _basicAttack = ScriptableObject.Instantiate(_basicAttack);
+            _basicAttack.Initialize(_myUnit);
+            _isInit = true;
+        }
     }
 
     /// <summary>
@@ -75,12 +78,22 @@ public class UAttackComponent : MonoBehaviour
         if (!_isInit)
             return;
 
-        _targetUnit = target;
-        _isAttacking = true;
+        SetAttackTarget(target);
 
         if (!CheckIfInRange())
             _myUnit.Movements.MoveWithinRange();
 
+        _basicAttack.Cast();
+    }
+
+    public void SetAttackTarget(Unit target)
+    {
+        _targetUnit = target;
+        _isAttacking = true;
+    }
+
+    public void PerformAttack()
+    {
         _basicAttack.Cast();
     }
 
